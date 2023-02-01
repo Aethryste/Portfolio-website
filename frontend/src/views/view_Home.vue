@@ -6,7 +6,7 @@
         <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
       <div class="scroll-hint anim-fade-in">
-        <p>Learn more about what I do</p>
+        <p>Learn more about me and what I do</p>
         <div class="icon-down"></div>
       </div>
     </div>
@@ -14,16 +14,15 @@
       <div class="base">
         <div class="elements">
           <h2 class="title">ABOUT</h2>
-          <div class="element">
-            element-1
+          <div class="element" id="elem1">
+            <comp_profile/>
           </div>
-          <div class="element">
-            element-2
-          </div>
-          <div class="element">
-            element-3
-          </div>
-<!--          <comp_aboutMe/>-->
+<!--          <div class="element">-->
+<!--            element-2-->
+<!--          </div>-->
+<!--          <div class="element">-->
+<!--            element-3-->
+<!--          </div>-->
         </div>
       </div>
     </div>
@@ -31,8 +30,11 @@
 </template>
 
 <script>
+import comp_profile from '@/components/comp_profile';
+
 export default {
-  name: 'view_AboutMe',
+  name: 'view_Home',
+  components: { comp_profile },
   data() {
     return {
       scroll: 0
@@ -168,30 +170,33 @@ export default {
         width: 75%;
         height: fit-content;
         margin: 0 auto auto auto;
-        border: orange 1px solid;
+        transform: translateY(-10vh);
         .title {
+          position: relative;
+          width: fit-content;
+          margin: 1em auto;
           color: dimgrey;
           font-size: 3em;
-          font-weight: 100;
+          font-weight: bolder;
           letter-spacing: 2px;
           text-align: center;
-          margin: 1em;
-          text-decoration: underline;
-          text-underline-offset: 0.2em;
-          //&:after {
-          //  content: "";
-          //  position:absolute;
-          //  bottom:-2px
-          //  left:0;
-          //  width:50px;
-          //  border-bottom:1px solid dimgrey;
-          //}
+          text-shadow: 3px 3px 7px rgba(156,156,156,0.78);
+          &:before{
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 1px;
+            bottom: 0;
+            left: 25%;
+            border-bottom: 6px solid dimgrey;
+          }
         }
         .element {
           width: 80%;
-          height: 200px;
+          height: fit-content;
           border: orange 1px solid;
-          margin: 1em auto;
+          margin: 2vh auto;
+          padding: 1vh;
         }
       }
     }
@@ -200,4 +205,8 @@ export default {
 .hidden {
   opacity: 0;
 }
+#elem1 {
+
+}
+
 </style>
