@@ -1,18 +1,27 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import view_AboutMe from '@/views/view_AboutMe'
-import view_Home from '@/views/view_Home'
+import { createRouter, createWebHistory } from 'vue-router';
+import index from '@/pages/index.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: view_Home
+    name: 'index',
+    component: index,
+    meta: {
+      auth: false,
+      title: 'Richard Algra'
+    }
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
-export default router
+});
+
+// Navigation guard to update the page title based on meta.title
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title || 'Default Title';
+  next();
+});
+
+export default router;
