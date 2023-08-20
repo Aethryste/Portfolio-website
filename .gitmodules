@@ -1,0 +1,3 @@
+[submodule "frontend"]
+  path = frontend/dist
+  url = https://github.com/aethryste/PortfolioSite/frontend/dist
