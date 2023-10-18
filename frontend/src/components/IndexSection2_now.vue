@@ -2,16 +2,17 @@
   <div class="component-wrapper">
     <div class="content-wrapper">
       <div class="left"> <!-- TODO: Add image to About section. -->
-        <p style="color:black; padding: 1em;">Placeholder for image/profile picture.</p>
+        <div class="image"></div>
+<!--        <p style="color:black; padding: 1em;">Placeholder for image/profile picture.</p>-->
       </div>
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
           <FunctionTitle/>
-          <p class="G_unselectable G_paragraph"> <!-- TODO: Clean-up html structure. -->
+          <p class="G_paragraph"> <!-- TODO: Clean-up html structure. -->
             My journey in IT started out with a simple certificate in the basics of Python,
             here I discovered my burning passion for programming.
-            After this discovery I decided to get my Bachelors Degree in Software Engineering at the Amsterdam University of Applied Sciences. (AUAS)
+            After this discovery I decided to get my Bachelors Degree in Software Engineering at the <a target="_blank" href="https://www.amsterdamuas.com/about-auas">Amsterdam University of Applied Sciences</a>. (AUAS)
             <br>
             <br>
             At AUAS I learned to work with several programming languages and associated frameworks by working on
@@ -21,7 +22,7 @@
             I'm most comfortable working in the front-end of a product but also have experience with back-end programming, API's, databases, testing, and deployment.
             <br>
             <br>
-            <span style="color: white">My Toolkit of preference includes:</span> <!-- TODO: Remove inline styling. -->
+            <span style="color: #3D7DF5">My toolkit of preference includes:</span> <!-- TODO: Remove inline styling. -->
           </p>
           <div class="toolbox-icons-group">
             <div class="toolbox-icon" id="icon-html"></div>
@@ -68,7 +69,13 @@ export default {
       display: flex;
       width: 50%;
       height: 100%;
-      background-color: white;
+      .image {
+        width: 100%;
+        height: 80%;
+        background: url("../assets/ProfileImg.svg") center no-repeat; // PLACEHOLDER
+        background-size: cover;
+        margin: auto!important;
+      }
     }
     .right {
       display: flex;
@@ -77,6 +84,12 @@ export default {
       .about-block {
         width: 70%;
         margin: auto auto auto 2em !important;
+        p {
+          a {
+            text-decoration: none;
+            color: white;
+          }
+        }
         .toolbox-icons-group {
           display: flex;
           flex-direction: row;

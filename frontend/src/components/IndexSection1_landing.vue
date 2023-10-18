@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper">
+  <div class="page-wrapper G_unselectable">
     <div class="page-title" ref="pageTitle">
       <h1 class="main">Hi, I'm Richard.</h1>
       <h2 class="sub">Software Engineer, front-end developer.</h2>
