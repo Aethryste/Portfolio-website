@@ -1,7 +1,7 @@
 <template>
   <div class="timeline G_unselectable">
     <div class="year" v-for="(year, index) in years" :key="year" :style="{ top: getYearPosition(index, years.length) }">{{ year }}</div>
-    <slot></slot>
+    <slot :years="years"></slot> <!-- Slot allows you to inject content dynamically -->
   </div>
 </template>
 
@@ -10,8 +10,8 @@ export default {
   name: 'Timeline',
   data() {
     return {
-      years: [2023,2022,2021,2020,2019,2018,2017].reverse()
-    }
+      years: [2023, 2022, 2021, 2020, 2019, 2018, 2017].reverse()
+    };
   },
   methods: {
     getYearPosition(index, total) {
@@ -27,7 +27,7 @@ export default {
 .timeline {
   width: 5px;
   height: 100%;
-  margin: 10% auto; /* Centering the timeline */
+  margin: auto!important; /* Centering the timeline */
   position: relative;
   background-color: white;
   color: black;

@@ -1,6 +1,5 @@
 <template>
   <div class="entry" :style="position">
-<!--    <div class="date">{{ date }}</div>-->
     <div class="title">{{ title }}</div>
     <div class="subtitle">{{ subtitle }}</div>
     <div class="description">{{ description }}</div>
@@ -9,38 +8,23 @@
 
 <script>
 export default {
-  name: 'TimelineEntry',
   props: {
-    date: {
-      type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    subtitle: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      default: ''
-    }
+    date: { type: String, required: true },
+    title: { type: String, required: true },
+    subtitle: { type: String, required: true },
+    description: { type: String, default: '' },
+    years: { type: Array, default: () => [] }
   },
   computed: {
     position() {
-      return {
-        top: this.calculatePosition()
-      }
+      return { top: this.calculatePosition() };
     }
   },
   methods: {
     calculatePosition() {
-      let [year, month, _] = this.date.split('-').map(d => parseInt(d));
-
-      // Calculate the year fraction
-      let yearIndex = 2023 - year; // 2023 is the start year now
+      let [year, month] = this.date.split('-').map(Number);
+      let yearIndex = this.years.indexOf(year);
+      if (yearIndex === -1) return '0%';  // handle year not found
       let yearFraction = yearIndex;
 
       // Calculate the month fraction
