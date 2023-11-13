@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'IndexSection4_projects',
+  name: 'section_projects',
   methods: {
     redirect(path, newTab) { // TODO: Move function to global script.
       if (newTab) {
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./src/styles/theme.scss";
+@import "src/styles/theme";
 .component-wrapper {
   position: relative;
   width: 100vw;

@@ -21,7 +21,7 @@
 import slideshowTimeline from '@/components/SlideshowTimeline'
 
 export default {
-  name: 'IndexSection3_past',
+  name: 'section_experience',
   components: {
     // Timeline,
     // TimelineEntry
@@ -69,12 +69,14 @@ export default {
 <style scoped lang="scss">
 
 #slideshowTimeline {
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  border:1px solid red;
+  //width: calc(100% - 2px);
+  //height: calc(100% - 2px);
+  //border:1px solid red;
+  width: 100%;
+  height: 100%;
 }
 
-@import "./src/styles/theme.scss";
+@import "src/styles/theme";
 .component-wrapper {
   color: white;
   width: 100vw;

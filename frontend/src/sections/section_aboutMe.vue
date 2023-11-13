@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import FunctionTitle from './subcomponent_FunctionTitle.vue';
+import FunctionTitle from '@/components/subcomponent_FunctionTitle.vue';
 export default {
-  name: 'IndexSectionAboutMe',
+  name: 'section_aboutMe',
   components: {
     FunctionTitle,
   }
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./src/styles/theme.scss";
+@import "../styles/theme";
 .component-wrapper {
   color: white;
   width: 100vw;

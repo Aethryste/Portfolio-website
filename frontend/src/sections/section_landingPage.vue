@@ -13,7 +13,7 @@
 <script>
 import TerminalBlinker from '@/components/subcomponent_TerminalBlinker'
 export default {
-  name: 'IndexSectionLanding',
+  name: 'section_landingPage',
   components: {
     TerminalBlinker
   },
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./src/styles/theme.scss";
+@import "src/styles/theme";
 .page-wrapper {
   position: relative;
   width: 100vw;
