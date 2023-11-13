@@ -1,5 +1,5 @@
 <template>
-  <div class="page-wrapper">
+  <div class="page-wrapper G_unselectable">
     <div class="page-title" ref="pageTitle">
       <h1 class="main">Hi, I'm Richard.</h1>
       <h2 class="sub">Software Engineer, front-end developer.</h2>
@@ -13,7 +13,7 @@
 <script>
 import TerminalBlinker from '@/components/subcomponent_TerminalBlinker'
 export default {
-  name: 'IndexSectionLanding',
+  name: 'section_landingPage',
   components: {
     TerminalBlinker
   },
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./src/styles/theme.scss";
+@import "src/styles/theme";
 .page-wrapper {
   position: relative;
   width: 100vw;

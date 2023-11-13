@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import IndexSection1_landing from '@/components/IndexSection1_landing';
-import indexSection2_now from '@/components/IndexSection2_now';
-import IndexSection3_past from '@/components/IndexSection3_past';
-import IndexSection4_projects from '@/components/IndexSection4_projects';
-import IndexSection5_contact from '@/components/IndexSection5_contact'
+import IndexSection1_landing from '@/sections/section_landingPage';
+import indexSection2_now from '@/sections/section_aboutMe';
+import IndexSection3_past from '@/sections/section_experience';
+import IndexSection4_projects from '@/sections/section_projects';
+import IndexSection5_contact from '@/sections/section_contactPage'
 
 export default {
   components: {

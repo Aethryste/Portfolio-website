@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="G_unselectable">
     <h1><span>{{ displayText }}</span><span v-if="playAnimation" class="blink">|</span></h1>
   </div>
 </template>
