@@ -10,7 +10,7 @@
       </button>
     </nav>
 
-    <div class="scroll-container" ref="scrollContainer">
+    <div class="scroll-container G_HideScrollbars" ref="scrollContainer">
       <IndexSection1_landing class="section" :isActive="this.S1active"/>
       <indexSection2_now class="section" :isActive="this.S2active"/>
       <IndexSection3_past class="section" :isActive="this.S3active"/>
@@ -57,6 +57,7 @@ export default {
       }
     },
     currentSection() {
+      console.log("index.vue - currentSection() = "+this.currentSection);
       if (this.currentSection === 0) {
         this.S1active = true
         this.S2active = false
@@ -92,7 +93,6 @@ export default {
         this.S4active = false
         this.S5active = true
       }
-
     }
   },
   methods: {
@@ -147,6 +147,7 @@ export default {
   mounted() {
     this.$refs.scrollContainer.addEventListener('wheel', this.handleScroll, { passive: false });
     this.isNavigationVisible = false;
+    console.log("index.vue mounted")
   },
   beforeUnmount() {
     this.$refs.scrollContainer.removeEventListener('wheel', this.handleScroll);

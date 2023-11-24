@@ -174,7 +174,7 @@ export default {
           .icon {
             width: 24px;
             height: 24px;
-            background: url("src/assets/icons-svg/icon-email.svg") center;
+            background: url("../assets/icons-svg/icon-email.svg") center;
             background-size: contain;
             image-rendering: crisp-edges;
             image-rendering: -moz-crisp-edges;          /* Firefox */
@@ -199,19 +199,19 @@ export default {
             }
           }
           #icon-linkedin {
-            background: url("src/assets/icons-svg/icon-linkedin.svg") center no-repeat;
+            background: url("../assets/icons-svg/icon-linkedin.svg") center no-repeat;
             background-size: cover;
           }
           #icon-github {
-            background: url("src/assets/icons-svg/icon-github.svg") center no-repeat;
+            background: url("../assets/icons-svg/icon-github.svg") center no-repeat;
             background-size: cover;
           }
           #icon-gitlab {
-            background: url("src/assets/icons-svg/icon-gitlab.svg") center no-repeat;
+            background: url("../assets/icons-svg/icon-gitlab.svg") center no-repeat;
             background-size: cover;
           }
           #icon-codepen {
-            background: url("src/assets/icons-svg/icon-codepen.svg") center no-repeat;
+            background: url("../assets/icons-svg/icon-codepen.svg") center no-repeat;
             background-size: cover;
           }
         }
@@ -275,7 +275,7 @@ export default {
             cursor: pointer;
           }
           span.icon {
-            background: url("src/assets/icons-svg/icon-send-black.svg") center no-repeat;
+            background: url("../assets/icons-svg/icon-send-black.svg") center no-repeat;
             background-size: contain;
             padding: 2px 30px 2px 0;
             width: 30px;
@@ -286,7 +286,7 @@ export default {
             border: 2px solid white;
             color: white;
             span.icon {
-              background: url("src/assets/icons-svg/icon-send-white.svg") center no-repeat;
+              background: url("../assets/icons-svg/icon-send-white.svg") center no-repeat;
               background-size: contain;
             }
           }

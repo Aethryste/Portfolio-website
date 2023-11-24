@@ -1,21 +1,26 @@
 <template>
-  <div class="page-wrapper G_unselectable">
-    <div class="page-title" ref="pageTitle">
-      <h1 class="main">Hi, I'm Richard.</h1>
-      <h2 class="sub">Software Engineer, front-end developer.</h2>
-      <div class="terminal">
-        <TerminalBlinker/>
+  <div class="page-wrapper">
+
+    <div class="front-layer G_unselectable">
+      <div class="page-title" ref="pageTitle">
+        <h1 class="main">Hi, I'm Richard.</h1>
+        <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
     </div>
+
+    <div class="back-layer G_unselectable">
+      <frontpage_threejs id="threeJs"/>
+    </div>
+
   </div>
 </template>
 
 <script>
-import TerminalBlinker from '@/components/subcomponent_TerminalBlinker'
+import frontpage_threejs from '@/components/frontpage_threejs.vue'
 export default {
   name: 'section_landingPage',
   components: {
-    TerminalBlinker
+    frontpage_threejs
   },
   props: {
     isActive: Boolean
@@ -75,28 +80,52 @@ export default {
   height: 100vh;
   margin: 0;
   overflow: hidden;
-  .page-title {
-    opacity: 0;
-    position: relative;
-    width: 50%;
-    height: fit-content;
-    margin: 60vh auto auto 8% !important;
-    font-family: 'montserrat', sans-serif;
-    font-weight: 100;
-    text-align: left;
-    .main {
-      font-size: 4em;
-      margin-bottom: -0.6%;
+  .front-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    .page-title {
+      opacity: 0;
+      position: absolute;
+      width: 50%;
+      height: fit-content;
+      margin: 60vh auto auto 8% !important;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      font-family: 'montserrat', sans-serif;
+      font-weight: 100;
+      text-align: left;
+      .main {
+        font-size: 4em;
+        margin-bottom: -0.6%;
+      }
+      .sub {
+        margin-left: 10px!important;
+        font-size: 1.5em;
+        font-weight: 300;
+        color: darkgrey;
+        transform: translateX(-6px);
+      }
     }
-    .sub {
-      margin-left: 10px!important;
-      font-size: 1.5em;
-      font-weight: 300;
-      color: darkgrey;
-      transform: translateX(-6px);
-    }
-    .terminal {
-      margin: 1.5em auto auto 0 !important;
+  }
+  .back-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    #threeJs {
+      position: absolute;
+      z-index: -10;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      border: 1px solid green;
     }
   }
 }
