@@ -9,18 +9,18 @@
     </div>
 
     <div class="back-layer G_unselectable">
-      <frontpage_threejs id="threeJs"/>
+      <frontpage_threeJs id="threeJs"/>
     </div>
 
   </div>
 </template>
 
 <script>
-import frontpage_threejs from '@/components/frontpage_threejs.vue'
+import frontpage_threeJs from '@/components/frontpage_threejs.vue'
 export default {
   name: 'section_landingPage',
   components: {
-    frontpage_threejs
+    frontpage_threeJs
   },
   props: {
     isActive: Boolean
@@ -125,7 +125,7 @@ export default {
       top: 0;
       left: 0;
       opacity: 1;
-      border: 1px solid green;
+      border: 1px solid orange;
     }
   }
 }

@@ -8,7 +8,7 @@
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
-          <FunctionTitle/>
+          <FunctionTitle class="FunctionTitle"/>
           <p class="G_paragraph"> <!-- TODO: Clean-up html structure. -->
             My journey in IT started out with a simple certificate in the basics of Python,
             here I discovered my burning passion for programming.
@@ -84,6 +84,9 @@ export default {
       .about-block {
         width: 70%;
         margin: auto auto auto 2em !important;
+        .FunctionTitle {
+          padding: 1em 0 0.2em 0;
+        }
         p {
           a {
             text-decoration: none;

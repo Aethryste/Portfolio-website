@@ -57,7 +57,6 @@ export default {
       }
     },
     currentSection() {
-      console.log("index.vue - currentSection() = "+this.currentSection);
       if (this.currentSection === 0) {
         this.S1active = true
         this.S2active = false
@@ -147,7 +146,6 @@ export default {
   mounted() {
     this.$refs.scrollContainer.addEventListener('wheel', this.handleScroll, { passive: false });
     this.isNavigationVisible = false;
-    console.log("index.vue mounted")
   },
   beforeUnmount() {
     this.$refs.scrollContainer.removeEventListener('wheel', this.handleScroll);

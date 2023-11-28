@@ -52,41 +52,44 @@ export default {
   data() {
     return {
       slides: [
-        {
-          year: 2018,
-          imageUrl: 'https://unsplash.it/1920/500?image=11',
-          title: 'Our nice super title',
-          text: 'Finished my studies at GLU ect. ect. ect.',
-          active: false
-        },
-        {
-          year: 2019,
-          imageUrl: 'https://unsplash.it/1920/500?image=12',
-          title: 'Our nice super title',
-          text: 'Lorem ipsum dolor site amet...',
-          active: false
-        },
+        // TODO: retrieve all info in json from backend.
+        // TODO: Reverse slide order, latest first.
         {
           year: 2020,
-          imageUrl: 'https://unsplash.it/1920/500?image=13',
-          title: 'Our nice super title',
-          text: 'Lorem ipsum dolor site amet...',
+          imageUrl: 'https://unsplash.it/1920/500?image=11',
+          title: 'All earlier experiences.',
+          text: "I've got about 5 years of working experience before my decision to career-switch to IT took place, " +
+            "most of this experience is related to Graphic Design, Game Development, and providing moving/transport " +
+            "services. More details can be found on my LinkedIn.",
           active: false
         },
         {
           year: 2021,
-          imageUrl: 'https://unsplash.it/1920/500?image=14',
-          title: 'Our nice super title',
-          text: 'Lorem ipsum dolor site amet...',
+          imageUrl: 'https://unsplash.it/1920/500?image=12',
+          title: 'The start of it all.',
+          text: "During 2021 I successfully completed a starter course on Python through Udemy, completing this " +
+            "course sparked my passion for programming. Not long after I decided to properly career-switch to IT " +
+            "by starting my Bachelor's degree at AUAS.",
           active: false
         },
         {
           year: 2022,
-          imageUrl: 'https://unsplash.it/1920/500?image=15',
-          title: 'Our nice super title',
-          text: 'Lorem ipsum dolor site amet...',
+          imageUrl: 'https://unsplash.it/1920/500?image=13',
+          title: 'My first IT occupations.',
+          text: 'Shortly after starting my Bachelor I joined "Newskool", a secondment company specialised in ' +
+            'providing, ambitious, starting IT-professionals to businesses in need. Through Newskool I gained my ' +
+            'first three IT service/operations occupations, which provided me two consecutive years of professional experience working in large corporations and their digital infrastructures.',
           active: false
         },
+        {
+          year: 2023,
+          imageUrl: 'https://unsplash.it/1920/500?image=14',
+          title: 'The next step.',
+          text: "Now, having built up professional experience working in IT-operations and having completed about " +
+            "half of my Bachelor, it's time for me to land my first Software Engineering / Developer occupation. " +
+            "This will be the next big step in my career, which i'm heavily looking forward to!",
+          active: false
+        }
       ]
     };
   },
@@ -120,16 +123,15 @@ $gray: #616161;
   margin: 0!important;
   .timeline {
     width: 100%;
-    height: 60%;
+    height: 100%;
     .swiper {
       width: 100%;
       height: 100%;
       .navigation-buttons {
-        border: 1px solid red;
         .year-list {
           position: absolute;
           top: 50%;
-          left: 50%;
+          right: 12.6%;
           transform: translate(-50%, -50%);
           display: flex;
           flex-direction: column;
@@ -262,10 +264,11 @@ $gray: #616161;
           box-shadow: -230px 0 150px 50vw rgba($black, .7);
         }
         &-content {
-          right: 30%;
+          right: 20%!important;
           top: 50%;
           transform: translateY(-50%);
-          width: 310px;
+          width: 510px;
+          max-width: 100%;
           font-size: 11px;
           text-align: right;
         }
@@ -274,8 +277,11 @@ $gray: #616161;
           font-size: 32px;
         }
         .timeline-title {
-          font-size: 46px;
-          margin: 0;
+          font-size: 3em;
+          margin: 0.1em 0 0.4em 0 !important;
+        }
+        .timeline-text {
+          font-size: 1.1em;
         }
       }
       .swiper-pagination {
