@@ -20,8 +20,8 @@ public class slideService {
                     "I've got about 5 years of working experience before my decision to career-switch to IT " +
                             "took place, most of this experience is related to Graphic Design, Game Development, and " +
                             "providing moving/transport services. More details can be found on my LinkedIn.",
-                    image.getType("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"),
-                    image.convertToBase64("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"));
+                    image.getType("src/main/resources/static/slideshow-images/2020_laptop.jpg"),
+                    image.convertToBase64("src/main/resources/static/slideshow-images/2020_laptop.jpg"));
         }
         if (year == 2021) {
             return new slide(
@@ -53,8 +53,8 @@ public class slideService {
                             "about half of my Bachelor, it's time for me to land my first Software Engineering / " +
                             "Developer occupation. This will be the next big step in my career, which i'm heavily " +
                             "looking forward to!",
-                    image.getType("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"),
-                    image.convertToBase64("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"));
+                    image.getType("src/main/resources/static/slideshow-images/2023_code.jpg"),
+                    image.convertToBase64("src/main/resources/static/slideshow-images/2023_code.jpg"));
         }
         else { return null; }
     }
