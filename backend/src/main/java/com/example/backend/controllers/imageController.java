@@ -15,10 +15,10 @@ public class imageController {
     @GetMapping("/slides/{year}")
     public slide slideServiceGetSlide(@PathVariable String year) {
         try {
-            return slideService.getSlide(Long.parseLong(year));
+            return slideService.getSlide(Integer.parseInt(year));
         }
-        catch(Exception e) {
-            System.out.println("[imageController] slideServiceGetSlide error.");
+        catch (Exception e) {
+            System.out.println("slideServiceGetSlide() - "+ e );
             return null;
         }
     }

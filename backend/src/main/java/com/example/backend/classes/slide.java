@@ -5,13 +5,15 @@ public class slide {
     private final long year;
     private final String title;
     private final String body;
-    private final String image;
+    private final String imageType;
+    private final String imageContent;
 
-    public slide(long year, String title, String body, String image) {
+    public slide(long year, String title, String body, String imageType, String imageContent) {
         this.year = year;
         this.title = title;
         this.body = body;
-        this.image = image;
+        this.imageType = imageType;
+        this.imageContent = imageContent;
     }
 
     // Getters
@@ -24,7 +26,10 @@ public class slide {
     public String getBody() {
         return body;
     }
-    public String getImage() {
-        return image;
+    public String getImageType() {
+        return imageType;
+    }
+    public String getImageContent() {
+        return imageContent;
     }
 }
