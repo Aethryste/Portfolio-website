@@ -46,6 +46,23 @@ export default {
   name: 'section_aboutMe',
   components: {
     FunctionTitle,
+  },
+  methods: {
+    fetchData() {
+      let ajax = new XMLHttpRequest()
+      ajax.open('GET', '/images/timeline')
+      ajax.onload = () => {
+        this.slides = JSON.parse(ajax.responseText);
+        console.log(this.slides);
+      };
+      ajax.onerror = () => {
+        console.error('Error fetching slideshow data.');
+      };
+      ajax.send();
+    }
+  },
+  created() {
+    this.fetchData();
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <nav class="navigation" ref="navigation" :style="{ opacity: isNavigationVisible ? 1 : 0 }">
+    <nav class="navigation" ref="navigation" :class="{ 'hidden': !isNavigationVisible }">
       <button
         class="scroll-nav-button"
         @click="navigateToSection(index - 1)"
@@ -165,14 +165,19 @@ export default {
   overflow-x: hidden;
 }
 .navigation {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: opacity 300ms ease-in-out;
+   position: fixed;
+   top: 50%;
+   right: 20px;
+   transform: translateY(-50%);
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   transition: opacity 300ms ease-in-out;
+   z-index: 500;
+ }
+.navigation.hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 button {
   background: none;
