@@ -8,7 +8,7 @@
           <p class="G_unselectable G_paragraph">Feel free to share your ideas or requests with me!</p>
           <div class="email">
             <div class="icon"></div>
-            <p id="emailAddress" @click="copyToClipboard('emailAddress')">placeholder@address.com</p>
+            <p id="emailAddress" @click="copyToClipboard('emailAddress')">contact@richardalgra.com</p>
             <transition name="fade" appear>
               <p v-if="copied" class="copied-text"> - Copied!</p>
             </transition>
@@ -18,8 +18,6 @@
                  @click="redirect('https://www.linkedin.com/in/richard-algra/', true)"></div>
             <div class="icon" id="icon-github"
                  @click="redirect('https://github.com/Aethryste?tab=repositories', true)"></div>
-<!--            <div class="icon" id="icon-gitlab"-->
-<!--                 @click="redirect('locked by university..', true)"></div>-->
             <div class="icon" id="icon-codepen"
                  @click="redirect('https://codepen.io/Aethryste', true)"></div>
           </div>
@@ -27,17 +25,17 @@
       </div>
       <div class="right">
         <form class="form-box">
-          <label class="unselectable">Name</label>
+          <label class="G_unselectable">Name</label>
           <input :class="{ 'error-border': !nameFilled }" @blur="checkInput('name')" v-model="nameValue">
-          <p class="error-text" v-if="nameErrorMsg">{{ nameErrorMsg }}</p>
+          <p class="G_unselectable error-text" v-if="nameErrorMsg">{{ nameErrorMsg }}</p>
 
-          <label class="unselectable">Email</label>
+          <label class="G_unselectable">Email</label>
           <input :class="{ 'error-border': !emailFilled }" @blur="checkInput('email')" v-model="emailValue">
-          <p class="error-text" v-if="emailErrorMsg">{{ emailErrorMsg }}</p>
+          <p class="G_unselectable error-text" v-if="emailErrorMsg">{{ emailErrorMsg }}</p>
 
-          <label class="unselectable">Message</label>
+          <label class="G_unselectable">Message</label>
           <textarea :class="{ 'error-border': !messageFilled }" @blur="checkInput('message')" v-model="messageValue"></textarea>
-          <p class="error-text" v-if="messageErrorMsg">{{ messageErrorMsg }}</p>
+          <p class="G_unselectable error-text" v-if="messageErrorMsg">{{ messageErrorMsg }}</p>
 
           <button @click.prevent="sendMessage"><span class="icon"></span>Reach out!</button>
 
@@ -114,9 +112,8 @@ export default {
         ajax.open('POST', '/contact/form')
 
         ajax.onreadystatechange = () => {
-          // Call a function when the state changes.
           if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
-            // Request finished. Do processing here.
+            // TODO: Request finished. Do processing here.
           }
         };
         ajax.send(obj);

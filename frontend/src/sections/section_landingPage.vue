@@ -8,9 +8,9 @@
       </div>
     </div>
 
-    <div class="back-layer G_unselectable">
-      <frontpage_threeJs id="threeJs"/>
-    </div>
+<!--    <div class="back-layer G_unselectable">-->
+<!--      <frontpage_threeJs id="threeJs"/>-->
+<!--    </div>-->
 
   </div>
 </template>
@@ -20,7 +20,7 @@ import frontpage_threeJs from '@/components/frontpage_threejs.vue'
 export default {
   name: 'section_landingPage',
   components: {
-    frontpage_threeJs
+    // frontpage_threeJs
   },
   props: {
     isActive: Boolean
@@ -125,7 +125,7 @@ export default {
       top: 0;
       left: 0;
       opacity: 1;
-      border: 1px solid orange;
+      //border: 1px solid orange;
     }
   }
 }
