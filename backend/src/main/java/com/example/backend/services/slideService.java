@@ -9,11 +9,9 @@ import java.util.ArrayList;
 public class slideService {
 
     private static final imageEditor imageEditor = new imageEditor();
-    // TODO: replace with database query, maybe mongo?
     private static ArrayList<slide> allSlides = new ArrayList<>(5);
 
-    public slideService() {
-    }
+    public slideService() {}
 
     public ArrayList<slide> getAllSlides() {
         if (allSlides.isEmpty()) {

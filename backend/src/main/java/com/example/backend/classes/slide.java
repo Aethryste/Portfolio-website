@@ -1,7 +1,6 @@
 package com.example.backend.classes;
 
 public class slide extends file {
-
     private final long year;
     private final String title;
     private final String body;

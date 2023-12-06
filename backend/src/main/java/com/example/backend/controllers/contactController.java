@@ -1,14 +1,11 @@
 package com.example.backend.controllers;
 
-import com.example.backend.classes.slide;
-import com.example.backend.services.slideService;
+import com.example.backend.configs.securityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @RestController
-@CrossOrigin(origins = "localhost", maxAge = 3600)
+@CrossOrigin(origins = securityConfig.ALLOWED_ORIGIN, maxAge = securityConfig.MAX_AGE)
 @RequestMapping("/contact")
 public class contactController {
 

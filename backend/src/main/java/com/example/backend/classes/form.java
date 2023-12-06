@@ -10,4 +10,14 @@ public abstract class form {
         this.to = to;
         this.content = content;
     }
+
+    public String getFrom() {
+        return from;
+    }
+    public String getTo() {
+        return to;
+    }
+    public String getContent() {
+        return content;
+    }
 }
