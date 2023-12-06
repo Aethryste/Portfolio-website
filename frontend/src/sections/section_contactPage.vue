@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import Form from '@/classes/form'
 export default {
   name: 'section_contactPage',
   data() {
@@ -65,7 +66,8 @@ export default {
       emailErrorMsg: '',
       messageErrorMsg: '',
       messageSent: false,
-      copied: false
+      copied: false,
+      form: null
     };
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
           break;
         case 'email':
           this.emailFilled = trimValue(this.emailValue) && this.emailValue.includes('@');
-          this.emailErrorMsg = this.emailFilled ? '' : 'Please enter a valid email';
+          this.emailErrorMsg = this.emailFilled ? '' : 'Please enter a valid form';
           break;
         case 'message':
           this.messageFilled = !!trimValue(this.messageValue);
@@ -105,9 +107,22 @@ export default {
       this.checkInput('name');
       this.checkInput('email');
       this.checkInput('message');
-      console.log("send message!")
       if (!this.nameErrorMsg && !this.emailErrorMsg && !this.messageErrorMsg) {
+        let obj = JSON.stringify(new Form(this.nameValue, this.emailValue, this.messageValue));
+
+        let ajax = new XMLHttpRequest()
+        ajax.open('POST', '/contact/form')
+
+        ajax.onreadystatechange = () => {
+          // Call a function when the state changes.
+          if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
+            // Request finished. Do processing here.
+          }
+        };
+        ajax.send(obj);
         this.messageSent = true;
+
+        // Is the below needed?
         setTimeout(() => {
           this.messageSent = false;
         }, 50000);

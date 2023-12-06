@@ -53,7 +53,6 @@ export default {
       ajax.open('GET', '/images/timeline')
       ajax.onload = () => {
         this.slides = JSON.parse(ajax.responseText);
-        console.log(this.slides);
       };
       ajax.onerror = () => {
         console.error('Error fetching slideshow data.');
