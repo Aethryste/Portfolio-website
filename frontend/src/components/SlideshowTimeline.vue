@@ -14,16 +14,18 @@
           :style="{ backgroundImage: generateBackgroundImage(slide) }"
           :data-year="slide.year"
         >
-          <div class="swiper-slide-content">
-            <span class="timeline-year">{{ slide.year }}</span>
-            <h4 class="timeline-title">{{ slide.title }}</h4>
-            <p class="timeline-text">{{ slide.body }}</p>
+          <div class="swiper-slide-content G_unselectable">
+            <div class="slide-description">
+              <span class="timeline-year">{{ slide.year }}</span>
+              <h4 class="timeline-title">{{ slide.title }}</h4>
+              <p class="timeline-text">{{ slide.body }}</p>
+            </div>
           </div>
         </swiper-slide>
-
         <div class="navigation-buttons">
-          <div class="swiper-button-prev" @click="prevSlide"></div>
-          <div class="year-list">
+          <div id="swiper-button-prev" @click="prevSlide"></div>
+          <div id="navigation-deco-top"></div>
+          <div id="year-list">
           <span
             v-for="slide in slides"
             :key="slide.year"
@@ -32,9 +34,9 @@
             {{ slide.year }}
           </span>
           </div>
-          <div class="swiper-button-next" @click="nextSlide"></div>
+          <div id="navigation-deco-bot"></div>
+          <div id="swiper-button-next" @click="nextSlide"></div>
         </div>
-
       </swiper>
     </div>
   </div>
@@ -91,55 +93,87 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// Colors
-$white: #fff;
-$black: #000;
-$primary: #d4a024;
-$gray: #616161;
+//$theme-primary-color: #d4a024;
+$theme-primary-color: dodgerblue;
+$general-text-color: white;
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 0!important;
   .timeline {
     width: 100%;
     height: 100%;
     .swiper {
-      width: 100%;
       height: 100%;
       .navigation-buttons {
-        .year-list {
-          position: absolute;
-          top: 50%;
-          right: 12.6%;
-          transform: translate(-50%, -50%);
+        z-index: 10;
+        position: absolute;
+        height: 95%;
+        right: 130px;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        display: flex;
+        flex-direction: column;
+        #year-list {
+          position: relative;
+          width: fit-content;
+          height: fit-content;
           display: flex;
           flex-direction: column;
-          z-index: 10;
           span {
+            margin: auto!important;
+            padding: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: $theme-primary-color;
+            text-shadow: 3px 4px 7px rgba(0,0,0,0.8);
+            opacity: 0.8;
             cursor: pointer;
-            padding: 5px 10px;
-            margin: 5px 0;
-            background-color: rgba($black, 0.6);
-            color: $white;
-            transition: background-color 0.3s;
+            transition: 0.3s;
             &:hover {
-              background-color: $primary;
+              color: $general-text-color;
+              opacity: 1;
             }
           }
         }
-        .swiper-button-prev {
-          top: 10%;
+        #swiper-button-prev, #swiper-button-next, #navigation-deco-top, #navigation-deco-bot {
+          position: relative;
+          display: flex;
+          width: 30px;
         }
-        .swiper-button-next {
-          bottom: 10%;
+        #swiper-button-prev, #swiper-button-next {
+          height: 30px;
+          margin: auto!important;
+          mask: url("../assets/icons-svg/icon-arrow.svg");
+          mask-size: cover;
+          background-color: $theme-primary-color;
+          cursor: pointer;
+          transform: scaleY(70%);
+          filter: none;
+          transition: 300ms;
+          &:hover {
+            background-color: white;
+          }
+        }
+        #swiper-button-next {
+          rotate: 180deg;
+        }
+        #navigation-deco-top, #navigation-deco-bot {
+          mask: url("../assets/brushStroke.svg");
+          mask-size: cover;
+          mask-repeat: no-repeat;
+          mask-position: center;
+          background-color: $theme-primary-color;
+          height: 15%;
+          transform: scaleX(50%);
+        }
+        #navigation-deco-top {
+          margin: auto auto 10px auto !important;
+        }
+        #navigation-deco-bot {
+          rotate: 180deg;
+          margin: 10px auto auto auto!important;
         }
       }
     }
-    .swiper-container {}
-    .swiper-wrapper {}
     .swiper-slide {
       position: relative;
       overflow: hidden;
@@ -154,161 +188,49 @@ $gray: #616161;
         bottom: -10%;
         width: 100%;
         height: 100%;
-        background-color: rgba($black, .7);
-        box-shadow: -230px 0 150px 60vw rgba($black, .7);
+        background-color: rgba(black, .7);
+        box-shadow: -230px 0 150px 60vw rgba(black, .7);
         border-radius: 100%;
       }
       &-content {
         position: absolute;
-        text-align: center;
-        width: 80%;
-        max-width: 310px;
-        right: 50%;
-        top: 13%;
-        transform: translate(50%, 0);
-        font-size: 12px;
-        z-index: 2;
+        right: 40px;
+        top: 50%;
+        width: 370px;
+        height: fit-content;
+        transform: translate(-50%,-50%);
+        text-align: right;
+        z-index: 15;
       }
-      &-active {
-        .timeline-year, .timeline-title, .timeline-text {
-          transition: 1100ms ease .4s!important;
-        }
+      .timeline-year, .timeline-title, .timeline-text {
+        transform: translate3d(20px, 0, 0);
+        opacity: 0;
       }
       .timeline-year {
         display: block;
-        font-style: italic;
-        font-size: 42px;
         margin-bottom: 50px;
-        transform: translate3d(20px, 0, 0);
-        color: $primary;
+        color: $theme-primary-color;
+        font-style: italic;
         font-weight: 300;
-        opacity: 0;
-        //transition: .2s ease .4s;
+        font-size: 42px;
       }
       .timeline-title {
+        margin: 0 0 30px;
         font-weight: 800;
         font-size: 34px;
-        margin: 0 0 30px;
-        opacity: 0;
-        transform: translate3d(20px, 0, 0);
-        transition: .2s ease .5s;
       }
       .timeline-text {
+        font-size: 12px;
         line-height: 1.5;
-        opacity: 0;
-        transform: translate3d(20px, 0, 0);
-        transition: .2s ease .6s;
       }
       &-active {
-        .timeline-year {
+        .timeline-year, .timeline-title, .timeline-text {
           opacity: 1;
           transform: translate3d(0, 0, 0);
-          transition: .4s ease 1.6s;
-        }
-        .timeline-title {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-          transition: .4s ease 1.7s;
-        }
-        .timeline-text {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-          transition: .4s ease 1.8s;
-        }
-      }
-    }
-    .swiper-button-next, .swiper-button-prev {
-      background-size: 20px 20px;
-      top: 15%;
-      width: 20px;
-      height: 20px;
-      margin-top: 0;
-      z-index: 2;
-      transition: .2s;
-      color: transparent;
-    }
-    .swiper-button-prev {
-      left: 8%;
-      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23d4a024'%2F%3E%3C%2Fsvg%3E");
-      &:hover {
-        transform: translateX(-3px);
-      }
-    }
-    .swiper-button-next {
-      right: 8%;
-      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23d4a024'%2F%3E%3C%2Fsvg%3E");
-      &:hover {
-        transform: translateX(3px);
-      }
-    }
-    @media screen and (min-width: 768px) {
-      .swiper-slide {
-        &::after {
-          right: -30%;
-          bottom: -8%;
-          width: 240px;
-          height: 50%;
-          box-shadow: -230px 0 150px 50vw rgba($black, .7);
-        }
-        &-content {
-          right: 20%!important;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 510px;
-          max-width: 100%;
-          font-size: 11px;
-          text-align: right;
-        }
-        .timeline-year {
-          margin-bottom: 0;
-          font-size: 32px;
-        }
-        .timeline-title {
-          font-size: 3em;
-          margin: 0.1em 0 0.4em 0 !important;
-        }
-        .timeline-text {
-          font-size: 1.1em;
-        }
-      }
-      .swiper-pagination {
-        display: flex;
-        border: 1px solid blue;
-      }
-      .swiper-button-prev {
-        top: 15%;
-        left: auto;
-        right: 15%;
-        transform: rotate(90deg) translate(0, 10px);
-        &:hover {
-          transform: rotate(90deg) translate(-3px, 10px);
-        }
-      }
-      .swiper-button-next {
-        top: auto;
-        bottom: 15%;
-        right: 15%;
-        transform: rotate(90deg) translate(0, 10px);
-        &:hover {
-          transform: rotate(90deg) translate(3px, 10px);
-        }
-      }
-    }
-    @media screen and (min-width: 1024px) {
-      .swiper-slide {
-        &::after {
-          right: -20%;
-          bottom: -12%;
-          width: 240px;
-          height: 50%;
-          box-shadow: -230px 0 150px 39vw rgba($black, .7);
-        }
-        &-content {
-          right: 25%;
+          transition: 1100ms ease .4s;
         }
       }
     }
   }
 }
-
 </style>

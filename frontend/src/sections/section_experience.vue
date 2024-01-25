@@ -1,30 +1,13 @@
 <template>
   <slideshowTimeline id="slideshowTimeline"/>
-<!--  <Timeline>-->
-<!--    <template #default="slotProps">-->
-<!--      <TimelineEntry-->
-<!--        v-for="entry in timelineEntries"-->
-<!--        :key="entry.date"-->
-<!--        :date="entry.date"-->
-<!--        :title="entry.title"-->
-<!--        :subtitle="entry.subtitle"-->
-<!--        :description="entry.description"-->
-<!--        :years="slotProps.years"-->
-<!--      />-->
-<!--    </template>-->
-<!--  </Timeline>-->
 </template>
 
 <script>
-// import Timeline from './Timeline.vue'; // Replace with the actual path
-// import TimelineEntry from './TimelineEntry.vue'; // Replace with the actual path
 import slideshowTimeline from '@/components/SlideshowTimeline'
 
 export default {
   name: 'section_experience',
   components: {
-    // Timeline,
-    // TimelineEntry
     slideshowTimeline
   },
   data() {
@@ -67,28 +50,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 #slideshowTimeline {
-  //width: calc(100% - 2px);
-  //height: calc(100% - 2px);
-  //border:1px solid red;
   width: 100%;
   height: 100%;
-}
-
-@import "src/styles/theme";
-.component-wrapper {
-  color: white;
-  width: 100vw;
-  height: 100vh;
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  Timeline {
-    position: absolute;
-    top:0;
-    left: 0;
-  }
 }
 </style>
