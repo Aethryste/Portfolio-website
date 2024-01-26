@@ -45,6 +45,12 @@
         </form>
       </div>
     </div>
+    <footer>
+      <div class="footer-content">
+        <p class="G_unselectable">Handcrafted with VueJS © 2024 Richard Algra</p>
+        <p>contact@richardalgra.com</p><!--replace with logo later-->
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -133,6 +139,7 @@ export default {
 @import "src/styles/theme";
 .component-wrapper {
   display: flex;
+  flex-wrap: wrap;
   width: 100vw;
   height: 100vh;
   color: white;
@@ -305,6 +312,37 @@ export default {
         }
         #message {
           resize: vertical;
+        }
+      }
+    }
+  }
+  footer {
+    display: flex;
+    position: relative;
+    //left: 0;
+    //bottom: 0;
+    margin: auto auto 0 auto !important;
+    background-color: black;
+    min-width: 100%;
+    height: 90px;
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: fit-content;
+      height: 50%;
+      padding: 10px;
+      margin: auto auto auto auto !important;
+      p {
+        margin: 4px!important;
+        font-size: 0.8em;
+        line-height: 1em;
+        color: $theme-primary-color;
+        &:nth-child(1) {
+          color: white;
+          border-bottom: 1px solid white;
+          padding-bottom: 10px;
         }
       }
     }

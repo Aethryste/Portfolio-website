@@ -10,6 +10,10 @@ $pageSection-3-color: rgb(10,10,8);
 $pageSection-3-posBase: 250vh;
 $pageSection-3-posOffset: 170vh;
 
+$theme-primary-color: #d4a024;
+//$theme-primary-color: dodgerblue;
+$general-text-color: white;
+
 html {
   background: linear-gradient(39deg,rgb(30,30,35),rgb(10,10,8));
   width: 100%;
@@ -29,7 +33,7 @@ html {
 .G_sectionHeader {
   font-weight: 400;
   font-size: 1.1em;
-  color: #3D7DF5;
+  color: $theme-primary-color;
   transform: scaleY(90%);
   font-family:
           Inter,
@@ -46,6 +50,9 @@ html {
           "Segoe UI Emoji",
           Segoe UI Symbol,
           "Noto Color Emoji";
+}
+.G_theme-primary-color-text {
+  color: $theme-primary-color;
 }
 .G_paragraph {
   color: #9B9EB1;

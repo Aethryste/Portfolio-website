@@ -22,7 +22,7 @@
             I'm most comfortable working in the front-end of a product but also have experience with back-end programming, API's, databases, testing, and deployment.
             <br>
             <br>
-            <span style="color: #3D7DF5">My toolkit of preference includes:</span> <!-- TODO: Remove inline styling. -->
+            <span class="G_theme-primary-color-text">My toolkit of preference includes:</span>
           </p>
           <div class="toolbox-icons-group">
             <div class="toolbox-icon" id="icon-html"></div>

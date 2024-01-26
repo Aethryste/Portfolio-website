@@ -93,9 +93,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-//$theme-primary-color: #d4a024;
-$theme-primary-color: dodgerblue;
-$general-text-color: white;
+@import "../styles/theme";
 
 .container {
   .timeline {

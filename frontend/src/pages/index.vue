@@ -153,7 +153,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   position: relative;
   overflow: hidden!important;
