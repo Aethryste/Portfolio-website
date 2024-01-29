@@ -143,22 +143,6 @@ export default {
   width: 100vw;
   height: 100vh;
   color: white;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica Neue,
-    Arial,
-    Noto Sans,
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    Segoe UI Symbol,
-    "Noto Color Emoji";
   align-items: center;
   justify-content: center;
   .content-wrapper {
@@ -182,11 +166,11 @@ export default {
           flex-direction: row;
           height: fit-content;
           width: fit-content;
-          margin: 1em 1em 1em 0 !important;
+          margin: 1em 1em 1em 0!important;
           text-align: center;
           p {
             height: 100%;
-            margin: auto auto auto 5px !important;
+            margin: auto auto auto 5px!important;
             color: white;
             cursor: pointer;
           }
@@ -196,9 +180,9 @@ export default {
             background: url("../assets/icons-svg/icon-email.svg") center;
             background-size: contain;
             image-rendering: crisp-edges;
-            image-rendering: -moz-crisp-edges;          /* Firefox */
-            image-rendering: -o-crisp-edges;            /* Opera */
-            -ms-interpolation-mode: nearest-neighbor;   /* IE (non-standard property) */
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -o-crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor;
           }
         }
         .icons-group {
@@ -206,11 +190,11 @@ export default {
           flex-direction: row;
           width: 50%;
           height: 60px;
-          margin: 30px 0 0 0 !important;
+          margin: 30px 0 0 0!important;
           .icon {
             width: 30px;
             height: 30px;
-            margin: auto 8px auto 0 !important;
+            margin: auto 8px auto 0!important;
             transition: 100ms;
             opacity: 0.3;
             &:hover {
@@ -245,9 +229,9 @@ export default {
         flex-direction: column;
         width: 80%;
         height: 70%;
-        margin: auto auto 3em 0 !important;
+        margin: auto auto 3em 0!important;
         label {
-          margin: 1em auto 5px 0 !important;
+          margin: 1em auto 5px 0!important;
         }
         input, textarea {
           padding: 0.8em;
@@ -266,23 +250,8 @@ export default {
           min-height: 8em;
         }
         button {
+          @extend .font_inter;
           padding: 0.8em;
-          font-family:
-            Inter,
-            ui-sans-serif,
-            system-ui,
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Helvetica Neue,
-            Arial,
-            Noto Sans,
-            sans-serif,
-            "Apple Color Emoji",
-            "Segoe UI Emoji",
-            Segoe UI Symbol,
-            "Noto Color Emoji";
           font-size: 1em;
           font-weight: 500;
           line-height: 130%;
@@ -319,9 +288,7 @@ export default {
   footer {
     display: flex;
     position: relative;
-    //left: 0;
-    //bottom: 0;
-    margin: auto auto 0 auto !important;
+    margin: auto auto 0 auto!important;
     background-color: black;
     min-width: 100%;
     height: 90px;
@@ -333,7 +300,7 @@ export default {
       width: fit-content;
       height: 50%;
       padding: 10px;
-      margin: auto auto auto auto !important;
+      margin: auto auto auto auto!important;
       p {
         margin: 4px!important;
         font-size: 0.8em;
@@ -350,7 +317,7 @@ export default {
 }
 .message-sent-notification {
   position: relative;
-  margin: 0.5em auto auto auto !important;
+  margin: 0.5em auto auto auto!important;
   padding: 0.3em;
   border: 2px solid green;
   text-align: center;
@@ -361,7 +328,7 @@ export default {
   transition: 300ms;
 }
 .error-border {
-  border-color: red !important;
+  border-color: red!important;
   box-shadow: 0 0 3px red;
 }
 .error-text {
@@ -382,25 +349,10 @@ export default {
   opacity: 0;
 }
 p.copied-text {
+  @extend .font_inter;
   color: limegreen!important;
   font-size: 0.9em!important;
   font-weight: 300!important;
   margin-left: 5px!important;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica Neue,
-    Arial,
-    Noto Sans,
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    Segoe UI Symbol,
-    "Noto Color Emoji"!important;
 }
 </style>

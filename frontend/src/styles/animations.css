@@ -1,0 +1,65 @@
+/*Used on landingPage*/
+.anim-fade-in-5s1d-0-1 {
+    animation: opacity-fade-in-0-1 5000ms forwards;
+    animation-delay: 1s;
+}
+@keyframes opacity-fade-in-0-1 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.anim-fade-out-3s1d-1-0 {
+    animation: opacity-fade-out-1-0 300ms forwards;
+}
+@keyframes opacity-fade-out-1-0 {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.anim-fade-in-5s3d-0-01 {
+    animation: opacity-fade-in-0-01 5000ms forwards;
+    animation-delay: 3s;
+}
+@keyframes opacity-fade-in-0-01 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+.anim-fade-out-3s-01-0 {
+    animation: opacity-fade-out-01-0 300ms forwards;
+}
+@keyframes opacity-fade-out-03-0 {
+    0% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.anim-bounce-vertical {
+    animation: anim-bounce-vertical 2000ms linear infinite;
+    animation-delay: 6s;
+}
+@keyframes anim-bounce-vertical {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
