@@ -28,25 +28,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "src/styles/theme";
 div {
+  @extend .font_inter;
   text-align: left;
   font-weight: bold;
   font-size: 1.4em;
-  font-family:
-    Inter,
-    ui-sans-serif,system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Helvetica Neue,
-    Arial,
-    Noto Sans,
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    Segoe UI Symbol,
-    "Noto Color Emoji";
 }
 </style>
