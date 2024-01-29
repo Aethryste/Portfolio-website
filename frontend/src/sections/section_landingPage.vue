@@ -6,6 +6,9 @@
         <h1 class="main">Hi, I'm Richard.</h1>
         <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
+      <div class="scroll-hint-bounce anim-bounce-vertical">
+        <div class="scroll-hint" ref="scroll-hint"></div>
+      </div>
     </div>
 
 <!--    <div class="back-layer G_unselectable">-->
@@ -43,31 +46,53 @@ export default {
     },
     header_disable: function () {
       const pageTitle = this.$refs.pageTitle;
+      const scrollHint = this.$refs["scroll-hint"];
       if (pageTitle) {
-        pageTitle.classList.remove('anim-fade-in');
-        pageTitle.classList.add('anim-fade-out');
+        pageTitle.classList.remove('anim-fade-in-5s1d-0-1');
+        pageTitle.classList.add('anim-fade-out-3s1d-1-0');
         pageTitle.addEventListener('animationend', function callback() {
           pageTitle.style.display = 'none';
           pageTitle.removeEventListener('animationend', callback);
         });
       }
+      if (scrollHint) {
+        scrollHint.classList.remove('anim-fade-in-5s3d-0-01');
+        scrollHint.classList.add('anim-fade-out-3s-01-0');
+        scrollHint.addEventListener('animationend', function callback() {
+          scrollHint.style.display = 'none';
+          scrollHint.removeEventListener('animationend', callback);
+        });
+      }
     },
     header_enable: function () {
       const pageTitle = this.$refs.pageTitle;
+      const scrollHint = this.$refs["scroll-hint"];
       if (pageTitle) {
         pageTitle.style.display = '';
-        pageTitle.classList.remove('anim-fade-out');
-        pageTitle.classList.add('anim-fade-in');
+        pageTitle.classList.remove('anim-fade-out-3s1d-1-0');
+        pageTitle.classList.add('anim-fade-in-5s1d-0-1');
         pageTitle.addEventListener('animationend', function callback() {
           pageTitle.removeEventListener('animationend', callback);
+        });
+      }
+      if (scrollHint) {
+        scrollHint.style.display = '';
+        scrollHint.classList.remove('anim-fade-out-3s-01-0');
+        scrollHint.classList.add('anim-fade-in-5s3d-0-01');
+        scrollHint.addEventListener('animationend', function callback() {
+          scrollHint.removeEventListener('animationend', callback);
         });
       }
     }
   },
   mounted () {
     const pageTitle = this.$refs.pageTitle;
+    const scrollHint = this.$refs["scroll-hint"];
     if (pageTitle) {
-      pageTitle.classList.add('anim-fade-in');
+      pageTitle.classList.add('anim-fade-in-5s1d-0-1');
+    }
+    if (scrollHint) {
+      scrollHint.classList.add('anim-fade-in-5s3d-0-01');
     }
   }
 }
@@ -112,6 +137,23 @@ export default {
         transform: translateX(-6px);
       }
     }
+    .scroll-hint-bounce {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: 15px;
+      left: calc(50% - 20px);
+      transform: translateY(0);
+      .scroll-hint {
+        width: 40px;
+        height: 40px;
+        mask: url("../assets/icons-svg/icon-scroll.svg");
+        mask-position: center;
+        mask-size: contain;
+        background-color: ghostwhite;
+        opacity: 0;
+      }
+    }
   }
   .back-layer {
     position: absolute;
@@ -126,7 +168,6 @@ export default {
       top: 0;
       left: 0;
       opacity: 1;
-      //border: 1px solid orange;
     }
   }
 }

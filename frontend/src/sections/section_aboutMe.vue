@@ -1,27 +1,31 @@
 <template>
   <div class="component-wrapper">
     <div class="content-wrapper">
-      <div class="left"> <!-- TODO: Add image to About section. -->
-        <div class="image"></div>
-<!--        <p style="color:black; padding: 1em;">Placeholder for image/profile picture.</p>-->
-      </div>
+      <div class="left">
+        <div class="image"></div></div>
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
           <FunctionTitle class="FunctionTitle"/>
-          <p class="G_paragraph"> <!-- TODO: Clean-up html structure. -->
-            My journey in IT started out with a simple certificate in the basics of Python,
-            here I discovered my burning passion for programming.
-            After this discovery I decided to get my Bachelors Degree in Software Engineering at the <a target="_blank" href="https://www.amsterdamuas.com/about-auas">Amsterdam University of Applied Sciences</a>. (AUAS)
-            <br>
-            <br>
-            At AUAS I learned to work with several programming languages and associated frameworks by working on
-            the full Software Development Life Cycle (SDLC) of my projects. In other words, all the way from concept to final deployment.
-            <br>
-            <br>
-            I'm most comfortable working in the front-end of a product but also have experience with back-end programming, API's, databases, testing, and deployment.
-            <br>
-            <br>
+          <p class="G_paragraph">
+            My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
+            assignments of this course I discovered a strong passion for programming within myself. After this discovery
+            I decided to get my Bachelors Degree in Software Engineering at the
+            <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
+              Amsterdam University of Applied Sciences
+            </a>. (AUAS)
+          </p>
+          <p class="G_paragraph">
+            At AUAS I initially learned about general computer science topics, then several programming languages and
+            associated frameworks, and later full stack web-development by working (Agile) on the full Software
+            Development Life Cycle (SDLC) of our projects.
+          </p>
+          <p class="G_paragraph">
+            Through these experiences I found that I'm most comfortable working in the front-end of a product but I also
+            have some experience with back-end programming, REST API's & web-sockets, databases, testing, and of course
+            deployment.
+          </p>
+          <p class="G_paragraph">
             <span class="G_theme-primary-color-text">My toolkit of preference includes:</span>
           </p>
           <div class="toolbox-icons-group">
@@ -88,7 +92,7 @@ export default {
       .image {
         width: 100%;
         height: 80%;
-        background: url("../assets/ProfileImg.svg") center no-repeat; // PLACEHOLDER
+        background: url("../assets/ProfileImg.svg") center no-repeat;
         background-size: cover;
         margin: auto!important;
       }
