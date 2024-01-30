@@ -1,9 +1,9 @@
 /*Used on landingPage*/
-.anim-fade-in-5s1d-0-1 {
-    animation: opacity-fade-in-0-1 5000ms forwards;
+.anim-pageTitle-fade-in {
+    animation: anim-pageTitle-fade-in 5000ms forwards;
     animation-delay: 1s;
 }
-@keyframes opacity-fade-in-0-1 {
+@keyframes anim-pageTitle-fade-in {
     0% {
         opacity: 0;
     }
@@ -11,10 +11,10 @@
         opacity: 1;
     }
 }
-.anim-fade-out-3s1d-1-0 {
-    animation: opacity-fade-out-1-0 300ms forwards;
+.anim-pageTitle-fade-out {
+    animation: anim-pageTitle-fade-out 300ms forwards;
 }
-@keyframes opacity-fade-out-1-0 {
+@keyframes anim-pageTitle-fade-out {
     0% {
         opacity: 1;
     }
@@ -22,11 +22,11 @@
         opacity: 0;
     }
 }
-.anim-fade-in-5s3d-0-01 {
-    animation: opacity-fade-in-0-01 5000ms forwards;
+.anim-scrollHint-fade-in {
+    animation: anim-scrollHint-fade-in 5000ms forwards;
     animation-delay: 3s;
 }
-@keyframes opacity-fade-in-0-01 {
+@keyframes anim-scrollHint-fade-in {
     0% {
         opacity: 0;
     }
@@ -34,10 +34,10 @@
         opacity: 0.1;
     }
 }
-.anim-fade-out-3s-01-0 {
-    animation: opacity-fade-out-01-0 300ms forwards;
+.anim-scrollHint-fade-out {
+    animation: anim-scrollHint-fade-out 300ms forwards;
 }
-@keyframes opacity-fade-out-03-0 {
+@keyframes anim-scrollHint-fade-out {
     0% {
         opacity: 0.1;
     }
