@@ -50,11 +50,7 @@ export default {
   },
   watch: {
     S1active(newValue) {
-      if (newValue && this.currentSection === 0) {
-        this.isNavigationVisible = false;
-      } else {
-        this.isNavigationVisible = true;
-      }
+      this.isNavigationVisible = !(newValue && this.currentSection === 0);
     },
     currentSection() {
       if (this.currentSection === 0) {
