@@ -18,10 +18,17 @@
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
           <FunctionTitle class="FunctionTitle"/>
-          <p class="G_paragraph">
+          <p class="G_paragraph" v-if="this.windowW > 500">
             My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
             assignments of this course I discovered a strong passion for programming within myself. After this discovery
             I decided to get my Bachelors Degree in Software Engineering at the
+            <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
+              Amsterdam University of Applied Sciences
+            </a>. (AUAS)
+          </p>
+          <p class="G_paragraph" v-else>
+            Gaining a certificate in Python made me discover a strong passion for programming within myself, this
+            discovery led to decide to study Software Engineering (Bachelor) at the
             <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
               Amsterdam University of Applied Sciences
             </a>. (AUAS)
@@ -64,7 +71,6 @@ export default {
   },
   data() {
     return {
-      windowH: window.innerHeight,
       windowW: window.innerWidth
     }
   },
@@ -79,10 +85,14 @@ export default {
         console.error('Error fetching slideshow data.');
       };
       ajax.send();
+    },
+    handleResize() {
+      this.windowW = window.innerWidth;
     }
   },
   created() {
     this.fetchData();
+    window.addEventListener('resize', this.handleResize);
   }
 }
 </script>
@@ -120,7 +130,7 @@ export default {
       height: 100%;
       .about-block {
         width: 70%;
-        margin: auto auto auto 2em !important;
+        margin: auto auto auto 2em!important;
         .FunctionTitle {
           padding: 1em 0 0.2em 0;
         }
@@ -135,20 +145,19 @@ export default {
   }
 }
 .toolbox-icons-group {
-
   &-big {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: fit-content;
-    margin: 20px 0 0 0 !important;
+    margin: 20px 0 0 0!important;
     justify-content: space-evenly;
     .toolbox-icon {
       width: 60px;
       min-width: 60px;
       height: 60px;
       min-height: 60px;
-      margin: 5px auto !important;
+      margin: 5px auto!important;
       transition: 300ms;
       &:hover {
         transform: translateY(-3px) scale(110%);
@@ -157,18 +166,17 @@ export default {
   }
   &-small {
     display: none;
-    //display: flex;
     flex-direction: row;
     width: 95%;
     height: fit-content;
-    margin: -15% auto auto auto !important;
+    margin: -15% auto auto auto!important;
     justify-content: space-evenly;
     .toolbox-icon {
       width: 50px;
       min-width: 50px;
       height: 50px;
       min-height: 50px;
-      margin: 5px auto !important;
+      margin: 5px auto!important;
       transition: 300ms;
       &:hover {
         transform: translateY(-3px) scale(110%);
@@ -176,48 +184,12 @@ export default {
     }
   }
 }
-#icon-html {
-  background: url("../assets/icons-svg/icon-html.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-css {
-  background: url("../assets/icons-svg/icon-css.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-js {
-  background: url("../assets/icons-svg/icon-js.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-vue {
-  background: url("../assets/icons-svg/icon-vue.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-java {
-  background: url("../assets/icons-svg/icon-java.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-nodejs {
-  background: url("../assets/icons-svg/icon-nodejs.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-sql {
-  background: url("../assets/icons-svg/icon-sql.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-python {
-  background: url("../assets/icons-svg/icon-python.svg") center no-repeat;
-  background-size: cover;
-}
 @media screen and (max-width: 1450px) {
-  .toolbox-icons-group {
-    &-big {
-      .toolbox-icon {
-        width: 50px;
-        min-width: 50px;
-        height: 50px;
-        min-height: 50px;
-      }
-    }
+  .toolbox-icons-group-big .toolbox-icon {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    min-height: 50px;
   }
 }
 @media screen and (max-width: 1260px) {
@@ -228,15 +200,11 @@ export default {
   #icon-css, #icon-js {
     display: none;
   }
-  .toolbox-icons-group {
-    &-big {
-      .toolbox-icon {
-        width: 60px;
-        min-width: 60px;
-        height: 60px;
-        min-height: 60px;
-      }
-    }
+  .toolbox-icons-group-big .toolbox-icon {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    min-height: 60px;
   }
 }
 @media screen and (max-width: 1190px) {
@@ -245,15 +213,11 @@ export default {
   }
 }
 @media screen and (max-width: 1100px) {
-  .toolbox-icons-group {
-    &-big {
-      .toolbox-icon {
-        width: 50px;
-        min-width: 50px;
-        height: 50px;
-        min-height: 50px;
-      }
-    }
+  .toolbox-icons-group-big .toolbox-icon {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    min-height: 50px;
   }
 }
 @media screen and (max-width: 1000px) {
@@ -265,104 +229,76 @@ export default {
       display: flex;
     }
   }
-  .component-wrapper{
-    .content-wrapper {
-      .left {
-        flex-wrap: wrap;
-        align-items: flex-start;
-        .image {
-          height: 60%;
-          //background-size: 150%;
-          margin-top: 18%!important;
-        }
-      }
+  .component-wrapper .content-wrapper .left {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    .image {
+      height: 60%;
+      margin-top: 18%!important;
     }
   }
 }
 @media screen and (max-width: 950px) {
-  .component-wrapper {
-    .content-wrapper {
+  .component-wrapper .content-wrapper {
+    flex-direction: column;
+    height: 100%;
+    .left {
+      margin: auto auto 0 auto!important;
+      width: 80%;
+      height: fit-content;
       flex-direction: column;
-      height: 100%;
-      .left {
-        margin: auto auto 0 auto!important;
-        width: 80%;
-        height: fit-content;
-        flex-direction: column;
-        .image {
-          height: 300px;
-          width: 100%;
-          margin: auto!important;
-        }
-        .toolbox-icons-group-small {
-          margin: auto auto 0 auto!important;
-          width: 100%;
-          padding-top: 10px;
-          padding-bottom: 10px;
-        }
+      .image {
+        height: 300px;
+        width: 100%;
+        margin: auto!important;
       }
-      .right {
-        margin: 0 auto auto auto!important;
-        width: 80%;
-        height: fit-content;
-        .about-block {
-          width: 100%;
-          margin: auto!important;
-        }
+      .toolbox-icons-group-small {
+        margin: auto auto 0 auto!important;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+    .right {
+      margin: 0 auto auto auto!important;
+      width: 80%;
+      height: fit-content;
+      .about-block {
+        width: 100%;
+        margin: auto!important;
       }
     }
   }
 }
 @media screen and (max-width: 700px) {
-  .component-wrapper {
-    .content-wrapper {
-      .left {
-        .image {
-          max-height: 250px;
-        }
-      }
-    }
+  .component-wrapper .content-wrapper .left .image {
+    max-height: 250px;
   }
 }
 @media screen and (max-width: 600px) {
-  .component-wrapper {
-    .content-wrapper {
-      max-width: 90%;
-      margin: auto !important;
+  .component-wrapper .content-wrapper {
+    max-width: 90%;
+    margin: auto!important;
+    .left .image {
+      background-size: 140%;
     }
   }
 }
 @media screen and (max-width: 500px) {
-  .component-wrapper {
-    .content-wrapper {
-      .left {
-        .image {
-          max-height: 180px;
-        }
-        .toolbox-icons-group-small {
-          .toolbox-icon {
-            width: 40px;
-            min-width: 40px;
-            height: 40px;
-            min-height: 40px;
-          }
-        }
+  .component-wrapper .content-wrapper {
+    .left {
+      .image {
+        max-height: 180px;
       }
-      .right {
-        .about-block {
-          .G_sectionHeader {
-            font-size: 1em;
-          }
-        }
+      .toolbox-icons-group-small .toolbox-icon {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        min-height: 40px;
       }
     }
-  }
-}
-@media screen and (max-width: 400px) {
-  .component-wrapper {
-    .content-wrapper {
-      //max-width: 80%;
-      //margin: auto !important;
+    .right .about-block .G_sectionHeader {
+      font-size: 1em;
     }
   }
 }
