@@ -197,4 +197,9 @@ button:hover {
   margin: 0 1em 0 0 !important;
   transition: 300ms;
 }
+@media screen and (max-width: 600px) {
+  .navigation {
+    right: 0;
+  }
+}
 </style>

@@ -78,13 +78,17 @@ export default {
 .blink {
   animation: blinker 1s steps(1, end) infinite;
 }
-
 @keyframes blinker {
   50% {
     opacity: 0;
   }
   100% {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 1.5em!important;
   }
 }
 </style>

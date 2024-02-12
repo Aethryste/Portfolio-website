@@ -2,7 +2,18 @@
   <div class="component-wrapper">
     <div class="content-wrapper">
       <div class="left">
-        <div class="image"></div></div>
+        <div class="image"></div>
+        <div class="toolbox-icons-group-small">
+          <div class="toolbox-icon" id="icon-html"></div>
+          <div class="toolbox-icon" id="icon-css"></div>
+          <div class="toolbox-icon" id="icon-js"></div>
+          <div class="toolbox-icon" id="icon-vue"></div>
+          <div class="toolbox-icon" id="icon-java"></div>
+          <div class="toolbox-icon" id="icon-nodejs"></div>
+          <div class="toolbox-icon" id="icon-sql"></div>
+          <div class="toolbox-icon" id="icon-python"></div>
+        </div>
+      </div>
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
@@ -28,7 +39,7 @@
           <p class="G_paragraph">
             <span class="G_theme-primary-color-text">My toolkit of preference includes:</span>
           </p>
-          <div class="toolbox-icons-group">
+          <div class="toolbox-icons-group-big">
             <div class="toolbox-icon" id="icon-html"></div>
             <div class="toolbox-icon" id="icon-css"></div>
             <div class="toolbox-icon" id="icon-js"></div>
@@ -50,6 +61,12 @@ export default {
   name: 'section_aboutMe',
   components: {
     FunctionTitle,
+  },
+  data() {
+    return {
+      windowH: window.innerHeight,
+      windowW: window.innerWidth
+    }
   },
   methods: {
     fetchData() {
@@ -113,56 +130,239 @@ export default {
             color: white;
           }
         }
-        .toolbox-icons-group {
-          display: flex;
-          flex-direction: row;
+      }
+    }
+  }
+}
+.toolbox-icons-group {
+
+  &-big {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    margin: 20px 0 0 0 !important;
+    justify-content: space-evenly;
+    .toolbox-icon {
+      width: 60px;
+      min-width: 60px;
+      height: 60px;
+      min-height: 60px;
+      margin: 5px auto !important;
+      transition: 300ms;
+      &:hover {
+        transform: translateY(-3px) scale(110%);
+      }
+    }
+  }
+  &-small {
+    display: none;
+    //display: flex;
+    flex-direction: row;
+    width: 95%;
+    height: fit-content;
+    margin: -15% auto auto auto !important;
+    justify-content: space-evenly;
+    .toolbox-icon {
+      width: 50px;
+      min-width: 50px;
+      height: 50px;
+      min-height: 50px;
+      margin: 5px auto !important;
+      transition: 300ms;
+      &:hover {
+        transform: translateY(-3px) scale(110%);
+      }
+    }
+  }
+}
+#icon-html {
+  background: url("../assets/icons-svg/icon-html.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-css {
+  background: url("../assets/icons-svg/icon-css.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-js {
+  background: url("../assets/icons-svg/icon-js.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-vue {
+  background: url("../assets/icons-svg/icon-vue.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-java {
+  background: url("../assets/icons-svg/icon-java.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-nodejs {
+  background: url("../assets/icons-svg/icon-nodejs.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-sql {
+  background: url("../assets/icons-svg/icon-sql.svg") center no-repeat;
+  background-size: cover;
+}
+#icon-python {
+  background: url("../assets/icons-svg/icon-python.svg") center no-repeat;
+  background-size: cover;
+}
+@media screen and (max-width: 1450px) {
+  .toolbox-icons-group {
+    &-big {
+      .toolbox-icon {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        min-height: 50px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1260px) {
+  #icon-html {
+    background: url("../assets/icons-svg/icon-htmlcssjs.svg") center no-repeat;
+    background-size: cover;
+  }
+  #icon-css, #icon-js {
+    display: none;
+  }
+  .toolbox-icons-group {
+    &-big {
+      .toolbox-icon {
+        width: 60px;
+        min-width: 60px;
+        height: 60px;
+        min-height: 60px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1190px) {
+  .G_theme-primary-color-text {
+    display: none;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .toolbox-icons-group {
+    &-big {
+      .toolbox-icon {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        min-height: 50px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1000px) {
+  .toolbox-icons-group {
+    &-big {
+      display: none;
+    }
+    &-small {
+      display: flex;
+    }
+  }
+  .component-wrapper{
+    .content-wrapper {
+      .left {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        .image {
+          height: 60%;
+          //background-size: 150%;
+          margin-top: 18%!important;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 950px) {
+  .component-wrapper {
+    .content-wrapper {
+      flex-direction: column;
+      height: 100%;
+      .left {
+        margin: auto auto 0 auto!important;
+        width: 80%;
+        height: fit-content;
+        flex-direction: column;
+        .image {
+          height: 300px;
           width: 100%;
-          height: 100px;
-          margin: 20px 0 0 0 !important;
-          justify-content: space-evenly;
+          margin: auto!important;
+        }
+        .toolbox-icons-group-small {
+          margin: auto auto 0 auto!important;
+          width: 100%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+      }
+      .right {
+        margin: 0 auto auto auto!important;
+        width: 80%;
+        height: fit-content;
+        .about-block {
+          width: 100%;
+          margin: auto!important;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .component-wrapper {
+    .content-wrapper {
+      .left {
+        .image {
+          max-height: 250px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .component-wrapper {
+    .content-wrapper {
+      max-width: 90%;
+      margin: auto !important;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .component-wrapper {
+    .content-wrapper {
+      .left {
+        .image {
+          max-height: 180px;
+        }
+        .toolbox-icons-group-small {
           .toolbox-icon {
-            width: 60px;
-            height: 60px;
-            margin: auto !important;
-            transition: 300ms;
-            &:hover {
-              transform: translateY(-3px) scale(110%);
-            }
-          }
-          #icon-html {
-            background: url("../assets/icons-svg/icon-html.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-css {
-            background: url("../assets/icons-svg/icon-css.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-js {
-            background: url("../assets/icons-svg/icon-js.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-vue {
-            background: url("../assets/icons-svg/icon-vue.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-java {
-            background: url("../assets/icons-svg/icon-java.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-nodejs {
-            background: url("../assets/icons-svg/icon-nodejs.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-sql {
-            background: url("../assets/icons-svg/icon-sql.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-python {
-            background: url("../assets/icons-svg/icon-python.svg") center no-repeat;
-            background-size: cover;
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
+            min-height: 40px;
           }
         }
       }
+      .right {
+        .about-block {
+          .G_sectionHeader {
+            font-size: 1em;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 400px) {
+  .component-wrapper {
+    .content-wrapper {
+      //max-width: 80%;
+      //margin: auto !important;
     }
   }
 }
