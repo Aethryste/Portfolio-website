@@ -17,7 +17,7 @@
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
-          <FunctionTitle class="FunctionTitle"/>
+          <comp_typingTitle class="FunctionTitle"/>
           <p class="G_paragraph" v-if="this.windowW > 500">
             My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
             assignments of this course I discovered a strong passion for programming within myself. After this discovery
@@ -63,11 +63,11 @@
 </template>
 
 <script>
-import FunctionTitle from '@/components/subcomponent_FunctionTitle.vue';
+import comp_typingTitle from '@/components/comp_typingTitle.vue';
 export default {
   name: 'section_aboutMe',
   components: {
-    FunctionTitle,
+    comp_typingTitle,
   },
   data() {
     return {

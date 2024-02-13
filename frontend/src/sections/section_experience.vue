@@ -1,57 +1,235 @@
 <template>
-  <slideshowTimeline id="slideshowTimeline"/>
+  <div class="component-wrapper">
+    <div class="timeline">
+      <swiper
+        direction="vertical"
+        :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+        :speed="800"
+        ref="mySwiper"
+      >
+        <swiper-slide
+          v-for="slide in slides"
+          :key="slide.year"
+          :class="{ 'swiper-slide-active': slide.active }"
+          :style="{ backgroundImage: generateBackgroundImage(slide) }"
+          :data-year="slide.year"
+        >
+          <div class="swiper-slide-content G_unselectable">
+            <div class="slide-description">
+              <span class="timeline-year">{{ slide.year }}</span>
+              <h4 class="timeline-title">{{ slide.title }}</h4>
+              <p class="timeline-text">{{ slide.body }}</p>
+            </div>
+          </div>
+        </swiper-slide>
+        <div class="navigation-buttons">
+          <div id="swiper-button-prev" @click="prevSlide"></div>
+          <div id="navigation-deco-top"></div>
+          <div id="year-list">
+          <span
+            v-for="slide in slides"
+            :key="slide.year"
+            @click="goToSlide(slide.year)"
+          >
+            {{ slide.year }}
+          </span>
+          </div>
+          <div id="navigation-deco-bot"></div>
+          <div id="swiper-button-next" @click="nextSlide"></div>
+        </div>
+      </swiper>
+    </div>
+  </div>
 </template>
 
 <script>
-import slideshowTimeline from '@/components/SlideshowTimeline'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
 
 export default {
   name: 'section_experience',
   components: {
-    slideshowTimeline
+    Swiper,
+    SwiperSlide,
   },
   data() {
     return {
-      timelineEntries: [
-        {
-          date: "2022-06-01",
-          title: "Danone - IT Service Desk Agent (L1)",
-          subtitle: "May 2022 - Jan 2022",
-          description: "First point-of-contact for end-users regarding IT incidents, requests and questions."
-        },
-        {
-          date: "2022-06-01",
-          title: "Total Energies - IT Service Desk Agent (L1)",
-          subtitle: "Feb 2022 - May 2022",
-          description: "First point-of-contact for end-users regarding IT incidents, requests and questions."
-        },
-        {
-          date: "2022-03-01",
-          title: "Mondial Movers - Mover/IT-Mover",
-          subtitle: "Aug 2018 - Feb 2022",
-          description: "My position here provided me with close to four consecutive years of experience in customer contact, care and satisfaction."
-        },
-        {
-          date: "2018-09-01",
-          title: "Grafisch Lyceum Utrecht - MBO4",
-          subtitle: "2014 - 2018",
-          description: "Studied GameArt & Development, graduated. (Comparable to associate's degree)"
-        },
-        {
-          date: "2017-06-01",
-          title: "Novility - 3D Artist (Generalist & Technical Artist)",
-          subtitle: "Jan 2017 - Dec 2017",
-          description: "Here I have spend most of my time working on props along with some rigging & animation-fixing tasks."
-        }
-      ].reverse()
+      slides: []
     };
+  },
+  methods: {
+    fetchData() {
+      let ajax = new XMLHttpRequest()
+      ajax.open('GET', '/images/timeline')
+      ajax.onload = () => {
+        this.slides = JSON.parse(ajax.responseText);
+      };
+      ajax.onerror = () => {
+        console.error('Error fetching slideshow data.');
+      };
+      ajax.send();
+    },
+    generateBackgroundImage(slide) {
+      if (slide.content && slide.type) {
+        const base64Image = `data:image/${slide.type};base64,${slide.content}`;
+        return `url(${base64Image})`;
+      } else { return ''; }
+    },
+    goToSlide(year) {
+      const index = this.slides.findIndex(slide => slide.year === year);
+      this.$refs.mySwiper.$el.swiper.slideTo(index);
+    },
+    nextSlide() {
+      this.$refs.mySwiper.$el.swiper.slideNext();
+    },
+    prevSlide() {
+      this.$refs.mySwiper.$el.swiper.slidePrev();
+    }
+  },
+  created() {
+    this.fetchData();
   }
 }
 </script>
 
 <style scoped lang="scss">
-#slideshowTimeline {
+@import "../styles/theme";
+.component-wrapper {
   width: 100%;
   height: 100%;
+  .timeline {
+    width: 100%;
+    height: 100%;
+    .swiper {
+      height: 100%;
+      .navigation-buttons {
+        z-index: 10;
+        position: absolute;
+        height: 95%;
+        right: 130px;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        display: flex;
+        flex-direction: column;
+        #year-list {
+          position: relative;
+          width: fit-content;
+          height: fit-content;
+          display: flex;
+          flex-direction: column;
+          span {
+            margin: auto!important;
+            padding: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: $theme-primary-color;
+            text-shadow: 3px 4px 7px rgba(0,0,0,0.8);
+            opacity: 0.8;
+            cursor: pointer;
+            transition: 0.3s;
+            &:hover {
+              color: $general-text-color;
+              opacity: 1;
+            }
+          }
+        }
+        #swiper-button-prev, #swiper-button-next, #navigation-deco-top, #navigation-deco-bot {
+          position: relative;
+          display: flex;
+          width: 30px;
+        }
+        #swiper-button-prev, #swiper-button-next {
+          height: 30px;
+          margin: auto!important;
+          mask: url("../assets/icons-svg/icon-arrow.svg");
+          mask-size: cover;
+          background-color: $theme-primary-color;
+          cursor: pointer;
+          transform: scaleY(70%);
+          filter: none;
+          transition: 300ms;
+          &:hover {
+            background-color: white;
+          }
+        }
+        #swiper-button-next {
+          rotate: 180deg;
+        }
+        #navigation-deco-top, #navigation-deco-bot {
+          mask: url("../assets/brushStroke.svg");
+          mask-size: cover;
+          mask-repeat: no-repeat;
+          mask-position: center;
+          background-color: $theme-primary-color;
+          height: 15%;
+          transform: scaleX(50%);
+        }
+        #navigation-deco-top {
+          margin: auto auto 10px auto!important;
+        }
+        #navigation-deco-bot {
+          rotate: 180deg;
+          margin: 10px auto auto auto!important;
+        }
+      }
+    }
+    .swiper-slide {
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        right: -115%;
+        bottom: -10%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(black, .7);
+        box-shadow: -230px 0 150px 60vw rgba(black, .7);
+        border-radius: 100%;
+      }
+      &-content {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        width: 370px;
+        height: fit-content;
+        transform: translate(-50%,-50%);
+        text-align: right;
+        z-index: 15;
+      }
+      .timeline-year, .timeline-title, .timeline-text {
+        transform: translate3d(20px, 0, 0);
+        opacity: 0;
+      }
+      .timeline-year {
+        display: block;
+        margin-bottom: 50px;
+        color: $theme-primary-color;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 42px;
+      }
+      .timeline-title {
+        margin: 0 0 30px;
+        font-weight: 800;
+        font-size: 34px;
+      }
+      .timeline-text {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      &-active {
+        .timeline-year, .timeline-title, .timeline-text {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+          transition: 1100ms ease .4s;
+        }
+      }
+    }
+  }
 }
 </style>

@@ -12,7 +12,7 @@
 import * as THREE from 'three';
 
 export default {
-  name: 'section_landingPage',
+  name: 'comp_frontpageThreeJs',
 // <!--  data() {-->
 // <!--    return {-->
 // <!--      // fragmentShader: null,-->

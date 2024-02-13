@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import frontpage_threeJs from '@/components/frontpage_threejs.vue'
+import comp_frontpageThreeJs from '@/components/comp_frontpageThreeJs.vue'
 export default {
   name: 'section_landingPage',
   components: {
-    // frontpage_threeJs
+    // comp_frontpageThreeJs
   },
   props: {
     isActive: Boolean

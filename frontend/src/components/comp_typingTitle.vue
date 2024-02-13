@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "FunctionTitle",
+  name: "comp_typingTitle",
   props: {
     playAnimation: {
       type: Boolean,
