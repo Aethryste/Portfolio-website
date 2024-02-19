@@ -75,14 +75,14 @@ export default {
     };
   },
   methods: {
-    redirect(path, newTab) { // TODO: Move function to global script.
+    redirect(path, newTab) {
       if (newTab) {
         window.open(
           path, '_blank'
         );
       }
     },
-    copyToClipboard(id) { // TODO: Move function to global script.
+    copyToClipboard(id) {
       let copyText = document.getElementById(id);
       navigator.clipboard.writeText(copyText.textContent);
       this.copied = true;
@@ -125,7 +125,6 @@ export default {
         ajax.send(obj);
         this.messageSent = true;
 
-        // Is the below needed?
         setTimeout(() => {
           this.messageSent = false;
         }, 50000);
@@ -354,5 +353,68 @@ p.copied-text {
   font-size: 0.9em!important;
   font-weight: 300!important;
   margin-left: 5px!important;
+}
+@media screen and (max-width: 1000px) {
+  .component-wrapper .content-wrapper .left .content {
+    h1 {
+      font-size: 1.5em;
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .component-wrapper .content-wrapper {
+    flex-direction: column;
+    width: 80%;
+    height: calc(100% - 90px);
+    .left, .right {
+      margin: auto!important;
+      width: 100%;
+      height: fit-content;
+      text-align: center;
+    }
+    .left {
+      margin: auto auto 0 auto!important;
+      .content {
+        .email {
+          display: none;
+        }
+        .icons-group {
+          margin: auto!important;
+          justify-content: center;
+          height: fit-content;
+          .icon {
+            margin: 0 auto 0 auto!important;
+          }
+        }
+      }
+    }
+    .right {
+      margin: 0 auto auto auto!important;
+      .form-box {
+        margin: 0 auto auto auto!important;
+        label {
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 550px) {
+  .component-wrapper .content-wrapper .left .content {
+    h1 {
+      font-size: 1.2em;
+    }
+    p {
+      font-size: 0.7em;
+    }
+  }
+  .component-wrapper .content-wrapper .right .form-box {
+    label {
+      font-size: 0.8em;
+    }
+    button {
+      font-size: 0.8em;
+    }
+  }
 }
 </style>
