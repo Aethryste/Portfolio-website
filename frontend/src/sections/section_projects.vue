@@ -106,6 +106,30 @@ export default {
   }
 }
 @media screen and (max-width: 700px) {
-  //Scale down text and buttons.
+  .component-wrapper .content-wrapper .left .content-box, .component-wrapper .content-wrapper .right .content-box {
+    width: 80%;
+    height: fit-content;
+    text-align: center;
+    margin: auto!important;
+    h1 {
+      font-size: 2em;
+      margin-top: 0!important;
+    }
+    p {
+      font-size: 1.3em;
+    }
+    button.font_inter {
+      width: 90%;
+      margin: auto!important;
+      padding: 0;
+    }
+  }
+}
+@media screen and (max-width: 440px) {
+  .component-wrapper .content-wrapper .left .content-box, .component-wrapper .content-wrapper .right .content-box {
+    p {
+      font-size: 1.1em;
+    }
+  }
 }
 </style>
