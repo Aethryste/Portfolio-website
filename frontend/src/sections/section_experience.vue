@@ -232,4 +232,49 @@ export default {
     }
   }
 }
+@media screen and (max-width: 1200px) {
+  .component-wrapper .timeline .swiper {
+    .swiper-slide-content {
+      transform: translate(-30%,-50%);
+    }
+    .navigation-buttons {
+      right: 50px;
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .component-wrapper .timeline .swiper {
+    .swiper-slide-content {
+      transform: translate(0,0);
+      top: 0;
+      left: 0;
+      position: relative;
+      margin: calc(50% - 100px) auto auto auto!important;
+      text-align: center;
+      width: 280px;
+      height: 200px;
+    }
+    .navigation-buttons {
+      background: rgba(255,255,255,0);
+      box-shadow: 0 0 10px 5px rgb(30,30,30);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      flex-direction: column;
+      height: fit-content;
+      width: 100px;
+      transform: translate(0,0);
+      left: 0;
+      bottom: 50px;
+      margin: auto auto 10% calc(50% - 50px)!important;
+      justify-content: center;
+      #year-list {
+        flex-direction: column;
+        margin: auto!important;
+      }
+      #navigation-deco-top, #navigation-deco-bot {
+        opacity: 0;
+      }
+    }
+  }
+}
 </style>
