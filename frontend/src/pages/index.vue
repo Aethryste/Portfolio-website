@@ -91,6 +91,26 @@ export default {
     }
   },
   methods: {
+    handleTouchStart(event) {
+      this.touchStartY = event.touches[0].clientY;
+    },
+    handleTouchMove(event) {
+      event.preventDefault();
+      const touchEndY = event.touches[0].clientY;
+      const touchDelta = this.touchStartY - touchEndY;
+      const sensitivity = window.innerHeight / 4;
+
+      if (touchDelta > sensitivity) {
+        this.scrollDown();
+        this.touchStartY = touchEndY;
+      } else if (touchDelta < -sensitivity) {
+        this.scrollUp();
+        this.touchStartY = touchEndY;
+      }
+    },
+    handleTouchEnd() {
+      // Implement snapping behavior if needed
+    },
     navigateToSection(sectionIndex) {
       this.currentSection = sectionIndex;
       this.scrollToSection();
@@ -140,11 +160,22 @@ export default {
     }
   },
   mounted() {
+    // Handle mouse scroll for desktops
     this.$refs.scrollContainer.addEventListener('wheel', this.handleScroll, { passive: false });
+    // Handle touch events for mobile devices
+    this.$refs.scrollContainer.addEventListener('touchstart', this.handleTouchStart, { passive: false });
+    this.$refs.scrollContainer.addEventListener('touchmove', this.handleTouchMove, { passive: false });
+    this.$refs.scrollContainer.addEventListener('touchend', this.handleTouchEnd, { passive: false });
+
     this.isNavigationVisible = false;
   },
   beforeUnmount() {
+    // Remove desktop scroll listener
     this.$refs.scrollContainer.removeEventListener('wheel', this.handleScroll);
+    // Remove touch event listeners
+    this.$refs.scrollContainer.removeEventListener('touchstart', this.handleTouchStart);
+    this.$refs.scrollContainer.removeEventListener('touchmove', this.handleTouchMove);
+    this.$refs.scrollContainer.removeEventListener('touchend', this.handleTouchEnd);
   }
 };
 </script>
