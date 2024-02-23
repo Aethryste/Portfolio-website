@@ -18,31 +18,53 @@
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
           <comp_typingTitle class="FunctionTitle"/>
-          <p class="G_paragraph" v-if="this.windowW > 500">
-            My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
-            assignments of this course I discovered a strong passion for programming within myself. After this discovery
-            I decided to get my Bachelors Degree in Software Engineering at the
-            <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
-              Amsterdam University of Applied Sciences
-            </a>. (AUAS)
-          </p>
-          <p class="G_paragraph" v-else>
-            Gaining a certificate in Python made me discover a strong passion for programming within myself, this
-            discovery led to decide to study Software Engineering (Bachelor) at the
-            <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
-              Amsterdam University of Applied Sciences
-            </a>. (AUAS)
-          </p>
-          <p class="G_paragraph">
-            At AUAS I initially learned about general computer science topics, then several programming languages and
-            associated frameworks, and later full stack web-development by working (Agile) on the full Software
-            Development Life Cycle (SDLC) of our projects.
-          </p>
-          <p class="G_paragraph">
-            Through these experiences I found that I'm most comfortable working in the front-end of a product but I also
-            have some experience with back-end programming, REST API's & web-sockets, databases, testing, and of course
-            deployment.
-          </p>
+
+          <div v-if="this.windowW > 500">
+            <p class="G_paragraph">
+              My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
+              assignments of this course I discovered a strong passion for programming within myself. After this discovery
+              I decided to get my Bachelors Degree in Software Engineering at the
+              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
+                Amsterdam University of Applied Sciences
+              </a>. (AUAS)
+            </p>
+            <p class="G_paragraph">
+              Gaining a certificate in Python made me discover a strong passion for programming within myself, this
+              discovery led to decide to study Software Engineering (Bachelor) at the
+              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
+                Amsterdam University of Applied Sciences
+              </a>. (AUAS)
+            </p>
+            <p class="G_paragraph">
+              At AUAS I initially learned about general computer science topics, then several programming languages and
+              associated frameworks, and later full stack web-development by working (Agile) on the full Software
+              Development Life Cycle (SDLC) of our projects.
+            </p>
+            <p class="G_paragraph">
+              Through these experiences I found that I'm most comfortable working in the front-end of a product but I also
+              have some experience with back-end programming, REST API's & web-sockets, databases, testing, and of course
+              deployment.
+            </p>
+          </div>
+
+          <div v-else>
+            <p class="G_paragraph">
+              Hey there! I'm Richard, a driven student and aspiring software engineer on a mission to translate code into
+              enhanced user experiences. Currently pursuing a Bachelor's in Software Engineering at the
+              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
+                Amsterdam University of Applied Sciences.
+              </a>
+            </p>
+            <p class="G_paragraph">
+              I'm especially passionate about front-end/web -development but aspire to work Full-stack.
+            </p>
+            <p class="G_paragraph">
+              My journey into programming began with a Python certificate and has evolved to encompass several other
+              languages. I've also got experience with most recurrent libraries and associated frameworks such as VueJs
+              and Springboot.
+            </p>
+          </div>
+
           <p class="G_paragraph">
             <span class="G_theme-primary-color-text">My toolkit of preference includes:</span>
           </p>
