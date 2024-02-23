@@ -122,6 +122,7 @@ export default {
         background: url("../assets/ProfileImg.svg") center no-repeat;
         background-size: cover;
         margin: auto!important;
+        box-shadow: rgba(0, 0, 0, 0.3) 0 3px 8px;
       }
     }
     .right {
@@ -290,16 +291,26 @@ export default {
       .image {
         max-height: 180px;
       }
-      .toolbox-icons-group-small .toolbox-icon {
-        width: 40px;
-        min-width: 40px;
-        height: 40px;
-        min-height: 40px;
+      .toolbox-icons-group-small {
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        margin-bottom: 1em!important;
+        .toolbox-icon {
+          width: 40px;
+          min-width: 40px;
+          height: 40px;
+          min-height: 40px;
+        }
       }
     }
     .right .about-block .G_sectionHeader {
-      font-size: 1em;
+      font-size: 1.1em;
     }
+  }
+}
+@media screen and (max-width: 400px) {
+  .component-wrapper .content-wrapper .left .image {
+    background-size: 200%;
+    background-position: 50% 40%;
   }
 }
 </style>
