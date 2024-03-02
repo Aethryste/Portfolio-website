@@ -1,7 +1,7 @@
 class Form {
-  constructor(name, from, content) {
-    this.name = name;
-    this.from = from;
+  constructor(senderAddress, senderName, content) {
+    this.senderAddress = senderAddress;
+    this.senderName = senderName;
     this.content = content;
   }
 }

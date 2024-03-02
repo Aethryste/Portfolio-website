@@ -71,7 +71,9 @@ export default {
       messageErrorMsg: '',
       messageSent: false,
       copied: false,
-      form: null
+      form: null,
+      lastSubmissionTime: 0, // Store the timestamp of the last form submission
+      throttleDuration: 60000, // Throttle duration in milliseconds (1 minute)
     };
   },
   methods: {
@@ -108,17 +110,25 @@ export default {
       }
     },
     sendMessage() {
+      const currentTime = Date.now();
+      // // Check if the last submission was within the throttle duration
+      // if (currentTime - this.lastSubmissionTime < this.throttleDuration) {
+      //   console.log('Please wait before submitting again.');
+      //   return;
+      // }
       this.checkInput('name');
       this.checkInput('email');
       this.checkInput('message');
       if (!this.nameErrorMsg && !this.emailErrorMsg && !this.messageErrorMsg) {
-        let obj = JSON.stringify(new Form(this.nameValue, this.emailValue, this.messageValue));
+        let obj = JSON.stringify(new Form(this.emailValue, this.nameValue, this.messageValue));
 
         let ajax = new XMLHttpRequest()
         ajax.open('POST', '/contact/form')
 
         ajax.onreadystatechange = () => {
           if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
+            // Update the last submission time
+            this.lastSubmissionTime = currentTime;
             // TODO: Request finished. Do processing here.
           }
         };
