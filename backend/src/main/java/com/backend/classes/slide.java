@@ -1,4 +1,4 @@
-package com.example.backend.classes;
+package com.backend.classes;
 
 public class slide extends file {
     private final long year;

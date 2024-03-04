@@ -1,14 +1,14 @@
-package com.example.backend.services;
+package com.backend.services;
 
-import com.example.backend.classes.slide;
-import com.example.backend.classes.imageEditor;
+import com.backend.classes.imageEditor;
+import com.backend.classes.slide;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
 public class slideService {
 
-    private static final imageEditor imageEditor = new imageEditor();
+    private static final com.backend.classes.imageEditor imageEditor = new imageEditor();
     private static ArrayList<slide> allSlides = new ArrayList<>(5);
 
     public slideService() {}

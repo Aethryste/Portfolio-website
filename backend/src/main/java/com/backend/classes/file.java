@@ -1,4 +1,4 @@
-package com.example.backend.classes;
+package com.backend.classes;
 
 public abstract class file {
     private final String fileName;

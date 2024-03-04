@@ -1,4 +1,4 @@
-package com.example.backend.classes;
+package com.backend.classes;
 
 import java.io.File;
 import java.io.IOException;

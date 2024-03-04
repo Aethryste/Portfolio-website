@@ -1,8 +1,7 @@
-package com.example.backend.controllers;
+package com.backend.controllers;
 
-import com.example.backend.classes.slide;
-import com.example.backend.configurations.securityConfig;
-import com.example.backend.services.slideService;
+import com.backend.classes.slide;
+import com.backend.configurations.securityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class imageController {
 
     @Autowired
-    private slideService slideService;
+    private com.backend.services.slideService slideService;
 
     @GetMapping("/timeline")
     public ArrayList<slide> slideServiceGetSlide() {
