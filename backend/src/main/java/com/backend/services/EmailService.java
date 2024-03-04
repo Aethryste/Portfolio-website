@@ -20,7 +20,7 @@ public class EmailService {
     private Environment env;
 
     public String sendEmail(String fromEmail, String fromName, String body) {
-        String response = "";
+        String response;
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) javaMailSender;
 
         Session session = Session.getInstance(mailSender.getJavaMailProperties(),
