@@ -121,9 +121,10 @@ export default {
       this.checkInput('message');
       if (!this.nameErrorMsg && !this.emailErrorMsg && !this.messageErrorMsg) {
         let obj = JSON.stringify(new Form(this.emailValue, this.nameValue, this.messageValue));
-
+        console.log(obj);
         let ajax = new XMLHttpRequest()
-        ajax.open('POST', '/contact/form')
+        ajax.open('POST', '/sendEmail')
+        ajax.setRequestHeader('Content-Type', 'application/json')
 
         ajax.onreadystatechange = () => {
           if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {

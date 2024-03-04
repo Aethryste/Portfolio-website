@@ -37,7 +37,7 @@ public class EmailService {
         message.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
         message.setTo(Objects.requireNonNull(env.getProperty("spring.mail.username")));
         message.setSubject("Message received from: "+fromName);
-        message.setText("You received a new message from "+fromName+"("+fromEmail+")\n\n"+body);
+        message.setText("You received a new message from "+fromName+" ("+fromEmail+")\n\n"+body);
 
         try {
             javaMailSender.send(message);
