@@ -1,8 +1,8 @@
 class Form {
-  constructor(senderAddress, senderName, content) {
-    this.senderAddress = senderAddress;
-    this.senderName = senderName;
-    this.content = content;
+  constructor(fromEmail, fromName, body) {
+    this.senderAddress = fromEmail;
+    this.senderName = fromName;
+    this.content = body;
   }
 }
 export default Form;

@@ -19,7 +19,8 @@ public class EmailService {
     @Autowired
     private Environment env;
 
-    public void sendEmail(String to, String subject, String body) {
+    public String sendEmail(String fromEmail, String fromName, String body) {
+        String response = "";
         JavaMailSenderImpl mailSender = (JavaMailSenderImpl) javaMailSender;
 
         Session session = Session.getInstance(mailSender.getJavaMailProperties(),
@@ -34,15 +35,18 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
+        message.setTo(Objects.requireNonNull(env.getProperty("spring.mail.username")));
+        message.setSubject("Message received from: "+fromName);
+        message.setText("You received a new message from "+fromName+"("+fromEmail+")\n\n"+body);
 
         try {
             javaMailSender.send(message);
             System.out.println("Email sent successfully!");
+            response = "success";
         } catch (Exception ex) {
             System.err.println("Failed to send email: " + ex.getMessage());
+            response = "failed";
         }
+        return response;
     }
 }
