@@ -1,7 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.classes.slide;
-import com.example.backend.configs.securityConfig;
+import com.example.backend.configurations.securityConfig;
 import com.example.backend.services.slideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -13,3 +13,6 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 }
+
+//TODO: Cleanup files and folder structure, maybe remove 'example' from hierarchy.
+//TODO: add unit tests
