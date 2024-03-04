@@ -34,14 +34,23 @@
           <p class="G_unselectable error-text" v-if="emailErrorMsg">{{ emailErrorMsg }}</p>
 
           <label class="G_unselectable">Message</label>
-          <textarea :class="{ 'error-border': !messageFilled }" @blur="checkInput('message')" v-model="messageValue"></textarea>
+          <textarea
+            :class="{ 'error-border': !messageFilled }"
+            @blur="checkInput('message')"
+            v-model="messageValue"></textarea>
           <p class="G_unselectable error-text" v-if="messageErrorMsg">{{ messageErrorMsg }}</p>
 
           <button @click.prevent="sendMessage"><span class="icon"></span>Reach out!</button>
 
           <Transition name="slide-fade">
-            <div v-if="messageSent" class="message-sent-notification">Message Sent!</div>
+            <div v-if="messageSent" class="message-sent-notification font_inter">Message Sent!</div>
           </transition>
+          <Transition name="slide-fade">
+            <div v-if="messageFailed" class="message-failed-notification font_inter">
+              Something went wrong, please try again later..
+            </div>
+          </Transition>
+          <span v-if="loading" class="loader"></span>
         </form>
       </div>
     </div>
@@ -69,11 +78,14 @@ export default {
       nameErrorMsg: '',
       emailErrorMsg: '',
       messageErrorMsg: '',
+      loading: false,
       messageSent: false,
+      messageFailed: false,
       copied: false,
       form: null,
-      lastSubmissionTime: 0, // Store the timestamp of the last form submission
-      throttleDuration: 60000, // Throttle duration in milliseconds (1 minute)
+      submissionResponse: null,
+      lastSubmissionTime: 0,
+      throttleDuration: 60000
     };
   },
   methods: {
@@ -101,7 +113,7 @@ export default {
           break;
         case 'email':
           this.emailFilled = trimValue(this.emailValue) && this.emailValue.includes('@');
-          this.emailErrorMsg = this.emailFilled ? '' : 'Please enter a valid form';
+          this.emailErrorMsg = this.emailFilled ? '' : 'Please enter a valid email address';
           break;
         case 'message':
           this.messageFilled = !!trimValue(this.messageValue);
@@ -110,35 +122,38 @@ export default {
       }
     },
     sendMessage() {
+      // TODO: Add spam protection.
       const currentTime = Date.now();
-      // // Check if the last submission was within the throttle duration
-      // if (currentTime - this.lastSubmissionTime < this.throttleDuration) {
-      //   console.log('Please wait before submitting again.');
-      //   return;
-      // }
       this.checkInput('name');
       this.checkInput('email');
       this.checkInput('message');
       if (!this.nameErrorMsg && !this.emailErrorMsg && !this.messageErrorMsg) {
+        this.loading = true;
         let obj = JSON.stringify(new Form(this.emailValue, this.nameValue, this.messageValue));
-        console.log(obj);
         let ajax = new XMLHttpRequest()
         ajax.open('POST', '/sendEmail')
         ajax.setRequestHeader('Content-Type', 'application/json')
 
         ajax.onreadystatechange = () => {
           if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
-            // Update the last submission time
+            if (ajax.responseText === 'success') {
+              this.loading = false;
+              this.messageSent = true;
+              setTimeout(() => {
+                this.messageSent = false;
+              }, 5000);
+            }
+            if (ajax.responseText === 'failed') {
+              this.loading = false;
+              this.messageFailed = true;
+              setTimeout(() => {
+                this.messageFailed = false;
+              }, 5000);
+            }
             this.lastSubmissionTime = currentTime;
-            // TODO: Request finished. Do processing here.
           }
         };
         ajax.send(obj);
-        this.messageSent = true;
-
-        setTimeout(() => {
-          this.messageSent = false;
-        }, 50000);
       }
     }
   }
@@ -244,6 +259,7 @@ export default {
           margin: 1em auto 5px 0!important;
         }
         input, textarea {
+          @extend .font_inter;
           padding: 0.8em;
           background-color: #161A2C;
           border: 1px solid darkslateblue;
@@ -328,13 +344,25 @@ export default {
 .message-sent-notification {
   position: relative;
   margin: 0.5em auto auto auto!important;
-  padding: 0.3em;
-  border: 2px solid green;
+  padding: 0.4em;
+  //border: 2px solid green;
   text-align: center;
   border-radius: 0.2em;
   color: green;
   font-weight: bold;
-  width: 25%;
+  width: fit-content;
+  transition: 300ms;
+}
+.message-failed-notification {
+  position: relative;
+  margin: 0.5em auto auto auto!important;
+  padding: 0.3em;
+  //border: 2px solid orange;
+  text-align: center;
+  border-radius: 0.2em;
+  color: orange;
+  font-weight: bold;
+  width: fit-content;
   transition: 300ms;
 }
 .error-border {
@@ -426,6 +454,49 @@ p.copied-text {
     button {
       font-size: 0.8em;
     }
+  }
+}
+.loader {
+  width: 10px;
+  min-height: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto!important;
+  position: relative;
+  color: #FFF;
+  left: -100px;
+  box-sizing: border-box;
+  animation: shadowRolling 2s linear infinite;
+}
+
+@keyframes shadowRolling {
+  0% {
+    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  12% {
+    box-shadow: 100px 0 white, 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  25% {
+    box-shadow: 110px 0 white, 100px 0 white, 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+  36% {
+    box-shadow: 120px 0 white, 110px 0 white, 100px 0 white, 0px 0 rgba(255, 255, 255, 0);
+  }
+  50% {
+    box-shadow: 130px 0 white, 120px 0 white, 110px 0 white, 100px 0 white;
+  }
+  62% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white, 110px 0 white;
+  }
+  75% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 white, 120px 0 white;
+  }
+  87% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 white;
+  }
+  100% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
   }
 }
 </style>
