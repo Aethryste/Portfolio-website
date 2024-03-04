@@ -1,5 +1,8 @@
 package com.backend.classes;
 
+import lombok.Getter;
+
+@Getter
 public class slide extends file {
     private final long year;
     private final String title;
@@ -10,15 +13,5 @@ public class slide extends file {
         this.year = year;
         this.title = title;
         this.body = body;
-    }
-
-    public long getYear() {
-        return year;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public String getBody() {
-        return body;
     }
 }

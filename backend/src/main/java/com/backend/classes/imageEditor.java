@@ -3,13 +3,12 @@ package com.backend.classes;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
+import lombok.NoArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+@NoArgsConstructor
 public class imageEditor {
-
-    public imageEditor() {}
-
     public String convertToBase64(String FilePath) {
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(new File(FilePath));

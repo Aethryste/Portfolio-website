@@ -1,5 +1,10 @@
 package com.backend.classes;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public abstract class file {
     private final String fileName;
     private final String fileType;
@@ -9,15 +14,5 @@ public abstract class file {
         this.fileName = fileName;
         this.fileType = fileType;
         this.fileContent = fileContent;
-    }
-
-    public String getName() {
-        return fileName;
-    }
-    public String getType() {
-        return fileType;
-    }
-    public String getContent() {
-        return fileContent;
     }
 }
