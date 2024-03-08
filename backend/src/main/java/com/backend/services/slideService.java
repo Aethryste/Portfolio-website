@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class slideService {
 
     private static final com.backend.classes.imageEditor imageEditor = new imageEditor();
-    private static ArrayList<slide> allSlides = new ArrayList<>(5);
+    private static final ArrayList<slide> allSlides = new ArrayList<>(5);
+    private static final String pathRoot = "src/main/resources/static/slideshow-images/";
 
     public slideService() {}
 
@@ -20,16 +21,15 @@ public class slideService {
         return allSlides;
     }
     private void buildSlides() {
-        // TODO: Insert file-path once to create instance, current setup is unnecessary.
         allSlides.add(new slide(
                 2020,
                 "All earlier experiences.",
                 "I've got about 5 years of working experience before my decision to career-switch to IT " +
                         "took place, most of this experience is related to Graphic Design, Game Development, and " +
                         "providing moving/transport services. More details can be found on my LinkedIn.",
-                imageEditor.getName("src/main/resources/static/slideshow-images/2020_laptop.jpg"),
-                imageEditor.getType("src/main/resources/static/slideshow-images/2020_laptop.jpg"),
-                imageEditor.convertToBase64("src/main/resources/static/slideshow-images/2020_laptop.jpg"))
+                imageEditor.getName(pathRoot+"2020_laptop.jpg"),
+                imageEditor.getType(pathRoot+"2020_laptop.jpg"),
+                imageEditor.convertToBase64(pathRoot+"2020_laptop.jpg"))
         );
         allSlides.add(new slide(
                 2021,
@@ -37,9 +37,9 @@ public class slideService {
                 "During 2021 I successfully completed a starter course on Python through Udemy, completing " +
                         "this course sparked my passion for programming. Not long after I decided to properly " +
                         "career-switch to IT by starting my Bachelor's degree at AUAS in Amsterdam.",
-                imageEditor.getName("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"),
-                imageEditor.getType("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"),
-                imageEditor.convertToBase64("src/main/resources/static/slideshow-images/2021_amsterdam.jpg"))
+                imageEditor.getName(pathRoot+"2021_amsterdam.jpg"),
+                imageEditor.getType(pathRoot+"2021_amsterdam.jpg"),
+                imageEditor.convertToBase64(pathRoot+"2021_amsterdam.jpg"))
         );
         allSlides.add(new slide(
                 2022,
@@ -49,9 +49,9 @@ public class slideService {
                         "Newskool I gained my first three IT service/operations occupations, which provided me " +
                         "two consecutive years of professional experience working in large corporations and " +
                         "their digital infrastructures.",
-                imageEditor.getName("src/main/resources/static/slideshow-images/2022_office.jpg"),
-                imageEditor.getType("src/main/resources/static/slideshow-images/2022_office.jpg"),
-                imageEditor.convertToBase64("src/main/resources/static/slideshow-images/2022_office.jpg"))
+                imageEditor.getName(pathRoot+"2022_office.jpg"),
+                imageEditor.getType(pathRoot+"2022_office.jpg"),
+                imageEditor.convertToBase64(pathRoot+"2022_office.jpg"))
         );
         allSlides.add(new slide(
                 2023,
@@ -60,9 +60,9 @@ public class slideService {
                         "about half of my Bachelor, it's time for me to land my first Software Engineering / " +
                         "Developer occupation. This will be the next big step in my career, which i'm heavily " +
                         "looking forward to!",
-                imageEditor.getName("src/main/resources/static/slideshow-images/2023_code.jpg"),
-                imageEditor.getType("src/main/resources/static/slideshow-images/2023_code.jpg"),
-                imageEditor.convertToBase64("src/main/resources/static/slideshow-images/2023_code.jpg"))
+                imageEditor.getName(pathRoot+"2023_code.jpg"),
+                imageEditor.getType(pathRoot+"2023_code.jpg"),
+                imageEditor.convertToBase64(pathRoot+"2023_code.jpg"))
         );
     }
 }
