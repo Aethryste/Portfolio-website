@@ -15,7 +15,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class securityConfig {
+public class SecurityConfig {
     public static final String ALLOWED_ORIGIN = "http://localhost";
     public static final long MAX_AGE = 3600L;
 

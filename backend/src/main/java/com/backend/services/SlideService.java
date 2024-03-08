@@ -1,27 +1,27 @@
 package com.backend.services;
 
-import com.backend.classes.imageEditor;
-import com.backend.classes.slide;
+import com.backend.classes.ImageEditor;
+import com.backend.classes.Slide;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public class slideService {
+public class SlideService {
 
-    private static final com.backend.classes.imageEditor imageEditor = new imageEditor();
-    private static final ArrayList<slide> allSlides = new ArrayList<>(5);
+    private static final ImageEditor imageEditor = new ImageEditor();
+    private static final ArrayList<Slide> ALL_SLIDES = new ArrayList<>(5);
     private static final String pathRoot = "src/main/resources/static/slideshow-images/";
 
-    public slideService() {}
+    public SlideService() {}
 
-    public ArrayList<slide> getAllSlides() {
-        if (allSlides.isEmpty()) {
+    public ArrayList<Slide> getAllSlides() {
+        if (ALL_SLIDES.isEmpty()) {
             this.buildSlides();
         }
-        return allSlides;
+        return ALL_SLIDES;
     }
     private void buildSlides() {
-        allSlides.add(new slide(
+        ALL_SLIDES.add(new Slide(
                 2020,
                 "All earlier experiences.",
                 "I've got about 5 years of working experience before my decision to career-switch to IT " +
@@ -31,7 +31,7 @@ public class slideService {
                 imageEditor.getType(pathRoot+"2020_laptop.jpg"),
                 imageEditor.convertToBase64(pathRoot+"2020_laptop.jpg"))
         );
-        allSlides.add(new slide(
+        ALL_SLIDES.add(new Slide(
                 2021,
                 "The start of it all.",
                 "During 2021 I successfully completed a starter course on Python through Udemy, completing " +
@@ -41,7 +41,7 @@ public class slideService {
                 imageEditor.getType(pathRoot+"2021_amsterdam.jpg"),
                 imageEditor.convertToBase64(pathRoot+"2021_amsterdam.jpg"))
         );
-        allSlides.add(new slide(
+        ALL_SLIDES.add(new Slide(
                 2022,
                 "My first IT occupations.",
                 "Shortly after starting my Bachelor I joined \"Newskool\", a secondment company specialised " +
@@ -53,7 +53,7 @@ public class slideService {
                 imageEditor.getType(pathRoot+"2022_office.jpg"),
                 imageEditor.convertToBase64(pathRoot+"2022_office.jpg"))
         );
-        allSlides.add(new slide(
+        ALL_SLIDES.add(new Slide(
                 2023,
                 "The next step.",
                 "Now, having built up professional experience working in IT-operations and having completed " +

@@ -8,7 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 @NoArgsConstructor
-public class imageEditor {
+public class ImageEditor {
     public String convertToBase64(String FilePath) {
         try {
             byte[] fileContent = FileUtils.readFileToByteArray(new File(FilePath));

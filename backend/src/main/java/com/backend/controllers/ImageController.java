@@ -1,21 +1,22 @@
 package com.backend.controllers;
 
-import com.backend.classes.slide;
-import com.backend.configurations.securityConfig;
+import com.backend.classes.Slide;
+import com.backend.configurations.SecurityConfig;
+import com.backend.services.SlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @RestController
-@CrossOrigin(origins = securityConfig.ALLOWED_ORIGIN, maxAge = securityConfig.MAX_AGE)
+@CrossOrigin(origins = SecurityConfig.ALLOWED_ORIGIN, maxAge = SecurityConfig.MAX_AGE)
 @RequestMapping("/images")
-public class imageController {
+public class ImageController {
 
     @Autowired
-    private com.backend.services.slideService slideService;
+    private SlideService slideService;
 
     @GetMapping("/timeline")
-    public ArrayList<slide> slideServiceGetSlide() {
+    public ArrayList<Slide> slideServiceGetSlide() {
         try {
             return slideService.getAllSlides();
         }
