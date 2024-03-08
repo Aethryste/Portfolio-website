@@ -9,18 +9,18 @@
         <div class="scroll-hint" ref="scrollHint"></div>
       </div>
     </div>
-<!--    <div class="back-layer G_unselectable">-->
-<!--      <frontpage_threeJs id="threeJs"/>-->
-<!--    </div>-->
+    <div class="back-layer G_unselectable">
+      <Tres_TheExperience id="canvas"/>
+    </div>
   </div>
 </template>
 
 <script>
-import comp_frontpageThreeJs from '@/components/comp_frontpageThreeJs.vue'
+import Tres_TheExperience from "@/components/tres_TheExperience.vue";
 export default {
   name: 'section_landingPage',
   components: {
-    // comp_frontpageThreeJs
+    Tres_TheExperience
   },
   props: {
     isActive: Boolean
