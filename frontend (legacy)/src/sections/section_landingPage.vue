@@ -10,17 +10,17 @@
       </div>
     </div>
     <div class="back-layer G_unselectable">
-      <HelloWorld id="canvas"/>
+      <Tres_TheExperience id="canvas"/>
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue';
+import Tres_TheExperience from "@/components/tres_TheExperience.vue";
 export default {
   name: 'section_landingPage',
   components: {
-    HelloWorld
+    Tres_TheExperience
   },
   props: {
     isActive: Boolean
@@ -164,11 +164,6 @@ export default {
       opacity: 1;
     }
   }
-}
-#canvas {
-  position: absolute!important;
-  width: 100%!important;
-  height: 100%!important;
 }
 .hidden {
   opacity: 0;

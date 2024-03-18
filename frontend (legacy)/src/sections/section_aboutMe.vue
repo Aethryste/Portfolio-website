@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import comp_typingTitle from '../components/comp_typingTitle.vue';
+import comp_typingTitle from '@/components/comp_typingTitle.vue';
 export default {
   name: 'section_aboutMe',
   components: {
@@ -97,11 +97,23 @@ export default {
     }
   },
   methods: {
+    fetchData() {
+      let ajax = new XMLHttpRequest()
+      ajax.open('GET', '/images/timeline')
+      ajax.onload = () => {
+        this.slides = JSON.parse(ajax.responseText);
+      };
+      ajax.onerror = () => {
+        console.error('Error fetching slideshow data.');
+      };
+      ajax.send();
+    },
     handleResize() {
       this.windowW = window.innerWidth;
     }
   },
   created() {
+    this.fetchData();
     window.addEventListener('resize', this.handleResize);
   }
 }

@@ -1,14 +1,8 @@
-<!--Items to do before initial deployment: (https://richardalgra.com/) -->
-<!--TODO: Check TresJS als ThreeJS alternative for landingPage.-->
-<!--TODO: Work on security, ex: properly resolve cors.-->
+<script setup>
+import IndexComp from '../src/pages/index.vue';
+import HelloWorld from '../src/components/HelloWorld.vue';
+</script>
 
 <template>
-  <router-view/>
+  <IndexComp/>
 </template>
-
-<style lang="scss">
-html {height: fit-content}
-* { margin: 0 !important; }
-</style>
-<script setup>
-</script>

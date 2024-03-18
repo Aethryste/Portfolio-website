@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import IndexSection1_landing from '../sections/section_landingPage.vue';
-import indexSection2_now from '../sections/section_aboutMe.vue';
-import IndexSection3_past from '../sections/section_experience.vue';
-import IndexSection4_projects from '../sections/section_projects.vue';
-import IndexSection5_contact from '../sections/section_contactPage.vue';
+import IndexSection1_landing from '@/sections/section_landingPage';
+import indexSection2_now from '@/sections/section_aboutMe';
+import IndexSection3_past from '@/sections/section_experience';
+import IndexSection4_projects from '@/sections/section_projects';
+import IndexSection5_contact from '@/sections/section_contactPage'
 
 export default {
   components: {

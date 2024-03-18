@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import Form from '../classes/from.js';
+import Form from '@/classes/form'
 export default {
   name: 'section_contactPage',
   data() {

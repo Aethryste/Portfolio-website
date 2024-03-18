@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/swiper-bundle.css';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
 
 export default {
   name: 'section_experience',
@@ -60,7 +60,7 @@ export default {
   methods: {
     fetchData() {
       let ajax = new XMLHttpRequest()
-      ajax.open('GET', BACKEND_URL+'/images/timeline')
+      ajax.open('GET', '/images/timeline')
       ajax.onload = () => {
         this.slides = JSON.parse(ajax.responseText);
       };
