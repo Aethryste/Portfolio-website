@@ -5,12 +5,12 @@ import { Noise } from 'noisejs';
 
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 4; // 50 in production
+let gridSize = 50; // 50 in production
 
 let time = ref(0);
 let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
-let noiseScale = 0.5;
+let noiseScale = 1.75;
 let pillars = ref([]);
 
 function calculateGroupCenter() {
@@ -62,21 +62,27 @@ function calculatePillarPosition(rowIndex, columnIndex) {
 }
 
 function animateWaves() {
-  time.value += 0.01;
-  noiseSeed += 0.001;
+  time.value += 0.03;
 
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
     for (let columnIndex = 0; columnIndex < gridSize; columnIndex++) {
-      const noiseValue = noise.simplex2(rowIndex * 0.1, columnIndex * 0.1, time.value);
+      const noiseValue = noise.simplex3(
+          rowIndex * 0.1,
+          columnIndex * 0.1,
+          time.value * 0.1
+      );
+
       const targetHeightOffset = noiseValue * noiseScale;
 
       const currentHeightOffset = pillars.value[rowIndex][columnIndex].y;
       const heightOffset = lerp(currentHeightOffset, targetHeightOffset, 0.05);
 
+      // Update the pillar height
       pillars.value[rowIndex][columnIndex].y = heightOffset;
     }
   }
 }
+
 
 function lerp(a, b, t) {
   return a * (1 - t) + b * t;
@@ -93,14 +99,14 @@ onMounted(() => {
 });
 
 let rawObjGridCenter = calculateGroupCenter();
-let correctedGridCenter = [0-rawObjGridCenter.x,0-rawObjGridCenter.y,0-rawObjGridCenter.z];
+let correctedGridCenter = [0 - rawObjGridCenter.x, 0 - rawObjGridCenter.y, 0 - rawObjGridCenter.z];
 </script>
 
 <template>
   <TresCanvas clear-color="#242424" window-size>
-    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[0, 0, 0]"/>
+    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[0, 0, 0]" />
     <TresAmbientLight :intensity="0.1" />
-    <TresDirectionalLight :position="[-5, 5, 1]"/>
+    <TresDirectionalLight :position="[-5, 5, 1]" />
 
     <TresGroup ref="object-grid" :position="correctedGridCenter">
       <template v-for="(row, rowIndex) in pillars" :key="rowIndex">
@@ -112,6 +118,5 @@ let correctedGridCenter = [0-rawObjGridCenter.x,0-rawObjGridCenter.y,0-rawObjGri
         </template>
       </template>
     </TresGroup>
-
   </TresCanvas>
 </template>
