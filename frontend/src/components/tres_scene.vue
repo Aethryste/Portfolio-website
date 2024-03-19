@@ -4,7 +4,7 @@ import { OrbitControls } from '@tresjs/cientos';
 
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 10;
+let gridSize = 10; // 50 in production
 
 function calculateGroupCenter() {
   let totalX = 0;
@@ -31,40 +31,50 @@ function calculateGroupCenter() {
   return { x: totalX / pillarCount, y: totalY / pillarCount, z: totalZ / pillarCount };
 }
 
-let groupCenter = calculateGroupCenter();
+let rawObjGridCenter = calculateGroupCenter();
+let correctedGridCenter = [0-rawObjGridCenter.x,0-rawObjGridCenter.y,0-rawObjGridCenter.z];
 </script>
 
 <template>
   <TresCanvas clear-color="#242424" window-size>
-    <TresPerspectiveCamera ref="camera" :position="[10, 10, 10]" :look-at="[0, 0, 0]"/>
+    <TresPerspectiveCamera ref="camera"
+                           :position="[10, 10, 5]"
+                           :look-at="[0, 0, 0]"/>
     <OrbitControls :camera="camera"/>
 
-    <TresGroup ref="object-grid">
+    <TresGroup ref="object-grid"
+               :position="correctedGridCenter"
+    >
       <template v-for="(row, rowIndex) in gridSize" :key="rowIndex">
         <template v-if="rowIndex % 2 === 0">
           <TresMesh v-for="(column, columnIndex) in gridSize" :key="columnIndex"
-                    :position="[columnIndex * (0.75 + rowGap), 0, rowIndex * 1.5 * columnGap]">
-            <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
+                    :position="[columnIndex * (0.75 + rowGap), 0, rowIndex * 1.5 * columnGap]"
+                    :scale="[1, 3, 1]"
+          >
+            <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]"/>
             <TresMeshStandardMaterial :color="0x222222" roughness="0.5" flat-shading/>
           </TresMesh>
         </template>
         <template v-else>
           <TresMesh v-for="(column, columnIndex) in gridSize" :key="columnIndex"
-                    :position="[(columnIndex + 0.5) * (0.75 + rowGap), 0, rowIndex * 1.5 * columnGap]">
+                    :position="[(columnIndex + 0.5) * (0.75 + rowGap), 0, rowIndex * 1.5 * columnGap]"
+                    :scale="[1, 3, 1]"
+          >
             <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
             <TresMeshStandardMaterial :color="0x222222" roughness="0.5" flat-shading/>
           </TresMesh>
         </template>
       </template>
+      <TresMesh ref:="group-center-marker"
+                :position="[rawObjGridCenter.x,rawObjGridCenter.y,rawObjGridCenter.z]"
+                :scale="[0.1, 5, 0.1]"
+      >
+        <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
+        <TresMeshStandardMaterial :color="0xFF0000" roughness="0.5" flat-shading/>
+      </TresMesh>
     </TresGroup>
-
-    <TresMesh ref:="group-center-marker" :position="[groupCenter.x, groupCenter.y, groupCenter.z]" :scale="[0.1, 5, 0.1]">
-      <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
-      <TresMeshStandardMaterial :color="0xFF0000" roughness="0.5" flat-shading/>
-    </TresMesh>
 
     <TresAmbientLight :intensity="0.1" />
     <TresDirectionalLight :position="[-5, 5, 1]" />
-    <TresAxesHelper/>
   </TresCanvas>
 </template>

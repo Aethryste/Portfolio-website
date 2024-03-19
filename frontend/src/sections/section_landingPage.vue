@@ -10,17 +10,17 @@
       </div>
     </div>
     <div class="back-layer G_unselectable">
-      <HelloWorld id="canvas"/>
+      <TresScene id="canvas"/>
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue';
+import TresScene from '../components/tres_scene.vue';
 export default {
   name: 'section_landingPage',
   components: {
-    HelloWorld
+    TresScene
   },
   props: {
     isActive: Boolean

@@ -1,8 +1,8 @@
 <script setup>
 import IndexComp from '../src/pages/index.vue';
-import HelloWorld from '../src/components/HelloWorld.vue';
+import TresScene from './components/tres_scene.vue';
 </script>
 
 <template>
-  <IndexComp/>
+  <TresScene/>
 </template>
