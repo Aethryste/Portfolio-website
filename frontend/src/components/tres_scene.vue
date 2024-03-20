@@ -5,7 +5,7 @@ import { Noise } from 'noisejs';
 
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 50; // 50 in production
+let gridSize = 10; // 50 in production
 
 let time = ref(0);
 let noiseSeed = Math.random();
@@ -105,13 +105,21 @@ let correctedGridCenter = [0 - rawObjGridCenter.x, 0 - rawObjGridCenter.y, 0 - r
 <template>
   <TresCanvas clear-color="#242424" window-size>
     <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[0, 0, 0]" />
-    <TresAmbientLight :intensity="0.1" />
+    <TresAmbientLight :intensity="0.5" />
     <TresDirectionalLight :position="[-5, 5, 1]" />
 
+
+    <!-- Plane emitting red light -->
+    <TresMesh :position="[0,-1,0]" :rotation-x="-Math.PI/2" :cast-shadow="true">
+      <TresPlaneGeometry :args="[gridSize * (0.75 + rowGap), gridSize * 1.5 * columnGap]" />
+      <TresMeshStandardMaterial :color="0xff0000" emissive="red" emissiveIntensity="10" />
+    </TresMesh>
+
+    <!-- Pillars -->
     <TresGroup ref="object-grid" :position="correctedGridCenter">
       <template v-for="(row, rowIndex) in pillars" :key="rowIndex">
         <template v-for="(pillar, columnIndex) in row" :key="columnIndex">
-          <TresMesh :position="[pillar.x, pillar.y, pillar.z]">
+          <TresMesh :position="[pillar.x, pillar.y, pillar.z]" :receive-shadow="true">
             <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
             <TresMeshStandardMaterial :color="0x222222" roughness="0.5" flat-shading />
           </TresMesh>
