@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { TresCanvas } from '@tresjs/core';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { Noise } from 'noisejs';
 
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 10; // 50 in production
-
+let gridSize = 50; // 50 in production
 let time = ref(0);
 let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
-let noiseScale = 1.75;
-let pillars = ref([]);
+let noiseScale = 5;
+let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
 
 function calculateGroupCenter() {
   let totalX = 0;
@@ -40,7 +39,7 @@ function calculateGroupCenter() {
 
 function generatePillars() {
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
-    let row = [];
+    let row: { x: number; y: number; z: number; }[] = [];
     for (let columnIndex = 0; columnIndex < gridSize; columnIndex++) {
       const position = calculatePillarPosition(rowIndex, columnIndex);
       row.push(position);
@@ -49,8 +48,8 @@ function generatePillars() {
   }
 }
 
-function calculatePillarPosition(rowIndex, columnIndex) {
-  let positionX, positionZ;
+function calculatePillarPosition(rowIndex: number, columnIndex: number) {
+  let positionX: number, positionZ: number;
   if (rowIndex % 2 === 0) {
     positionX = columnIndex * (0.75 + rowGap);
     positionZ = rowIndex * 1.5 * columnGap;
@@ -62,8 +61,7 @@ function calculatePillarPosition(rowIndex, columnIndex) {
 }
 
 function animateWaves() {
-  time.value += 0.03;
-
+  time.value += 0.01;
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
     for (let columnIndex = 0; columnIndex < gridSize; columnIndex++) {
       const noiseValue = noise.simplex3(
@@ -71,20 +69,14 @@ function animateWaves() {
           columnIndex * 0.1,
           time.value * 0.1
       );
-
       const targetHeightOffset = noiseValue * noiseScale;
-
       const currentHeightOffset = pillars.value[rowIndex][columnIndex].y;
-      const heightOffset = lerp(currentHeightOffset, targetHeightOffset, 0.05);
-
-      // Update the pillar height
-      pillars.value[rowIndex][columnIndex].y = heightOffset;
+      pillars.value[rowIndex][columnIndex].y = lerp(currentHeightOffset, targetHeightOffset, 0.1);
     }
   }
 }
 
-
-function lerp(a, b, t) {
+function lerp(a: number, b: number, t: number) {
   return a * (1 - t) + b * t;
 }
 
@@ -99,29 +91,27 @@ onMounted(() => {
 });
 
 let rawObjGridCenter = calculateGroupCenter();
-let correctedGridCenter = [0 - rawObjGridCenter.x, 0 - rawObjGridCenter.y, 0 - rawObjGridCenter.z];
+let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (0 - rawObjGridCenter.y), (0 - rawObjGridCenter.z)];
 </script>
 
 <template>
   <TresCanvas clear-color="#242424" window-size>
-    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[0, 0, 0]" />
-    <TresAmbientLight :intensity="0.5" />
-    <TresDirectionalLight :position="[-5, 5, 1]" />
+    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
+    <TresDirectionalLight :intensity="0.6" :color="0xe3eeff" :position="[-5, 10, 1]" />
+<!--    <TresPointLight :intensity="100" :color="0xff0000" :position="[0,-4,0]" />-->
 
+    <TresPointLight :intensity="80" :color="0xf03800" :position="[0,-4,0]" />
+    <TresPointLight :intensity="20" :color="0xff0000" :position="[5,-4,5]" />
+    <TresPointLight :intensity="20" :color="0xff0000" :position="[-5,-4,-5]" />
 
-    <!-- Plane emitting red light -->
-    <TresMesh :position="[0,-1,0]" :rotation-x="-Math.PI/2" :cast-shadow="true">
-      <TresPlaneGeometry :args="[gridSize * (0.75 + rowGap), gridSize * 1.5 * columnGap]" />
-      <TresMeshStandardMaterial :color="0xff0000" emissive="red" emissiveIntensity="10" />
-    </TresMesh>
 
     <!-- Pillars -->
     <TresGroup ref="object-grid" :position="correctedGridCenter">
-      <template v-for="(row, rowIndex) in pillars" :key="rowIndex">
+      <template v-for="(row, rowIndex) in pillars.value" :key="rowIndex">
         <template v-for="(pillar, columnIndex) in row" :key="columnIndex">
           <TresMesh :position="[pillar.x, pillar.y, pillar.z]" :receive-shadow="true">
-            <TresCylinderGeometry :args="[0.5, 0.5, 1, 6]" />
-            <TresMeshStandardMaterial :color="0x222222" roughness="0.5" flat-shading />
+            <TresCylinderGeometry :args="[0.5, 0.5, 3, 6]" />
+            <TresMeshStandardMaterial :color="0x222222" :roughness="0.8" flat-shading />
           </TresMesh>
         </template>
       </template>
