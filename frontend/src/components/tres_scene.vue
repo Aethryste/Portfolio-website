@@ -2,10 +2,11 @@
 import { TresCanvas } from '@tresjs/core';
 import { ref, onMounted, reactive } from 'vue';
 import { Noise } from 'noisejs';
+import { volumetricLightShader } from '../shaders/volumetricLightShader';
 
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 50; // 50 in production
+let gridSize = 50;
 let time = ref(0);
 let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
@@ -96,16 +97,19 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
 
 <template>
   <TresCanvas clear-color="#242424" window-size>
-    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
-    <TresDirectionalLight :intensity="0.6" :color="0xe3eeff" :position="[-5, 10, 1]" />
-<!--    <TresPointLight :intensity="100" :color="0xff0000" :position="[0,-4,0]" />-->
 
+    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
+
+    <TresDirectionalLight :intensity="0.6" :color="0xe3eeff" :position="[-5, 10, 1]" />
     <TresPointLight :intensity="80" :color="0xf03800" :position="[0,-4,0]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[5,-4,5]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[-5,-4,-5]" />
 
+    <TresMesh>
+      <TresPlaneGeometry />
+      <TresShaderMaterial />
+    </TresMesh>
 
-    <!-- Pillars -->
     <TresGroup ref="object-grid" :position="correctedGridCenter">
       <template v-for="(row, rowIndex) in pillars.value" :key="rowIndex">
         <template v-for="(pillar, columnIndex) in row" :key="columnIndex">
@@ -116,5 +120,6 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
         </template>
       </template>
     </TresGroup>
+
   </TresCanvas>
 </template>
