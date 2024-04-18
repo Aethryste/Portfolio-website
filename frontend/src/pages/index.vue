@@ -45,7 +45,7 @@ export default {
       S3active: false,
       S4active: false,
       S5active: false,
-      isNavigationVisible: true
+      isNavigationVisible: true,
     };
   },
   watch: {
@@ -139,8 +139,8 @@ export default {
       }, 1000);
     },
     handleScroll(event) {
+      event.preventDefault();
       if (this.isScrolling) {
-        event.preventDefault();
         return;
       }
       if (event.deltaY < 0) {
