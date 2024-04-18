@@ -20,7 +20,7 @@ let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }
 let fps = 60, now, then = Date.now(), interval = 1000/fps, delta;
 let animationId:number|null = null;
 
-
+// Methods
 function calculateGroupCenter() {
   let totalX = 0;
   let totalY = 0;
@@ -57,13 +57,10 @@ function generatePillars() {
 }
 
 function calculatePillarPosition(rowIndex: number, columnIndex: number) {
-  let positionX: number, positionZ: number;
-  if (rowIndex % 2 === 0) {
-    positionX = columnIndex * (0.75 + rowGap);
-    positionZ = rowIndex * 1.5 * columnGap;
-  } else {
-    positionX = (columnIndex + 0.5) * (0.75 + rowGap);
-    positionZ = rowIndex * 1.5 * columnGap;
+  let positionX = columnIndex * (0.75 + rowGap);
+  let positionZ = rowIndex * 1.5 * columnGap;
+  if (rowIndex % 2 !== 0) {
+    positionX += 0.5 * (0.75 + rowGap);
   }
   return { x: positionX, y: 0, z: positionZ };
 }
@@ -101,7 +98,9 @@ function animateLoop() {
 watch(() => parent_props.isActive, (newVal, oldVal) => {
   if (newVal) {
     if (!animationId) {
-      animateLoop();
+      setTimeout(() => {
+        animateLoop();
+      }, 1000);
     }
   } else {
     if (animationId) {
@@ -124,14 +123,11 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
 
 <template>
   <TresCanvas preset="realistic" window-size>
-
     <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
-
     <TresDirectionalLight :intensity="0.6" :color="0xe3eeff" :position="[-5, 10, 1]" />
     <TresPointLight :intensity="80" :color="0xf03800" :position="[0,-4,0]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[5,-4,5]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[-5,-4,-5]" />
-
     <TresGroup ref="object-grid" :position="correctedGridCenter">
       <template v-for="(row, rowIndex) in pillars.value" :key="rowIndex">
         <template v-for="(pillar, columnIndex) in row" :key="columnIndex">
@@ -142,6 +138,5 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
         </template>
       </template>
     </TresGroup>
-
   </TresCanvas>
 </template>
