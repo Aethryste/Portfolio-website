@@ -57,14 +57,14 @@
     <footer>
       <div class="footer-content">
         <p class="G_unselectable">Handcrafted with VueJS © 2024 Richard Algra</p>
-        <p>contact@richardalgra.com</p><!--replace with logo later-->
+        <p>contact@richardalgra.com</p>
       </div>
     </footer>
   </div>
 </template>
 
 <script>
-import Form from '../classes/from.js';
+import Form from '../classes/form.js';
 export default {
   name: 'section_contactPage',
   data() {
@@ -122,7 +122,6 @@ export default {
       }
     },
     sendMessage() {
-      // TODO: Add spam protection.
       const currentTime = Date.now();
       this.checkInput('name');
       this.checkInput('email');
@@ -345,7 +344,6 @@ export default {
   position: relative;
   margin: 0.5em auto auto auto!important;
   padding: 0.4em;
-  //border: 2px solid green;
   text-align: center;
   border-radius: 0.2em;
   color: green;
@@ -357,7 +355,6 @@ export default {
   position: relative;
   margin: 0.5em auto auto auto!important;
   padding: 0.3em;
-  //border: 2px solid orange;
   text-align: center;
   border-radius: 0.2em;
   color: orange;
@@ -472,16 +469,16 @@ p.copied-text {
 
 @keyframes shadowRolling {
   0% {
-    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    box-shadow: 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0);
   }
   12% {
-    box-shadow: 100px 0 white, 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    box-shadow: 100px 0 white, 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0);
   }
   25% {
-    box-shadow: 110px 0 white, 100px 0 white, 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    box-shadow: 110px 0 white, 100px 0 white, 0 0 rgba(255, 255, 255, 0), 0 0 rgba(255, 255, 255, 0);
   }
   36% {
-    box-shadow: 120px 0 white, 110px 0 white, 100px 0 white, 0px 0 rgba(255, 255, 255, 0);
+    box-shadow: 120px 0 white, 110px 0 white, 100px 0 white, 0 0 rgba(255, 255, 255, 0);
   }
   50% {
     box-shadow: 130px 0 white, 120px 0 white, 110px 0 white, 100px 0 white;

@@ -180,7 +180,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .container {
   position: relative;
   overflow: hidden!important;

@@ -17,7 +17,7 @@
       <div class="right">
         <div class="about-block">
           <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
-          <comp_typingTitle class="FunctionTitle"/>
+          <typewriter class="FunctionTitle"/>
 
           <div v-if="this.windowW > 500">
             <p class="G_paragraph">
@@ -85,11 +85,11 @@
 </template>
 
 <script>
-import comp_typingTitle from '../components/comp_typingTitle.vue';
+import typewriter from '../components/typewriter.vue';
 export default {
   name: 'section_aboutMe',
   components: {
-    comp_typingTitle,
+    typewriter,
   },
   data() {
     return {
