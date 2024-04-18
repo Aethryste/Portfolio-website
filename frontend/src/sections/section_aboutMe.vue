@@ -322,5 +322,9 @@ export default {
     background-size: 200%;
     background-position: 50% 40%;
   }
+  .G_sectionHeader {
+    font-size: 0.8em!important;
+    margin: 0 0 0 0!important;
+  }
 }
 </style>

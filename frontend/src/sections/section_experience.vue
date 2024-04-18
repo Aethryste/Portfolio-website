@@ -193,9 +193,9 @@ export default {
       }
       &-content {
         position: absolute;
-        right: 40px;
+        right: 10px;
         top: 50%;
-        width: 370px;
+        width: 470px;
         height: fit-content;
         transform: translate(-50%,-50%);
         text-align: right;
@@ -207,15 +207,14 @@ export default {
       }
       .timeline-year {
         display: block;
-        margin-bottom: 50px;
         color: $theme-primary-color;
         font-style: italic;
-        font-weight: 300;
+        font-weight: 100;
         font-size: 42px;
       }
       .timeline-title {
-        margin: 0 0 30px;
-        font-weight: 800;
+        margin: 0 0 -5px;
+        font-weight: 300;
         font-size: 34px;
       }
       .timeline-text {
