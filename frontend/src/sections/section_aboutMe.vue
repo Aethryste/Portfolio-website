@@ -143,7 +143,7 @@ export default {
         width: 70%;
         margin: auto auto auto 2em!important;
         .FunctionTitle {
-          padding: 1em 0 0.2em 0;
+          margin: -1em 0 -1em 0!important;
         }
         p {
           a {
