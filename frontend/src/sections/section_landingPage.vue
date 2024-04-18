@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="back-layer G_unselectable">
-      <TresScene id="canvas"/>
+      <TresScene v-bind:isActive="isActive" id="canvas"/>
     </div>
   </div>
 </template>

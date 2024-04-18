@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { TresCanvas } from '@tresjs/core';
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, defineProps, watch } from 'vue';
 import { Noise } from 'noisejs';
-import { volumetricLightShader } from '../shaders/volumetricLightShader';
 
+// Databind from parent
+const parent_props = defineProps({
+  isActive: Boolean,
+})
+
+// Variables
 let columnGap = 0.55;
 let rowGap = 0.2;
 let gridSize = 50;
@@ -12,13 +17,15 @@ let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
 let noiseScale = 5;
 let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
+let fps = 60, now, then = Date.now(), interval = 1000/fps, delta;
+let animationId:number|null = null;
+
 
 function calculateGroupCenter() {
   let totalX = 0;
   let totalY = 0;
   let totalZ = 0;
   let pillarCount = 0;
-
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
     for (let columnIndex = 0; columnIndex < gridSize; columnIndex++) {
       let positionX, positionZ;
@@ -82,13 +89,33 @@ function lerp(a: number, b: number, t: number) {
 }
 
 function animateLoop() {
-  animateWaves();
-  requestAnimationFrame(animateLoop);
+  now = Date.now();
+  delta = now - then;
+  if (delta > interval) {
+    then = now - (delta % interval);
+    animateWaves();
+    animationId = requestAnimationFrame(animateLoop);
+  }
 }
+
+watch(() => parent_props.isActive, (newVal, oldVal) => {
+  if (newVal) {
+    if (!animationId) {
+      animateLoop();
+    }
+  } else {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+})
 
 onMounted(() => {
   generatePillars();
-  animateLoop();
+  if (parent_props.isActive) {
+    animateLoop();
+  }
 });
 
 let rawObjGridCenter = calculateGroupCenter();
@@ -96,7 +123,7 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
 </script>
 
 <template>
-  <TresCanvas clear-color="#242424" window-size>
+  <TresCanvas preset="realistic" window-size>
 
     <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
 
@@ -104,11 +131,6 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
     <TresPointLight :intensity="80" :color="0xf03800" :position="[0,-4,0]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[5,-4,5]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[-5,-4,-5]" />
-
-    <TresMesh>
-      <TresPlaneGeometry />
-      <TresShaderMaterial />
-    </TresMesh>
 
     <TresGroup ref="object-grid" :position="correctedGridCenter">
       <template v-for="(row, rowIndex) in pillars.value" :key="rowIndex">
