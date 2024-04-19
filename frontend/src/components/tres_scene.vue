@@ -4,21 +4,23 @@ import { ref, onMounted, reactive, defineProps, watch } from 'vue';
 import { Noise } from 'noisejs';
 
 // Databind from parent
-const parent_props = defineProps({
+let parent_props = defineProps({
   isActive: Boolean,
 })
 
 // Variables
-let gridSize = isMobileDevice() ? 15 : 50;
-let fps = isMobileDevice() ? 40 : 60;
-let now, then = Date.now(), interval = 1000/fps, delta;
-
-let columnGap = 0.55;
-let rowGap = 0.2;
+const gridSize = isMobileDevice() ? 15 : 50;
+const maxFPS = isMobileDevice() ? 20 : 60;
+let lastFrameTime = 0;
+const fpsInterval = 1000 / maxFPS;
+let lastFPSTime = 0;
+let frameCount = 0;
+const columnGap = 0.55;
+const rowGap = 0.2;
 let time = ref(0);
 let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
-let noiseScale = 5;
+const noiseScale = 5;
 let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
 let animationId:number|null = null;
 
@@ -101,24 +103,6 @@ function lerp(a: number, b: number, t: number) {
   return a * (1 - t) + b * t;
 }
 
-// function animateLoop() {
-//   console.log(parent_props.isActive, 'test');
-//   now = Date.now();
-//   delta = now - then;
-//   console.log(delta, interval)
-//   if (delta > interval) {
-//     then = now - (delta % interval);
-//     animateWaves();
-//     animationId = requestAnimationFrame(animateLoop);
-//   }
-// }
-
-let lastFrameTime = 0;
-const maxFPS = isMobileDevice() ? 20 : 60;
-let fpsInterval = 1000 / maxFPS;
-let lastFPSTime = 0;
-let frameCount = 0;
-
 function animateLoop() {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFrameTime;
@@ -126,22 +110,16 @@ function animateLoop() {
   // Log FPS every second
   if (currentTime > lastFPSTime + 1000) {
     const fps = frameCount;
-    console.log(`FPS: ${fps}`);
-
+    console.log(`FPS: ${fps}`); // Mainly for testing purposes, maybe include visually in (prod) canvas.
     lastFPSTime = currentTime;
     frameCount = 0;
   }
-
-  // Limit the frame rate by checking if enough time has passed since the last frame
   if (elapsedTime > fpsInterval) {
     lastFrameTime = currentTime;
-
     animateWaves();
     frameCount++;
-
     animationId = requestAnimationFrame(animateLoop);
   } else {
-    // If not enough time has passed, wait until the next frame
     animationId = requestAnimationFrame(animateLoop);
   }
 }
