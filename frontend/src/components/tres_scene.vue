@@ -9,18 +9,34 @@ const parent_props = defineProps({
 })
 
 // Variables
+let gridSize = isMobileDevice() ? 15 : 50;
+let fps = isMobileDevice() ? 40 : 60;
+let now, then = Date.now(), interval = 1000/fps, delta;
+
 let columnGap = 0.55;
 let rowGap = 0.2;
-let gridSize = 50;
 let time = ref(0);
 let noiseSeed = Math.random();
 let noise = new Noise(noiseSeed);
 let noiseScale = 5;
 let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
-let fps = 60, now, then = Date.now(), interval = 1000/fps, delta;
 let animationId:number|null = null;
 
 // Methods
+function isMobileDevice(): boolean {
+  const userAgent = navigator.userAgent;
+  const mobileKeywords = [
+    "Android",
+    "webOS",
+    "iPhone",
+    "iPad",
+    "iPod",
+    "BlackBerry",
+    "Windows Phone"
+  ];
+  return mobileKeywords.some(keyword => userAgent.includes(keyword));
+}
+
 function calculateGroupCenter() {
   let totalX = 0;
   let totalY = 0;
@@ -85,12 +101,47 @@ function lerp(a: number, b: number, t: number) {
   return a * (1 - t) + b * t;
 }
 
+// function animateLoop() {
+//   console.log(parent_props.isActive, 'test');
+//   now = Date.now();
+//   delta = now - then;
+//   console.log(delta, interval)
+//   if (delta > interval) {
+//     then = now - (delta % interval);
+//     animateWaves();
+//     animationId = requestAnimationFrame(animateLoop);
+//   }
+// }
+
+let lastFrameTime = 0;
+const maxFPS = isMobileDevice() ? 20 : 60;
+let fpsInterval = 1000 / maxFPS;
+let lastFPSTime = 0;
+let frameCount = 0;
+
 function animateLoop() {
-  now = Date.now();
-  delta = now - then;
-  if (delta > interval) {
-    then = now - (delta % interval);
+  const currentTime = Date.now();
+  const elapsedTime = currentTime - lastFrameTime;
+
+  // Log FPS every second
+  if (currentTime > lastFPSTime + 1000) {
+    const fps = frameCount;
+    console.log(`FPS: ${fps}`);
+
+    lastFPSTime = currentTime;
+    frameCount = 0;
+  }
+
+  // Limit the frame rate by checking if enough time has passed since the last frame
+  if (elapsedTime > fpsInterval) {
+    lastFrameTime = currentTime;
+
     animateWaves();
+    frameCount++;
+
+    animationId = requestAnimationFrame(animateLoop);
+  } else {
+    // If not enough time has passed, wait until the next frame
     animationId = requestAnimationFrame(animateLoop);
   }
 }
@@ -123,7 +174,8 @@ let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (
 
 <template>
   <TresCanvas preset="realistic" window-size>
-    <TresPerspectiveCamera ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
+    <TresPerspectiveCamera v-if="isMobileDevice()" ref="camera" :position="[8, 8, 5]" :look-at="[0, -2, 0]" :zoom="1.2"/>
+    <TresPerspectiveCamera v-else ref="camera" :position="[10, 10, 5]" :look-at="[2, -2, 0]" />
     <TresDirectionalLight :intensity="0.6" :color="0xe3eeff" :position="[-5, 10, 1]" />
     <TresPointLight :intensity="80" :color="0xf03800" :position="[0,-4,0]" />
     <TresPointLight :intensity="20" :color="0xff0000" :position="[5,-4,5]" />

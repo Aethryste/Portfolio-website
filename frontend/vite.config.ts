@@ -12,6 +12,6 @@ export default defineConfig({
         viteRequire()
     ],
     define: {
-        BACKEND_URL: JSON.stringify('http://localhost:8081')
+        BACKEND_URL: JSON.stringify('http://www.srv511389.hstgr.cloud')
     }
 })

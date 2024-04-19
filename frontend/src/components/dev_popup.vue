@@ -13,7 +13,6 @@ export default {
   methods: {
     disable: function () {
       let elem = document.querySelector('#DevPopUp');
-      console.log(elem)
       elem.classList.add('anim-pageTitle-fade-out');
       elem.addEventListener('animationend', function callback() {
         elem.style.display = 'none';
