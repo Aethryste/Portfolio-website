@@ -91,6 +91,14 @@ export default {
     }
   },
   methods: {
+    updateSectionHeights() {
+      const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+      const sections = this.$refs.scrollContainer.querySelectorAll('.section');
+      sections.forEach((section, index) => {
+        section.style.height = `${viewportHeight-2}px`;
+      });
+      this.sectionHeights = Array.from(sections).map(section => section.clientHeight);
+    },
     handleTouchStart(event) {
       this.touchStartY = event.touches[0].clientY;
     },
@@ -99,7 +107,6 @@ export default {
       const touchEndY = event.touches[0].clientY;
       const touchDelta = this.touchStartY - touchEndY;
       const sensitivity = window.innerHeight / 4;
-
       if (touchDelta > sensitivity) {
         this.scrollDown();
         this.touchStartY = touchEndY;
@@ -160,9 +167,9 @@ export default {
     }
   },
   mounted() {
-    // Handle mouse scroll for desktops
+    this.updateSectionHeights();
+    window.addEventListener('resize', this.updateSectionHeights);
     this.$refs.scrollContainer.addEventListener('wheel', this.handleScroll, { passive: false });
-    // Handle touch events for mobile devices
     this.$refs.scrollContainer.addEventListener('touchstart', this.handleTouchStart, { passive: false });
     this.$refs.scrollContainer.addEventListener('touchmove', this.handleTouchMove, { passive: false });
     this.$refs.scrollContainer.addEventListener('touchend', this.handleTouchEnd, { passive: false });
@@ -170,9 +177,8 @@ export default {
     this.isNavigationVisible = false;
   },
   beforeUnmount() {
-    // Remove desktop scroll listener
+    window.removeEventListener('resize', this.updateSectionHeights);
     this.$refs.scrollContainer.removeEventListener('wheel', this.handleScroll);
-    // Remove touch event listeners
     this.$refs.scrollContainer.removeEventListener('touchstart', this.handleTouchStart);
     this.$refs.scrollContainer.removeEventListener('touchmove', this.handleTouchMove);
     this.$refs.scrollContainer.removeEventListener('touchend', this.handleTouchEnd);
@@ -184,12 +190,18 @@ export default {
 .container {
   position: relative;
   overflow: hidden!important;
+  width: 100vw;
+  height: 100vh;
 }
 .scroll-container {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.section {
+  height: calc(100% - 2px);
+  width: calc(100% - 2px);
 }
 .navigation {
    position: fixed;

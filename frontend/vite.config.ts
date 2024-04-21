@@ -5,13 +5,14 @@ import { viteRequire } from 'vite-require'
 
 export default defineConfig({
     server: {
-        port: 8080,
+        port: 80,
     },
     plugins: [
         vue({...templateCompilerOptions}),
         viteRequire()
     ],
     define: {
-        BACKEND_URL: JSON.stringify('http://www.srv511389.hstgr.cloud')
+        BACKEND_URL: JSON.stringify('https://www.srv511389.hstgr.cloud')
+        // BACKEND_URL: JSON.stringify('http://localhost:8081')
     }
 })

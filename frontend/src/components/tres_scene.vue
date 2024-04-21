@@ -110,7 +110,7 @@ function animateLoop() {
   // Log FPS every second
   if (currentTime > lastFPSTime + 1000) {
     const fps = frameCount;
-    console.log(`FPS: ${fps}`); // Mainly for testing purposes, maybe include visually in (prod) canvas.
+    // console.log(`FPS: ${fps}`); // Mainly for testing purposes, maybe include visually in (prod) canvas.
     lastFPSTime = currentTime;
     frameCount = 0;
   }
