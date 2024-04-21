@@ -1,20 +1,26 @@
 package com.backend.classes;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Base64;
-import lombok.NoArgsConstructor;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Component;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
 
-@NoArgsConstructor
+@Component
 public class ImageEditor {
-    public String convertToBase64(String FilePath) {
+
+    public String convertToBase64(String resourcePath) {
         try {
-            byte[] fileContent = FileUtils.readFileToByteArray(new File(FilePath));
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream(resourcePath);
+            if (inputStream == null) {
+                System.out.println("Error loading image: Resource not found: " + resourcePath);
+                return null;
+            }
+            byte[] fileContent = inputStream.readAllBytes();
             return Base64.getEncoder().encodeToString(fileContent);
         } catch (IOException e) {
-            System.out.println("convertTo() - "+ e );
+            System.out.println("Error loading image: " + e.getMessage());
             return null;
         }
     }
@@ -30,7 +36,7 @@ public class ImageEditor {
         try {
             return FilenameUtils.getName(FilePath);
         } catch (Exception e) {
-            System.out.println("getName() - "+ e );
+            System.out.println("getName() - " + e);
             return null;
         }
     }

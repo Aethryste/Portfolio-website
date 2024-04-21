@@ -3,6 +3,7 @@ package com.backend.services;
 import com.backend.classes.ImageEditor;
 import com.backend.classes.Slide;
 import org.springframework.stereotype.Repository;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Repository
@@ -10,11 +11,11 @@ public class SlideService {
 
     private static final ImageEditor imageEditor = new ImageEditor();
     private static final ArrayList<Slide> ALL_SLIDES = new ArrayList<>(5);
-    private static final String pathRoot = "src/main/resources/static/slideshow-images/";
+    private static final String pathRoot = "static/slideshow-images/";
 
     public SlideService() {}
 
-    public ArrayList<Slide> getAllSlides() {
+    public ArrayList<Slide> getAllSlides() throws IOException {
         if (ALL_SLIDES.isEmpty()) {
             this.buildSlides();
         }

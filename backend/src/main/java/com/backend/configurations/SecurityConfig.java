@@ -16,7 +16,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    public static final String ALLOWED_ORIGIN = "http://localhost";
+    public static final String ALLOWED_ORIGIN = "https://richardalgra.com";
     public static final long MAX_AGE = 3600L;
 
     @Bean
@@ -32,7 +32,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 //        CORS: Allow all for now, configure properly in prod
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList(ALLOWED_ORIGIN));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
