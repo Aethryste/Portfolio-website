@@ -10,19 +10,18 @@ let parent_props = defineProps({
 
 // Variables
 const gridSize = isMobileDevice() ? 15 : 50;
+const rowGap = isMobileDevice() ? 0.155 : 0.2;
+const columnGap = 0.54;
+let noise = new Noise(Math.random());
+const noiseScale = isMobileDevice() ? 6 : 5;
+let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
+let animationId:number|null = null;
+let time = ref(0);
+
+// Unused or should be removed
 const maxFPS = isMobileDevice() ? 20 : 60;
 let lastFrameTime = 0;
 const fpsInterval = 1000 / maxFPS;
-let lastFPSTime = 0;
-let frameCount = 0;
-const columnGap = 0.55;
-const rowGap = 0.2;
-let time = ref(0);
-let noiseSeed = Math.random();
-let noise = new Noise(noiseSeed);
-const noiseScale = 5;
-let pillars = reactive({ value: [] as Array<{ x: number; y: number; z: number; }[]> });
-let animationId:number|null = null;
 
 // Methods
 function isMobileDevice(): boolean {
@@ -38,7 +37,6 @@ function isMobileDevice(): boolean {
   ];
   return mobileKeywords.some(keyword => userAgent.includes(keyword));
 }
-
 function calculateGroupCenter() {
   let totalX = 0;
   let totalY = 0;
@@ -62,7 +60,6 @@ function calculateGroupCenter() {
   }
   return { x: totalX / pillarCount, y: totalY / pillarCount, z: totalZ / pillarCount };
 }
-
 function generatePillars() {
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
     let row: { x: number; y: number; z: number; }[] = [];
@@ -73,7 +70,6 @@ function generatePillars() {
     pillars.value.push(row);
   }
 }
-
 function calculatePillarPosition(rowIndex: number, columnIndex: number) {
   let positionX = columnIndex * (0.75 + rowGap);
   let positionZ = rowIndex * 1.5 * columnGap;
@@ -82,14 +78,13 @@ function calculatePillarPosition(rowIndex: number, columnIndex: number) {
   }
   return { x: positionX, y: 0, z: positionZ };
 }
-
 function animateWaves() {
   time.value += 0.01;
   for (let rowIndex = 0; rowIndex < gridSize; rowIndex++) {
     for (let columnIndex = 0; columnIndex < gridSize; columnIndex++) {
       const noiseValue = noise.simplex3(
-          rowIndex * 0.1,
-          columnIndex * 0.1,
+          rowIndex / 10,
+          columnIndex / 10,
           time.value * 0.1
       );
       const targetHeightOffset = noiseValue * noiseScale;
@@ -98,32 +93,22 @@ function animateWaves() {
     }
   }
 }
-
 function lerp(a: number, b: number, t: number) {
   return a * (1 - t) + b * t;
 }
-
 function animateLoop() {
   const currentTime = Date.now();
   const elapsedTime = currentTime - lastFrameTime;
-
-  // Log FPS every second
-  if (currentTime > lastFPSTime + 1000) {
-    const fps = frameCount;
-    // console.log(`FPS: ${fps}`); // Mainly for testing purposes, maybe include visually in (prod) canvas.
-    lastFPSTime = currentTime;
-    frameCount = 0;
-  }
   if (elapsedTime > fpsInterval) {
     lastFrameTime = currentTime;
     animateWaves();
-    frameCount++;
     animationId = requestAnimationFrame(animateLoop);
-  } else {
+  }
+  // required for mobile due to mobile framerate it seems, further investigate.
+  else if (isMobileDevice()) {
     animationId = requestAnimationFrame(animateLoop);
   }
 }
-
 watch(() => parent_props.isActive, (newVal, oldVal) => {
   if (newVal) {
     if (!animationId) {
@@ -138,14 +123,12 @@ watch(() => parent_props.isActive, (newVal, oldVal) => {
     }
   }
 })
-
 onMounted(() => {
   generatePillars();
   if (parent_props.isActive) {
     animateLoop();
   }
 });
-
 let rawObjGridCenter = calculateGroupCenter();
 let correctedGridCenter: [number, number, number] = [(0 - rawObjGridCenter.x), (0 - rawObjGridCenter.y), (0 - rawObjGridCenter.z)];
 </script>
