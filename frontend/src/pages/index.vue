@@ -95,7 +95,7 @@ export default {
       const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
       const sections = this.$refs.scrollContainer.querySelectorAll('.section');
       sections.forEach((section, index) => {
-        section.style.height = `${viewportHeight-2}px`;
+        section.style.height = `${viewportHeight}px`;
       });
       this.sectionHeights = Array.from(sections).map(section => section.clientHeight);
     },
@@ -190,18 +190,14 @@ export default {
 .container {
   position: relative;
   overflow: hidden!important;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
 }
 .scroll-container {
-  width: 100vw;
+  width: 100dvw;
   height: 100dvh;
   overflow-y: scroll;
   overflow-x: hidden;
-}
-.section {
-  height: calc(100% - 2px);
-  width: calc(100% - 2px);
 }
 .navigation {
    position: fixed;

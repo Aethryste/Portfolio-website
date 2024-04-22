@@ -5,6 +5,9 @@
         direction="vertical"
         :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
         :speed="800"
+        :touchEventsTarget="'none'"
+        :simulateTouch="false"
+        :allowTouchMove="false"
         ref="mySwiper"
       >
         <swiper-slide
@@ -95,8 +98,9 @@ export default {
 <style scoped lang="scss">
 @import "../styles/theme";
 .component-wrapper {
-  width: 100%;
-  height: 100%;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
   .timeline {
     width: 100%;
     height: 100%;
@@ -174,6 +178,8 @@ export default {
       }
     }
     .swiper-slide {
+      margin: auto!important;
+      height: 100%;
       position: relative;
       overflow: hidden;
       background-size: cover;

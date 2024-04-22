@@ -35,6 +35,7 @@ export default {
   font-family: "Roboto Light", sans-serif;
   backdrop-filter: blur(10px);
   box-shadow: 10px 10px 10px black;
+  background: rgba(0,0,0,0.6);
   z-index: 1000;
   .close-btn {
     position: absolute;
