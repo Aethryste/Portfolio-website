@@ -2,7 +2,7 @@
   <div class="component-wrapper">
     <div class="front-layer G_unselectable">
       <div class="page-title" ref="pageTitle">
-        <h1 class="main">Hi, I'm Richard.</h1>
+        <h1 class="main">Hi, I'm <span id="richard">Richard</span>.</h1>
         <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
       <div class="scroll-hint-bounce anim-bounce-vertical">
@@ -94,6 +94,9 @@ export default {
 
 <style scoped lang="scss">
 @import "src/styles/theme";
+#richard {
+  color: $theme-primary-color;
+}
 .component-wrapper {
   position: relative;
   width: 100vw;
