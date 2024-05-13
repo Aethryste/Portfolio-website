@@ -10,7 +10,8 @@
       </div>
     </div>
     <div class="back-layer G_unselectable">
-      <TresScene v-bind:isActive="isActive" id="canvas"/>
+      <p style="text-align: center; opacity: 0.3">3D scene currently deactivated for performance reasons.. :(</p>
+<!--      <TresScene v-bind:isActive="isActive" id="canvas"/>-->
     </div>
   </div>
 </template>
@@ -20,7 +21,7 @@ import TresScene from '../components/tres_scene.vue';
 export default {
   name: 'section_landingPage',
   components: {
-    TresScene
+    // TresScene
   },
   props: {
     isActive: Boolean
