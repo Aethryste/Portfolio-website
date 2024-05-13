@@ -12,6 +12,7 @@ export default {
   },
   data() {
     return {
+      windowWidth: 0,
       elem_profile_image: null,
       elem_profile_details: null,
       readMoreActivated: false,
@@ -57,12 +58,19 @@ export default {
         this.elem_profile_details.classList.add('animation-move-out-to-right');
       }
     },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
     activateReadMore() {
       this.readMoreActivated = true;
     },
     activateReadLess() {
       this.readMoreActivated = false;
     }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   },
   mounted () {
     this.elem_profile_image = document.querySelector('.profile-image');
@@ -78,8 +86,6 @@ export default {
       <img src="../assets/ProfileImg.svg" alt="Profile image"/>
     </div>
 
-<!--    <div class="arrow"/>-->
-
     <div class="profile-details">
       <div class="about">
         <header class="G_unselectable G_sectionHeader">About</header>
@@ -94,9 +100,10 @@ export default {
             Read less...
           </a>
         </p>
-        <div class="skills-container">
+        <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth >= 970" class="skills-container">
           <h3 v-if="!this.readMoreActivated">Frontend</h3>
-          <h4 v-if="this.readMoreActivated">Frontend</h4>
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Frontend</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260">
           <div class="skill-section">
             <skill_item icon="src/assets/icons-svg/icon-html.svg" :minimize="this.readMoreActivated">
               <template v-slot:title>HTML</template>
@@ -118,7 +125,8 @@ export default {
             </skill_item>
           </div>
           <h3 v-if="!this.readMoreActivated">Backend</h3>
-          <h4 v-if="this.readMoreActivated">Backend</h4>
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Backend</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260">
           <div class="skill-section">
             <skill_item icon="src/assets/icons-svg/icon-java.svg" :minimize="this.readMoreActivated">
               <template v-slot:title>Java</template>
@@ -134,8 +142,9 @@ export default {
             </skill_item>
           </div>
           <h3 v-if="!this.readMoreActivated">Tools</h3>
-          <h4 v-if="this.readMoreActivated">Tools</h4>
-          <div class="skill-section">
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Tools</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
+          <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth > 1136" class="skill-section">
             <skill_item icon="src/assets/icons-svg/icon-npm.svg" :minimize="this.readMoreActivated">
               <template v-slot:title>NPM</template>
             </skill_item>
@@ -159,10 +168,10 @@ export default {
   display: flex;
   font-family: "Roboto Light", sans-serif;
   .profile-image {
-    transform: translateX(-100%);
+    transform: translateX(-125%);
     display: flex;
     width: 50%;
-    height: 70%;
+    height: 640px;
     margin: auto auto auto 0;
     overflow: hidden;
     img {
@@ -173,19 +182,12 @@ export default {
       -moz-transform: scale(1.3);
       -o-transform: scale(1.3);
       -ms-transform: scale(1.3);
-      opacity: 0.1; //TODO: Remove later.
+      object-fit: cover;
+      object-position: center;
     }
   }
-  .arrow {
-    position: absolute;
-    width: 400px;
-    height: 200px;
-    border: 1px solid red;
-    top: 20%;
-    left: 40%;
-  }
   .profile-details {
-    transform: translateX(100%);
+    transform: translateX(125%);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -220,6 +222,10 @@ export default {
       margin: 1em auto auto auto;
       width: 100%;
       height: fit-content;
+      hr {
+        opacity: 0.1;
+        margin: 0;
+      }
       h3 {
         text-transform: uppercase;
         color: lightgrey;
@@ -307,6 +313,75 @@ export default {
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+@media screen and (max-width: 1420px) {
+  .container .profile-image img {
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 970px) {
+  .container .profile-details .skills-container {
+    h3 {
+      font-size: 0.7em;
+    }
+    .skill-section {
+      .container {
+        height: 40px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 940px) {
+  .container .profile-details .biography {
+    max-height: 30%;
+  }
+}
+@media screen and (max-width: 840px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    .profile-image {
+      margin: 8% auto auto auto;
+      width: 80%;
+      height: 25%;
+    }
+    .profile-details {
+      margin: auto;
+      width: 80%;
+    }
+    .about {
+      margin: auto!important;
+      width: 100%!important;
+      .skills-container {
+        h3 {
+          font-size: 0.9em;
+        }
+        .skill-section .container {
+          flex-direction: row;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 510px) {
+  .container {
+    .profile-image {
+      height: 15%;
+      margin: auto auto 0 auto;
+    }
+  }
+  .container .profile-details {
+    margin: 0 auto auto auto;
+    .about .skills-container {
+      h3 {
+        display: none;
+      }
+      .skill-section {
+        justify-content: center;
+      }
+    }
   }
 }
 </style>

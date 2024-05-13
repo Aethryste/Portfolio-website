@@ -67,4 +67,37 @@ export default {
     display: none;
   }
 }
+@media screen and (max-width: 1420px) {
+  .container {
+    height: 50px;
+    width: 150px;
+  }
+  .minimized {
+    height: 35px;
+  }
+
+}
+@media screen and (max-width: 1280px) {
+  .minimized {
+    height: 32px;
+    font-size: 0.8em;
+  }
+}
+@media screen and (max-width: 1120px) {
+  .container {
+    width: 130px;
+    .icon {
+      transform: scale(80%);
+    }
+  }
+}
+@media screen and (max-width: 1060px) {
+  .container {
+    width: 125px;
+    font-size: 0.8em;
+    .icon {
+      transform: scale(74%);
+    }
+  }
+}
 </style>
