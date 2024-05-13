@@ -1,8 +1,10 @@
 <script lang="ts">
 import typewriter from "../components/typewriter.vue";
+import Skill_item from "../components/skill_item.vue";
 export default {
   name: "section_aboutMe",
   components: {
+    Skill_item,
     typewriter,
   },
   props: {
@@ -91,35 +93,57 @@ export default {
           <a class="" v-if="readMoreActivated" @click="activateReadLess" href="#">
             Read less...
           </a>
-          <div class="skills-container">
+          <div class="skills-container G_unselectable">
             <h3>Frontend</h3>
             <div class="skill-section">
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
+              <skill_item icon="">
+                <template v-slot:title>HTML</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>CSS</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>JavaScript</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>SCSS</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>VueJs</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>Vite</template>
+              </skill_item>
             </div>
             <h3>Backend</h3>
             <div class="skill-section">
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
+              <skill_item icon="">
+                <template v-slot:title>Java</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>Spring</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>Python</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>MySQL</template>
+              </skill_item>
             </div>
-            <h3>Other</h3>
+            <h3>Tools</h3>
             <div class="skill-section">
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
-              <div class="skill-item"></div>
+              <skill_item icon="">
+                <template v-slot:title>NPM</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>GIT</template>
+              </skill_item>
+              <skill_item icon="">
+                <template v-slot:title>IDEA</template>
+              </skill_item>
             </div>
           </div>
         </p>
-        <div class="toolkit-list">
-          <div class="toolkit-item"></div>
-          <div class="toolkit-item"></div>
-          <div class="toolkit-item"></div>
-        </div>
       </div>
 
     </div>
@@ -137,7 +161,7 @@ export default {
     transform: translateX(-100%);
     display: flex;
     width: 50%;
-    height: 60%;
+    height: 70%;
     margin: auto auto auto 0;
     overflow: hidden;
     img {
@@ -165,7 +189,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 60%;
+    height: 70%;
     margin: auto auto auto 0;
     .about {
       width: calc(100%  - 5em);
@@ -184,21 +208,16 @@ export default {
         color: $theme-primary-color;
       }
       .skills-container {
-        margin: auto;
+        margin: 1em auto auto auto;
         width: 100%;
         height: 100%;
-        h2 {
-          color: grey;
-          font-weight: 500;
-          line-height: 2em;
-          border-bottom: 1px solid grey;
-          opacity: 0.5;
-        }
         h3 {
-          color: grey;
-          font-weight: 500;
+          color: $theme-primary-color;
+          font-size: 1.1em;
+          font-weight: 400;
           margin-top: 0.2em;
           margin-bottom: 0;
+          opacity: 0.5;
         }
         .skill-section {
           width: 100%;
@@ -217,11 +236,6 @@ export default {
                     rgb(255,255,255),
                     rgb(200,200,200)
             );
-            opacity: 0.05;
-            transition: 300ms;
-            &:hover {
-              opacity: 0.1;
-            }
           }
         }
       }
