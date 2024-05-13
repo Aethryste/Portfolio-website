@@ -84,7 +84,7 @@ export default {
       <div class="about">
         <header class="G_unselectable G_sectionHeader">About</header>
         <typewriter id="typewriter"/>
-        <p class="biography G_paragraph">
+        <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
           <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
           <a class="" v-if="!readMoreActivated" @click="activateReadMore" href="#">
             Read more...
@@ -93,61 +93,62 @@ export default {
           <a class="" v-if="readMoreActivated" @click="activateReadLess" href="#">
             Read less...
           </a>
-          <div class="skills-container G_unselectable">
-            <h3>Frontend</h3>
-            <div class="skill-section">
-              <skill_item icon="">
-                <template v-slot:title>HTML</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>CSS</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>JavaScript</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>SCSS</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>VueJs</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>Vite</template>
-              </skill_item>
-            </div>
-            <h3>Backend</h3>
-            <div class="skill-section">
-              <skill_item icon="">
-                <template v-slot:title>Java</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>Spring</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>Python</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>MySQL</template>
-              </skill_item>
-            </div>
-            <h3>Tools</h3>
-            <div class="skill-section">
-              <skill_item icon="">
-                <template v-slot:title>NPM</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>GIT</template>
-              </skill_item>
-              <skill_item icon="">
-                <template v-slot:title>IDEA</template>
-              </skill_item>
-            </div>
-          </div>
         </p>
+        <div class="skills-container">
+          <h3 v-if="!this.readMoreActivated">Frontend</h3>
+          <h4 v-if="this.readMoreActivated">Frontend</h4>
+          <div class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-html.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>HTML</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-css.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>CSS</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-js.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>JavaScript</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-scss.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>SCSS</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-vue.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>VueJs</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-vite.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Vite</template>
+            </skill_item>
+          </div>
+          <h3 v-if="!this.readMoreActivated">Backend</h3>
+          <h4 v-if="this.readMoreActivated">Backend</h4>
+          <div class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-java.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Java</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-spring.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Spring</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-python.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Python</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-sql.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>MySQL</template>
+            </skill_item>
+          </div>
+          <h3 v-if="!this.readMoreActivated">Tools</h3>
+          <h4 v-if="this.readMoreActivated">Tools</h4>
+          <div class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-npm.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>NPM</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-git.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>GIT</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-idea.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>IDEA</template>
+            </skill_item>
+          </div>
+        </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -172,7 +173,7 @@ export default {
       -moz-transform: scale(1.3);
       -o-transform: scale(1.3);
       -ms-transform: scale(1.3);
-      opacity: 0.1;
+      opacity: 0.1; //TODO: Remove later.
     }
   }
   .arrow {
@@ -203,40 +204,59 @@ export default {
       }
     }
     .biography {
+      transition: max-height 0.5s linear;
+      overflow: hidden;
+      max-height: 20%;
+      &.expanded {
+        max-height: 100%;
+        transition: max-height 0.5s linear;
+      }
       a {
         text-decoration: none;
         color: $theme-primary-color;
       }
-      .skills-container {
-        margin: 1em auto auto auto;
+    }
+    .skills-container {
+      margin: 1em auto auto auto;
+      width: 100%;
+      height: fit-content;
+      h3 {
+        text-transform: uppercase;
+        color: lightgrey;
+        font-weight: 500;
+        font-size: 0.9em;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        opacity: 0.3;
+      }
+      h4 {
+        text-transform: uppercase;
+        color: lightgrey;
+        font-size: 0.7em;
+        font-weight: 500;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        opacity: 0.3;
+      }
+      .skill-section {
         width: 100%;
-        height: 100%;
-        h3 {
-          color: $theme-primary-color;
-          font-size: 1.1em;
-          font-weight: 400;
-          margin-top: 0.2em;
-          margin-bottom: 0;
-          opacity: 0.5;
-        }
-        .skill-section {
-          width: 100%;
-          height: fit-content;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          .skill-item {
-            border-radius: 0.3em;
-            display: block;
-            width: 200px;
-            height: 60px;
-            margin: 5px;
-            background: linear-gradient(
-                    190deg,
-                    rgb(255,255,255),
-                    rgb(200,200,200)
-            );
-          }
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .skill-item {
+          border-radius: 0.3em;
+          display: block;
+          width: 200px;
+          height: 60px;
+          margin: 5px;
+          background: linear-gradient(
+                  190deg,
+                  rgb(255,255,255),
+                  rgb(200,200,200)
+          );
         }
       }
     }
