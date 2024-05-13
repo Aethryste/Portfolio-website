@@ -1,82 +1,159 @@
+<script lang="ts">
+import typewriter from "../components/typewriter.vue";
+import Skill_item from "../components/skill_item.vue";
+export default {
+  name: "section_aboutMe",
+  components: {
+    Skill_item,
+    typewriter,
+  },
+  props: {
+    isActive: Boolean
+  },
+  data() {
+    return {
+      windowWidth: 0,
+      elem_profile_image: null,
+      elem_profile_details: null,
+      readMoreActivated: false,
+      longText: "Hey there! I'm Richard, a driven student and aspiring software engineer on a mission to create " +
+          "enhanced user experiences through code. Currently pursuing a Bachelor's in Software Engineering at the " +
+          "Amsterdam University of Applied Sciences, I'm especially passionate about front-end/web -development but " +
+          "aspire to work Full-stack.\n\nMy journey into programming began with a Python certificate and has " +
+          "evolved to encompass several other languages including HTML/(S)CSS/Javascript, Java, and MySQL. I've " +
+          "also got experience with most recurrent libraries and associated frameworks such as VueJs and Springboot. " +
+          "I thrive in collaborative environments where ideas flow freely and collective efforts drive innovation." +
+          " I tend to prioritize quality and precision in my work.\n\nCurrently seeking long-term career " +
+          "opportunities that encourage personal and professional growth, I'm eager to contribute and " +
+          "tackle exciting challenges! "
+    }
+  },
+  watch: {
+    isActive(newVal, oldVal) {
+      if (newVal !== oldVal) { this.isActiveWatch(newVal); }
+    }
+  },
+  methods: {
+    isActiveWatch(value) {
+      if (value) {
+        if (this.elem_profile_image.classList.contains('animation-move-out-to-left')) {
+          this.elem_profile_image.classList.remove('animation-move-out-to-left');
+        }
+        this.elem_profile_image.classList.add('animation-move-in-from-left');
+
+        if (this.elem_profile_details.classList.contains('animation-move-out-to-right')) {
+          this.elem_profile_details.classList.remove('animation-move-out-to-right');
+        }
+        this.elem_profile_details.classList.add('animation-move-in-from-right');
+      }
+      else {
+        if (this.elem_profile_image.classList.contains('animation-move-in-from-left')) {
+          this.elem_profile_image.classList.remove('animation-move-in-from-left');
+        }
+        this.elem_profile_image.classList.add('animation-move-out-to-left');
+
+        if (this.elem_profile_details.classList.contains('animation-move-in-from-right')) {
+          this.elem_profile_details.classList.remove('animation-move-in-from-right');
+        }
+        this.elem_profile_details.classList.add('animation-move-out-to-right');
+      }
+    },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
+    activateReadMore() {
+      this.readMoreActivated = true;
+    },
+    activateReadLess() {
+      this.readMoreActivated = false;
+    }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  mounted () {
+    this.elem_profile_image = document.querySelector('.profile-image');
+    this.elem_profile_details = document.querySelector('.profile-details');
+  }
+}
+</script>
+
 <template>
-  <div class="component-wrapper">
-    <div class="content-wrapper">
-      <div class="left">
-        <div class="image"></div>
-        <div class="toolbox-icons-group-small">
-          <div class="toolbox-icon" id="icon-html"></div>
-          <div class="toolbox-icon" id="icon-css"></div>
-          <div class="toolbox-icon" id="icon-js"></div>
-          <div class="toolbox-icon" id="icon-vue"></div>
-          <div class="toolbox-icon" id="icon-java"></div>
-          <div class="toolbox-icon" id="icon-nodejs"></div>
-          <div class="toolbox-icon" id="icon-sql"></div>
-          <div class="toolbox-icon" id="icon-python"></div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="about-block">
-          <h3 class="G_unselectable G_sectionHeader">ABOUT</h3>
-          <typewriter class="FunctionTitle"/>
+  <div class="container">
 
-          <div v-if="this.windowW > 500">
-            <p class="G_paragraph">
-              My journey through IT started out by gaining a certificate regarding the basics of Python, by working on the
-              assignments of this course I discovered a strong passion for programming within myself. After this discovery
-              I decided to get my Bachelors Degree in Software Engineering at the
-              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
-                Amsterdam University of Applied Sciences
-              </a>. (AUAS)
-            </p>
-            <p class="G_paragraph">
-              Gaining a certificate in Python made me discover a strong passion for programming within myself, this
-              discovery led to decide to study Software Engineering (Bachelor) at the
-              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
-                Amsterdam University of Applied Sciences
-              </a>. (AUAS)
-            </p>
-            <p class="G_paragraph">
-              At AUAS I initially learned about general computer science topics, then several programming languages and
-              associated frameworks, and later full stack web-development by working (Agile) on the full Software
-              Development Life Cycle (SDLC) of our projects.
-            </p>
-            <p class="G_paragraph">
-              Through these experiences I found that I'm most comfortable working in the front-end of a product but I also
-              have some experience with back-end programming, REST API's & web-sockets, databases, testing, and of course
-              deployment.
-            </p>
+    <div class="profile-image">
+      <img src="../assets/ProfileImg.svg" alt="Profile image"/>
+    </div>
+
+    <div class="profile-details">
+      <div class="about">
+        <header class="G_unselectable G_sectionHeader">About</header>
+        <typewriter id="typewriter"/>
+        <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
+          <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
+          <a class="" v-if="!readMoreActivated" @click="activateReadMore" href="#">
+            Read more...
+          </a>
+          <span v-if="readMoreActivated" v-html="longText.replace(/\n/g, '<br/>')"></span>
+          <a class="" v-if="readMoreActivated" @click="activateReadLess" href="#">
+            Read less...
+          </a>
+        </p>
+        <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth >= 970" class="skills-container">
+          <h3 v-if="!this.readMoreActivated">Frontend</h3>
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Frontend</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260">
+          <div class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-html.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>HTML</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-css.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>CSS</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-js.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>JavaScript</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-scss.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>SCSS</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-vue.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>VueJs</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-vite.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Vite</template>
+            </skill_item>
           </div>
-
-          <div v-else>
-            <p class="G_paragraph">
-              Hey there! I'm Richard, a driven student and aspiring software engineer on a mission to translate code into
-              enhanced user experiences. Currently pursuing a Bachelor's in Software Engineering at the
-              <a target="_blank" href="https://www.amsterdamuas.com/about-auas">
-                Amsterdam University of Applied Sciences.
-              </a>
-            </p>
-            <p class="G_paragraph">
-              I'm especially passionate about front-end/web -development but aspire to work Full-stack.
-            </p>
-            <p class="G_paragraph">
-              My journey into programming began with a Python certificate and has evolved to encompass several other
-              languages. I've also got experience with most recurrent libraries and associated frameworks such as VueJs
-              and Springboot.
-            </p>
+          <h3 v-if="!this.readMoreActivated">Backend</h3>
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Backend</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260">
+          <div class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-java.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Java</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-spring.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Spring</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-python.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>Python</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-sql.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>MySQL</template>
+            </skill_item>
           </div>
-
-          <p class="G_paragraph">
-            <span class="G_theme-primary-color-text">My toolkit of preference includes:</span>
-          </p>
-          <div class="toolbox-icons-group-big">
-            <div class="toolbox-icon" id="icon-html"></div>
-            <div class="toolbox-icon" id="icon-css"></div>
-            <div class="toolbox-icon" id="icon-js"></div>
-            <div class="toolbox-icon" id="icon-vue"></div>
-            <div class="toolbox-icon" id="icon-java"></div>
-            <div class="toolbox-icon" id="icon-nodejs"></div>
-            <div class="toolbox-icon" id="icon-sql"></div>
-            <div class="toolbox-icon" id="icon-python"></div>
+          <h3 v-if="!this.readMoreActivated">Tools</h3>
+          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Tools</h4>
+          <hr v-if="this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
+          <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth > 1136" class="skill-section">
+            <skill_item icon="src/assets/icons-svg/icon-npm.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>NPM</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-git.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>GIT</template>
+            </skill_item>
+            <skill_item icon="src/assets/icons-svg/icon-idea.svg" :minimize="this.readMoreActivated">
+              <template v-slot:title>IDEA</template>
+            </skill_item>
           </div>
         </div>
       </div>
@@ -84,247 +161,227 @@
   </div>
 </template>
 
-<script>
-import typewriter from '../components/typewriter.vue';
-export default {
-  name: 'section_aboutMe',
-  components: {
-    typewriter,
-  },
-  data() {
-    return {
-      windowW: window.innerWidth
-    }
-  },
-  methods: {
-    handleResize() {
-      this.windowW = window.innerWidth;
-    }
-  },
-  created() {
-    window.addEventListener('resize', this.handleResize);
-  }
-}
-</script>
-
 <style scoped lang="scss">
 @import "../styles/theme";
-.component-wrapper {
-  color: white;
-  width: 100vw;
-  height: 100vh;
+#more {display: none;}
+.container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  .content-wrapper {
+  font-family: "Roboto Light", sans-serif;
+  .profile-image {
+    transform: translateX(-125%);
     display: flex;
-    flex-direction: row;
-    height: 70%;
-    width: 100%;
-    margin: auto!important;
-    .left {
-      display: flex;
-      width: 50%;
+    width: 50%;
+    height: 640px;
+    margin: auto auto auto 0;
+    overflow: hidden;
+    img {
+      width: 100%;
       height: 100%;
-      .image {
-        width: 100%;
-        height: 80%;
-        background: url("../assets/ProfileImg.svg") center no-repeat;
-        background-size: cover;
-        margin: auto!important;
-        box-shadow: rgba(0, 0, 0, 0.3) 0 3px 8px;
-      }
-    }
-    .right {
-      display: flex;
-      width: 50%;
-      height: 100%;
-      .about-block {
-        width: 70%;
-        margin: auto auto auto 2em!important;
-        .FunctionTitle {
-          margin: -1em 0 -1em 0!important;
-        }
-        p {
-          a {
-            text-decoration: none;
-            color: white;
-          }
-        }
-      }
+      transform: scale(1.3);
+      -webkit-transform: scale(1.3);
+      -moz-transform: scale(1.3);
+      -o-transform: scale(1.3);
+      -ms-transform: scale(1.3);
+      object-fit: cover;
+      object-position: center;
     }
   }
-}
-.toolbox-icons-group {
-  &-big {
+  .profile-details {
+    transform: translateX(125%);
+    position: relative;
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: fit-content;
-    margin: 20px 0 0 0!important;
-    justify-content: space-evenly;
-    .toolbox-icon {
-      width: 60px;
-      min-width: 60px;
-      height: 60px;
-      min-height: 60px;
-      margin: 5px auto!important;
-      transition: 300ms;
-      &:hover {
-        transform: translateY(-3px) scale(110%);
-      }
-    }
-  }
-  &-small {
-    display: none;
-    flex-direction: row;
-    width: 95%;
-    height: fit-content;
-    margin: -15% auto auto auto!important;
-    justify-content: space-evenly;
-    .toolbox-icon {
-      width: 50px;
-      min-width: 50px;
-      height: 50px;
-      min-height: 50px;
-      margin: 5px auto!important;
-      transition: 300ms;
-      &:hover {
-        transform: translateY(-3px) scale(110%);
-      }
-    }
-  }
-}
-@media screen and (max-width: 1450px) {
-  .toolbox-icons-group-big .toolbox-icon {
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    min-height: 50px;
-  }
-}
-@media screen and (max-width: 1260px) {
-  #icon-html {
-    background: url("../assets/icons-svg/icon-htmlcssjs.svg") center no-repeat;
-    background-size: cover;
-  }
-  #icon-css, #icon-js {
-    display: none;
-  }
-  .toolbox-icons-group-big .toolbox-icon {
-    width: 60px;
-    min-width: 60px;
-    height: 60px;
-    min-height: 60px;
-  }
-}
-@media screen and (max-width: 1190px) {
-  .G_theme-primary-color-text {
-    display: none;
-  }
-}
-@media screen and (max-width: 1100px) {
-  .toolbox-icons-group-big .toolbox-icon {
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    min-height: 50px;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .toolbox-icons-group {
-    &-big {
-      display: none;
-    }
-    &-small {
-      display: flex;
-    }
-  }
-  .component-wrapper .content-wrapper .left {
-    flex-wrap: wrap;
-    align-items: flex-start;
-    .image {
-      height: 60%;
-      margin-top: 18%!important;
-    }
-  }
-}
-@media screen and (max-width: 950px) {
-  .component-wrapper .content-wrapper {
     flex-direction: column;
-    height: 100%;
-    .left {
-      margin: auto auto 0 auto!important;
-      width: 80%;
+    width: 50%;
+    height: 70%;
+    margin: auto auto auto 0;
+    .about {
+      width: calc(100%  - 5em);
+      height: calc(100%  - 2em);
+      margin: auto auto auto 1em;
+      .G_sectionHeader {
+        text-transform: uppercase;
+      }
+      #typewriter {
+        margin: -1em 0 -1em 0!important;
+      }
+    }
+    .biography {
+      transition: max-height 0.5s linear;
+      overflow: hidden;
+      max-height: 20%;
+      &.expanded {
+        max-height: 100%;
+        transition: max-height 0.5s linear;
+      }
+      a {
+        text-decoration: none;
+        color: $theme-primary-color;
+      }
+    }
+    .skills-container {
+      margin: 1em auto auto auto;
+      width: 100%;
       height: fit-content;
-      flex-direction: column;
-      .image {
-        height: 300px;
+      hr {
+        opacity: 0.1;
+        margin: 0;
+      }
+      h3 {
+        text-transform: uppercase;
+        color: lightgrey;
+        font-weight: 500;
+        font-size: 0.9em;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        opacity: 0.3;
+      }
+      h4 {
+        text-transform: uppercase;
+        color: lightgrey;
+        font-size: 0.7em;
+        font-weight: 500;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        opacity: 0.3;
+      }
+      .skill-section {
         width: 100%;
-        margin: auto!important;
-      }
-      .toolbox-icons-group-small {
-        margin: auto auto 0 auto!important;
-        width: 100%;
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-    }
-    .right {
-      margin: 0 auto auto auto!important;
-      width: 80%;
-      height: fit-content;
-      .about-block {
-        width: 100%;
-        margin: auto!important;
-      }
-    }
-  }
-}
-@media screen and (max-width: 700px) {
-  .component-wrapper .content-wrapper .left .image {
-    max-height: 250px;
-  }
-}
-@media screen and (max-width: 600px) {
-  .component-wrapper .content-wrapper {
-    max-width: 90%;
-    margin: auto!important;
-    .left .image {
-      background-size: 140%;
-    }
-  }
-}
-@media screen and (max-width: 500px) {
-  .component-wrapper .content-wrapper {
-    .left {
-      .image {
-        max-height: 180px;
-      }
-      .toolbox-icons-group-small {
-        border-bottom: 1px solid rgba(255,255,255,0.3);
-        margin-bottom: 1em!important;
-        .toolbox-icon {
-          width: 40px;
-          min-width: 40px;
-          height: 40px;
-          min-height: 40px;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .skill-item {
+          border-radius: 0.3em;
+          display: block;
+          width: 200px;
+          height: 60px;
+          margin: 5px;
+          background: linear-gradient(
+                  190deg,
+                  rgb(255,255,255),
+                  rgb(200,200,200)
+          );
         }
       }
     }
-    .right .about-block .G_sectionHeader {
-      font-size: 1.1em;
+  }
+}
+.animation-move-in-from-left {
+  animation: move-in-from-left 500ms forwards 400ms;
+}
+@keyframes move-in-from-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animation-move-in-from-right {
+  animation: move-in-from-right 500ms forwards 400ms;
+}
+@keyframes move-in-from-right {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animation-move-out-to-left {
+  animation: move-out-to-left 400ms forwards;
+}
+@keyframes move-out-to-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animation-move-out-to-right {
+  animation: move-out-to-right 400ms forwards;
+}
+@keyframes move-out-to-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media screen and (max-width: 1420px) {
+  .container .profile-image img {
+    transform: scale(1);
+  }
+}
+@media screen and (max-width: 970px) {
+  .container .profile-details .skills-container {
+    h3 {
+      font-size: 0.7em;
+    }
+    .skill-section {
+      .container {
+        height: 40px;
+      }
     }
   }
 }
-@media screen and (max-width: 400px) {
-  .component-wrapper .content-wrapper .left .image {
-    background-size: 200%;
-    background-position: 50% 40%;
+@media screen and (max-width: 940px) {
+  .container .profile-details .biography {
+    max-height: 30%;
   }
-  .G_sectionHeader {
-    font-size: 0.8em!important;
-    margin: 0 0 0 0!important;
+}
+@media screen and (max-width: 840px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    .profile-image {
+      margin: 8% auto auto auto;
+      width: 80%;
+      height: 25%;
+    }
+    .profile-details {
+      margin: auto;
+      width: 80%;
+    }
+    .about {
+      margin: auto!important;
+      width: 100%!important;
+      .skills-container {
+        h3 {
+          font-size: 0.9em;
+        }
+        .skill-section .container {
+          flex-direction: row;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 510px) {
+  .container {
+    .profile-image {
+      height: 15%;
+      margin: auto auto 0 auto;
+    }
+  }
+  .container .profile-details {
+    margin: 0 auto auto auto;
+    .about .skills-container {
+      h3 {
+        display: none;
+      }
+      .skill-section {
+        justify-content: center;
+      }
+    }
   }
 }
 </style>
