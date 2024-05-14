@@ -1,6 +1,21 @@
 <script lang="ts">
 import typewriter from "../components/typewriter.vue";
 import Skill_item from "../components/skill_item.vue";
+
+import icon_html from "../assets/icons-svg/icon-html.svg?url";
+import icon_css from "../assets/icons-svg/icon-css.svg?url";
+import icon_js from "../assets/icons-svg/icon-js.svg?url";
+import icon_scss from "../assets/icons-svg/icon-scss.svg?url";
+import icon_vue from "../assets/icons-svg/icon-vue.svg?url";
+import icon_vite from "../assets/icons-svg/icon-vite.svg?url";
+import icon_java from "../assets/icons-svg/icon-java.svg?url";
+import icon_spring from "../assets/icons-svg/icon-spring.svg?url";
+import icon_python from "../assets/icons-svg/icon-python.svg?url";
+import icon_mysql from "../assets/icons-svg/icon-sql.svg?url";
+import icon_npm from "../assets/icons-svg/icon-npm.svg?url";
+import icon_git from "../assets/icons-svg/icon-git.svg?url";
+import icon_idea from "../assets/icons-svg/icon-idea.svg?url";
+
 export default {
   name: "section_aboutMe",
   components: {
@@ -25,7 +40,22 @@ export default {
           "I thrive in collaborative environments where ideas flow freely and collective efforts drive innovation." +
           " I tend to prioritize quality and precision in my work.\n\nCurrently seeking long-term career " +
           "opportunities that encourage personal and professional growth, I'm eager to contribute and " +
-          "tackle exciting challenges! "
+          "tackle exciting challenges! ",
+      icons: {
+        html: icon_html,
+        css: icon_css,
+        js: icon_js,
+        scss: icon_scss,
+        vue: icon_vue,
+        vite: icon_vite,
+        java: icon_java,
+        spring: icon_spring,
+        python: icon_python,
+        sql: icon_mysql,
+        npm: icon_npm,
+        git: icon_git,
+        idea: icon_idea,
+      }
     }
   },
   watch: {
@@ -105,22 +135,22 @@ export default {
           <h4 v-if="this.readMoreActivated && windowWidth > 1260">Frontend</h4>
           <hr v-if="this.readMoreActivated && windowWidth < 1260">
           <div class="skill-section">
-            <skill_item icon="src/assets/icons-svg/icon-html.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.html" :minimize="this.readMoreActivated">
               <template v-slot:title>HTML</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-css.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.css" :minimize="this.readMoreActivated">
               <template v-slot:title>CSS</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-js.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.js" :minimize="this.readMoreActivated">
               <template v-slot:title>JavaScript</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-scss.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.scss" :minimize="this.readMoreActivated">
               <template v-slot:title>SCSS</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-vue.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.vue" :minimize="this.readMoreActivated">
               <template v-slot:title>VueJs</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-vite.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.vite" :minimize="this.readMoreActivated">
               <template v-slot:title>Vite</template>
             </skill_item>
           </div>
@@ -128,16 +158,16 @@ export default {
           <h4 v-if="this.readMoreActivated && windowWidth > 1260">Backend</h4>
           <hr v-if="this.readMoreActivated && windowWidth < 1260">
           <div class="skill-section">
-            <skill_item icon="src/assets/icons-svg/icon-java.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.java" :minimize="this.readMoreActivated">
               <template v-slot:title>Java</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-spring.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.spring" :minimize="this.readMoreActivated">
               <template v-slot:title>Spring</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-python.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.python" :minimize="this.readMoreActivated">
               <template v-slot:title>Python</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-sql.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.sql" :minimize="this.readMoreActivated">
               <template v-slot:title>MySQL</template>
             </skill_item>
           </div>
@@ -145,13 +175,13 @@ export default {
           <h4 v-if="this.readMoreActivated && windowWidth > 1260">Tools</h4>
           <hr v-if="this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
           <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth > 1136" class="skill-section">
-            <skill_item icon="src/assets/icons-svg/icon-npm.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.npm" :minimize="this.readMoreActivated">
               <template v-slot:title>NPM</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-git.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.git" :minimize="this.readMoreActivated">
               <template v-slot:title>GIT</template>
             </skill_item>
-            <skill_item icon="src/assets/icons-svg/icon-idea.svg" :minimize="this.readMoreActivated">
+            <skill_item :icon="icons.idea" :minimize="this.readMoreActivated">
               <template v-slot:title>IDEA</template>
             </skill_item>
           </div>

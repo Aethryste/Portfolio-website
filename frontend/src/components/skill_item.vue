@@ -10,13 +10,18 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  mounted() {
+    console.log(this.icon)
+    const iconElement = this.$refs.icon as HTMLElement;
+    iconElement.style.background = "url("+this.icon+")";
   }
 }
 </script>
 
 <template>
   <div class="container G_unselectable" :class="{ 'minimized': minimize }">
-    <div class="icon" v-if="!minimize" :style="{ background: `url(${icon}) center no-repeat`}"/>
+    <div ref="icon" class="icon" v-if="!minimize" :style="{ backgroundImage: `url(${icon})`}"/>
     <p class="title">
       <slot name="title"></slot>
     </p>
