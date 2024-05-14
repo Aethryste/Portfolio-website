@@ -61,14 +61,32 @@ export default {
     };
   },
   methods: {
-    fetchData() {
+    fetchSlides() {
       let ajax = new XMLHttpRequest()
-      ajax.open('GET', BACKEND_URL+'/images/timeline')
+      ajax.open('GET', BACKEND_URL+'/res/slides')
       ajax.onload = () => {
         this.slides = JSON.parse(ajax.responseText);
       };
       ajax.onerror = () => {
         console.error('Error fetching slideshow data.');
+      };
+      ajax.send();
+    },
+    fetchIcons() {
+      let ajax = new XMLHttpRequest()
+      ajax.open('GET', BACKEND_URL + '/res/icon/icon-arrow.svg');
+      ajax.responseType = 'text';
+      ajax.onload = () => {
+        if (ajax.status === 200) {
+          const base64SVG = btoa(ajax.responseText);
+          const maskUrl = `url('data:image/svg+xml;base64,${base64SVG}')`;
+          document.documentElement.style.setProperty('--btn-mask', maskUrl);
+        } else {
+          console.error('Error fetching icon:', ajax.statusText);
+        }
+      };
+      ajax.onerror = () => {
+        console.error('Error fetching icon.');
       };
       ajax.send();
     },
@@ -90,7 +108,8 @@ export default {
     }
   },
   created() {
-    this.fetchData();
+    this.fetchSlides();
+    this.fetchIcons();
   }
 }
 </script>
@@ -145,7 +164,7 @@ export default {
         #swiper-button-prev, #swiper-button-next {
           height: 30px;
           margin: auto!important;
-          mask: url("../assets/icons-svg/icon-arrow.svg");
+          mask: var(--btn-mask);
           mask-size: cover;
           background-color: $theme-primary-color;
           cursor: pointer;
