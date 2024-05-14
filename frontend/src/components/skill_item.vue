@@ -11,17 +11,36 @@ export default {
       default: false
     }
   },
+  methods: {
+    fetchData() {
+      let ajax = new XMLHttpRequest()
+      ajax.open('GET', BACKEND_URL + '/res/icon/' + this.icon);
+      ajax.responseType = 'text';
+      ajax.onload = () => {
+        if (ajax.status === 200) {
+          const svgData = ajax.responseText;
+          const base64SVG = btoa(svgData);
+          const iconElement = this.$refs.icon as HTMLElement;
+          iconElement.style.background = "url('data:image/svg+xml;base64," + base64SVG + "')";
+        } else {
+          console.error('Error fetching icon:', ajax.statusText);
+        }
+      };
+      ajax.onerror = () => {
+        console.error('Error fetching icon.');
+      };
+      ajax.send();
+    },
+  },
   mounted() {
-    console.log(this.icon)
-    const iconElement = this.$refs.icon as HTMLElement;
-    iconElement.style.background = "url("+this.icon+")";
+    this.fetchData();
   }
 }
 </script>
 
 <template>
   <div class="container G_unselectable" :class="{ 'minimized': minimize }">
-    <div ref="icon" class="icon" v-if="!minimize" :style="{ backgroundImage: `url(${icon})`}"/>
+    <div ref="icon" class="icon" v-if="!minimize"/>
     <p class="title">
       <slot name="title"></slot>
     </p>

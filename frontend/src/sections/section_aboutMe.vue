@@ -2,20 +2,6 @@
 import typewriter from "../components/typewriter.vue";
 import Skill_item from "../components/skill_item.vue";
 
-import icon_html from "../assets/icons-svg/icon-html.svg?url";
-import icon_css from "../assets/icons-svg/icon-css.svg?url";
-import icon_js from "../assets/icons-svg/icon-js.svg?url";
-import icon_scss from "../assets/icons-svg/icon-scss.svg?url";
-import icon_vue from "../assets/icons-svg/icon-vue.svg?url";
-import icon_vite from "../assets/icons-svg/icon-vite.svg?url";
-import icon_java from "../assets/icons-svg/icon-java.svg?url";
-import icon_spring from "../assets/icons-svg/icon-spring.svg?url";
-import icon_python from "../assets/icons-svg/icon-python.svg?url";
-import icon_mysql from "../assets/icons-svg/icon-sql.svg?url";
-import icon_npm from "../assets/icons-svg/icon-npm.svg?url";
-import icon_git from "../assets/icons-svg/icon-git.svg?url";
-import icon_idea from "../assets/icons-svg/icon-idea.svg?url";
-
 export default {
   name: "section_aboutMe",
   components: {
@@ -42,19 +28,19 @@ export default {
           "opportunities that encourage personal and professional growth, I'm eager to contribute and " +
           "tackle exciting challenges! ",
       icons: {
-        html: icon_html,
-        css: icon_css,
-        js: icon_js,
-        scss: icon_scss,
-        vue: icon_vue,
-        vite: icon_vite,
-        java: icon_java,
-        spring: icon_spring,
-        python: icon_python,
-        sql: icon_mysql,
-        npm: icon_npm,
-        git: icon_git,
-        idea: icon_idea,
+        html: "icon-html.svg",
+        css: "icon-css.svg",
+        js: "icon-js.svg",
+        scss: "icon-scss.svg",
+        vue: "icon-vue.svg",
+        vite: "icon-vite.svg",
+        java: "icon-java.svg",
+        spring: "icon-spring.svg",
+        python: "icon-python.svg",
+        sql: "icon-sql.svg",
+        npm: "icon-npm.svg",
+        git: "icon-git.svg",
+        idea: "icon-idea.svg",
       }
     }
   },
