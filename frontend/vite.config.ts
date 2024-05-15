@@ -13,6 +13,5 @@ export default defineConfig({
     ],
     define: {
         BACKEND_URL: JSON.stringify('https://www.srv511389.hstgr.cloud')
-        // BACKEND_URL: JSON.stringify('http://localhost:8081')
     }
 })

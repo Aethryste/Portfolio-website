@@ -1,6 +1,7 @@
 <script lang="ts">
 import typewriter from "../components/typewriter.vue";
 import Skill_item from "../components/skill_item.vue";
+import { isMobileDevice } from "../globals";
 
 export default {
   name: "section_aboutMe",
@@ -14,6 +15,7 @@ export default {
   data() {
     return {
       windowWidth: 0,
+      isMobileDevice: isMobileDevice(),
       elem_profile_image: null,
       elem_profile_details: null,
       readMoreActivated: false,
@@ -41,7 +43,8 @@ export default {
         npm: "icon-npm.svg",
         git: "icon-git.svg",
         idea: "icon-idea.svg",
-      }
+      },
+      profileImagePath: BACKEND_URL+'/ProfileImg.svg'
     }
   },
   watch: {
@@ -99,7 +102,7 @@ export default {
   <div class="container">
 
     <div class="profile-image">
-      <img src="../assets/ProfileImg.svg" alt="Profile image"/>
+      <img :src='this.profileImagePath' alt="Profile image"/>
     </div>
 
     <div class="profile-details">
@@ -157,10 +160,10 @@ export default {
               <template v-slot:title>MySQL</template>
             </skill_item>
           </div>
-          <h3 v-if="!this.readMoreActivated">Tools</h3>
-          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Tools</h4>
-          <hr v-if="this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
-          <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth > 1136" class="skill-section">
+          <h3 v-if="!this.isMobileDevice && !this.readMoreActivated">Tools</h3>
+          <h4 v-if="!this.isMobileDevice && this.readMoreActivated && windowWidth > 1260">Tools</h4>
+          <hr v-if="!this.isMobileDevice && this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
+          <div v-if="!this.isMobileDevice && !this.readMoreActivated || !this.isMobileDevice && this.readMoreActivated && windowWidth > 1136" class="skill-section">
             <skill_item :icon="icons.npm" :minimize="this.readMoreActivated">
               <template v-slot:title>NPM</template>
             </skill_item>
