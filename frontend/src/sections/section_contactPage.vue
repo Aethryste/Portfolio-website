@@ -40,7 +40,11 @@
             v-model="messageValue"></textarea>
           <p class="G_unselectable error-text" v-if="messageErrorMsg">{{ messageErrorMsg }}</p>
 
-          <button @click.prevent="sendMessage"><span class="icon"></span>Reach out!</button>
+<!--          <button @click.prevent="sendMessage"><span class="icon"></span>Reach out!</button>-->
+          <button @click.prevent="sendMessage" @mouseover="changeIcon('sendIcon', 'sendWhite')" @mouseout="changeIcon('sendIcon', 'sendBlack')">
+            <span class="icon" ref="sendIcon"></span>Reach out!
+          </button>
+
 
           <Transition name="slide-fade">
             <div v-if="messageSent" class="message-sent-notification font_inter">Message Sent!</div>
@@ -88,14 +92,14 @@ export default {
       submissionResponse: null,
       lastSubmissionTime: 0,
       throttleDuration: 60000,
-      icons: {
-        email: '',
-        linkedin: '',
-        github: '',
-        codepen: '',
-        sendBlack: '',
-        sendWhite: ''
-      }
+      icons: [
+        { id: 'email', url: 'icon-email', data: '' },
+        { id: 'linkedin', url: 'icon-linkedin', data: '' },
+        { id: 'github', url: 'icon-github', data: '' },
+        { id: 'codepen', url: 'icon-codepen', data: '' },
+        { id: 'sendBlack', url: 'icon-send-black', data: '' },
+        { id: 'sendWhite', url: 'icon-send-white', data: '' }
+      ]
     };
   },
   watch: {
@@ -107,15 +111,24 @@ export default {
     }
   },
   methods: {
-    getIconStyle(iconName) {
-      return {
+    getIconStyle(iconId) {
+      const icon = this.icons.find(icon => icon.id === iconId);
+      return icon ? {
         width: '24px',
         height: '24px',
-        background: `url(data:image/svg+xml,${encodeURIComponent(this.icons[iconName])}) center no-repeat`,
+        background: `url(data:image/svg+xml,${encodeURIComponent(icon.data)}) center no-repeat`,
         backgroundSize: 'cover',
         imageRendering: 'crisp-edges',
         msInterpolationMode: 'nearest-neighbor'
-      };
+      } : {};
+    },
+    changeIcon(iconRef, iconName) {
+      const element = this.$refs[iconRef];
+      const icon = this.icons.find(icon => icon.id === iconName);
+      if (element && icon) {
+        element.style.background = `url(data:image/svg+xml,${encodeURIComponent(icon.data)}) center no-repeat`;
+        element.style.backgroundSize = 'contain';
+      }
     },
     updateIconStyles() {
       for (const icon in this.icons) {
@@ -193,10 +206,12 @@ export default {
     }
   },
   async mounted() {
-    for (const icon in this.icons) {
-      this.icons[icon] = await backendFetch(`/res/icon/icon-${icon}.svg`);
+    for (const icon of this.icons) {
+      icon.data = await backendFetch(`/res/icon/${icon.url}.svg`);
     }
-  }
+    this.changeIcon('sendIcon', 'sendBlack');
+  },
+
 }
 </script>
 
