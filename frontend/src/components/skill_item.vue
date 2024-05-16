@@ -1,6 +1,4 @@
 <script lang="ts">
-import { backendFetch } from '../globals';
-
 export default {
   name: "skill_item",
   props: {
@@ -13,19 +11,15 @@ export default {
       default: false
     }
   },
-  methods: {
-    async fetchData() {
-      try {
-        const base64SVG = btoa(await backendFetch(`/res/icon/${this.icon}`));
-        const iconElement = this.$refs.icon as HTMLElement;
-        iconElement.style.background = `url('data:image/svg+xml;base64,${base64SVG}')`;
-      } catch (error) {
-        console.error('Error fetching icon:', error.message);
-      }
+  watch: {
+    icon(newIcon) {
+      const iconElement = this.$refs.icon as HTMLElement;
+      iconElement.style.background = newIcon;
     }
   },
-  created() {
-    this.fetchData();
+  mounted() {
+    const iconElement = this.$refs.icon as HTMLElement;
+    iconElement.style.background = this.icon;
   }
 }
 </script>

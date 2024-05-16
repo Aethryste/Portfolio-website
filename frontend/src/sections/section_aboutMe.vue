@@ -1,9 +1,10 @@
 <script lang="ts">
+import { defineComponent } from 'vue';
 import typewriter from "../components/typewriter.vue";
 import Skill_item from "../components/skill_item.vue";
-import { isMobileDevice } from "../globals";
+import { backendFetch, isMobileDevice } from "../globals";
 
-export default {
+export default defineComponent({
   name: "section_aboutMe",
   components: {
     Skill_item,
@@ -14,11 +15,11 @@ export default {
   },
   data() {
     return {
-      windowWidth: 0,
-      isMobileDevice: isMobileDevice(),
-      elem_profile_image: null,
-      elem_profile_details: null,
-      readMoreActivated: false,
+      windowWidth: 0 as number,
+      isMobileDevice: isMobileDevice() as boolean,
+      elem_profile_image: null as Element | null,
+      elem_profile_details: null as Element | null,
+      readMoreActivated: false as boolean,
       longText: "Hey there! I'm Richard, a driven student and aspiring software engineer on a mission to create " +
           "enhanced user experiences through code. Currently pursuing a Bachelor's in Software Engineering at the " +
           "Amsterdam University of Applied Sciences, I'm especially passionate about front-end/web -development but " +
@@ -28,150 +29,119 @@ export default {
           "I thrive in collaborative environments where ideas flow freely and collective efforts drive innovation." +
           " I tend to prioritize quality and precision in my work.\n\nCurrently seeking long-term career " +
           "opportunities that encourage personal and professional growth, I'm eager to contribute and " +
-          "tackle exciting challenges! ",
-      icons: {
-        html: "icon-html.svg",
-        css: "icon-css.svg",
-        js: "icon-js.svg",
-        scss: "icon-scss.svg",
-        vue: "icon-vue.svg",
-        vite: "icon-vite.svg",
-        java: "icon-java.svg",
-        spring: "icon-spring.svg",
-        python: "icon-python.svg",
-        sql: "icon-sql.svg",
-        npm: "icon-npm.svg",
-        git: "icon-git.svg",
-        idea: "icon-idea.svg",
-      },
-      profileImagePath: BACKEND_URL+'/ProfileImg.svg'
+          "tackle exciting challenges! " as string,
+      profileImagePath: BACKEND_URL+'/ProfileImg.svg' as string,
+      skillCategories: [
+        {
+          title: 'Frontend',
+          skills: [
+            { name: 'HTML', iconName: 'html', icon: '' },
+            { name: 'CSS', iconName: 'css', icon: '' },
+            { name: 'JavaScript', iconName: 'js', icon: '' },
+            { name: 'SCSS', iconName: 'scss', icon: '' },
+            { name: 'VueJs', iconName: 'vue', icon: '' },
+            { name: 'Vite', iconName: 'vite', icon: '' },
+          ]
+        },
+        {
+          title: 'Backend',
+          skills: [
+            { name: 'Java', iconName: 'java', icon: '' },
+            { name: 'Spring', iconName: 'spring', icon: '' },
+            { name: 'Python', iconName: 'python', icon: '' },
+            { name: 'MySQL', iconName: 'sql', icon: '' },
+          ]
+        },
+        {
+          title: 'Other',
+          skills: [
+            { name: 'NPM', iconName: 'npm', icon: '' },
+            { name: 'GIT', iconName: 'git', icon: '' },
+            { name: 'IDEA', iconName: 'idea', icon: '' },
+          ]
+        }
+      ] as Array<{ title: string, skills: Array<{ name: string, icon: string }> }>
     }
   },
   watch: {
-    isActive(newVal, oldVal) {
+    isActive(newVal:boolean, oldVal:boolean) {
       if (newVal !== oldVal) { this.isActiveWatch(newVal); }
     }
   },
   methods: {
-    isActiveWatch(value) {
-      if (value) {
-        if (this.elem_profile_image.classList.contains('animation-move-out-to-left')) {
-          this.elem_profile_image.classList.remove('animation-move-out-to-left');
-        }
-        this.elem_profile_image.classList.add('animation-move-in-from-left');
-
-        if (this.elem_profile_details.classList.contains('animation-move-out-to-right')) {
-          this.elem_profile_details.classList.remove('animation-move-out-to-right');
-        }
-        this.elem_profile_details.classList.add('animation-move-in-from-right');
+    toggleAnimation(element: Element | null, inClass: string, outClass: string, isActive: boolean) {
+      if (element) {
+        element.classList.remove(isActive ? outClass : inClass);
+        element.classList.add(isActive ? inClass : outClass);
       }
-      else {
-        if (this.elem_profile_image.classList.contains('animation-move-in-from-left')) {
-          this.elem_profile_image.classList.remove('animation-move-in-from-left');
-        }
-        this.elem_profile_image.classList.add('animation-move-out-to-left');
-
-        if (this.elem_profile_details.classList.contains('animation-move-in-from-right')) {
-          this.elem_profile_details.classList.remove('animation-move-in-from-right');
-        }
-        this.elem_profile_details.classList.add('animation-move-out-to-right');
-      }
+    },
+    isActiveWatch(value: boolean) {
+      this.toggleAnimation(this.elem_profile_image, 'animation-move-in-from-left', 'animation-move-out-to-left', value);
+      this.toggleAnimation(this.elem_profile_details, 'animation-move-in-from-right', 'animation-move-out-to-right', value);
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
     },
-    activateReadMore() {
-      this.readMoreActivated = true;
+    toggleReadMore() {
+      this.readMoreActivated = !this.readMoreActivated;
     },
-    activateReadLess() {
-      this.readMoreActivated = false;
+    async fetchIcon(filename:string) {
+      try {
+        const base64SVG = btoa(await backendFetch(`/res/icon/${filename}`));
+        return `url('data:image/svg+xml;base64,${base64SVG}')`;
+      } catch (error) {
+        console.error(`Error fetching icon: ${filename}`, error);
+        return '';
+      }
     }
   },
-  created() {
+  async created() {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
+    for (const category of this.skillCategories) {
+      for (const skill of category.skills) {
+        skill.icon = await this.fetchIcon(`icon-${skill.iconName}.svg`);
+      }
+    }
   },
   mounted () {
     this.elem_profile_image = document.querySelector('.profile-image');
     this.elem_profile_details = document.querySelector('.profile-details');
   }
-}
+});
 </script>
 
 <template>
   <div class="container">
-
     <div class="profile-image">
-      <img :src='this.profileImagePath' alt="Profile image"/>
+      <img :src='profileImagePath' alt="Profile image"/>
     </div>
-
     <div class="profile-details">
       <div class="about">
         <header class="G_unselectable G_sectionHeader">About</header>
         <typewriter id="typewriter"/>
         <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
           <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
-          <a class="" v-if="!readMoreActivated" @click="activateReadMore" href="#">
+          <a class="" v-if="!readMoreActivated" @click="toggleReadMore" href="#">
             Read more...
           </a>
           <span v-if="readMoreActivated" v-html="longText.replace(/\n/g, '<br/>')"></span>
-          <a class="" v-if="readMoreActivated" @click="activateReadLess" href="#">
+          <a class="" v-if="readMoreActivated" @click="toggleReadMore" href="#">
             Read less...
           </a>
         </p>
-        <div v-if="!this.readMoreActivated || this.readMoreActivated && windowWidth >= 970" class="skills-container">
-          <h3 v-if="!this.readMoreActivated">Frontend</h3>
-          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Frontend</h4>
-          <hr v-if="this.readMoreActivated && windowWidth < 1260">
-          <div class="skill-section">
-            <skill_item :icon="icons.html" :minimize="this.readMoreActivated">
-              <template v-slot:title>HTML</template>
-            </skill_item>
-            <skill_item :icon="icons.css" :minimize="this.readMoreActivated">
-              <template v-slot:title>CSS</template>
-            </skill_item>
-            <skill_item :icon="icons.js" :minimize="this.readMoreActivated">
-              <template v-slot:title>JavaScript</template>
-            </skill_item>
-            <skill_item :icon="icons.scss" :minimize="this.readMoreActivated">
-              <template v-slot:title>SCSS</template>
-            </skill_item>
-            <skill_item :icon="icons.vue" :minimize="this.readMoreActivated">
-              <template v-slot:title>VueJs</template>
-            </skill_item>
-            <skill_item :icon="icons.vite" :minimize="this.readMoreActivated">
-              <template v-slot:title>Vite</template>
-            </skill_item>
-          </div>
-          <h3 v-if="!this.readMoreActivated">Backend</h3>
-          <h4 v-if="this.readMoreActivated && windowWidth > 1260">Backend</h4>
-          <hr v-if="this.readMoreActivated && windowWidth < 1260">
-          <div class="skill-section">
-            <skill_item :icon="icons.java" :minimize="this.readMoreActivated">
-              <template v-slot:title>Java</template>
-            </skill_item>
-            <skill_item :icon="icons.spring" :minimize="this.readMoreActivated">
-              <template v-slot:title>Spring</template>
-            </skill_item>
-            <skill_item :icon="icons.python" :minimize="this.readMoreActivated">
-              <template v-slot:title>Python</template>
-            </skill_item>
-            <skill_item :icon="icons.sql" :minimize="this.readMoreActivated">
-              <template v-slot:title>MySQL</template>
-            </skill_item>
-          </div>
-          <h3 v-if="!this.isMobileDevice && !this.readMoreActivated">Tools</h3>
-          <h4 v-if="!this.isMobileDevice && this.readMoreActivated && windowWidth > 1260">Tools</h4>
-          <hr v-if="!this.isMobileDevice && this.readMoreActivated && windowWidth < 1260 && windowWidth > 1136">
-          <div v-if="!this.isMobileDevice && !this.readMoreActivated || !this.isMobileDevice && this.readMoreActivated && windowWidth > 1136" class="skill-section">
-            <skill_item :icon="icons.npm" :minimize="this.readMoreActivated">
-              <template v-slot:title>NPM</template>
-            </skill_item>
-            <skill_item :icon="icons.git" :minimize="this.readMoreActivated">
-              <template v-slot:title>GIT</template>
-            </skill_item>
-            <skill_item :icon="icons.idea" :minimize="this.readMoreActivated">
-              <template v-slot:title>IDEA</template>
+        <div v-if="!readMoreActivated || readMoreActivated && windowWidth >= 970" class="skills-container">
+          <div v-for="category in skillCategories" :key="category.title" class="skill-section">
+            <h3 v-if="!readMoreActivated">{{ category.title }}</h3>
+            <h4 v-if="readMoreActivated && windowWidth > 1260">{{ category.title }}</h4>
+            <hr v-if="readMoreActivated && windowWidth < 1260">
+            <skill_item
+                v-for="skill in category.skills"
+                :key="skill.name"
+                :icon="skill.icon"
+                :minimize="readMoreActivated"
+            >
+              <template v-slot:title>{{ skill.name }}</template>
             </skill_item>
           </div>
         </div>
@@ -244,8 +214,10 @@ export default {
       hr {
         opacity: 0.1;
         margin: 0;
+        width: 100%;
       }
       h3 {
+        width: 100%;
         text-transform: uppercase;
         color: lightgrey;
         font-weight: 500;
@@ -256,6 +228,7 @@ export default {
         opacity: 0.3;
       }
       h4 {
+        width: 100%;
         text-transform: uppercase;
         color: lightgrey;
         font-size: 0.7em;
