@@ -2,11 +2,11 @@
   <div class="container">
     <nav class="navigation" ref="navigation" :class="{ 'hidden': !isNavigationVisible }">
       <button
-        class="scroll-nav-button"
+        class="scroll-nav-button" type="button"
         @click="navigateToSection(index - 1)"
         v-for="index in sectionsCount"
         :key="index"
-        :style="buttonBackground(index - 1)">
+        :style="setIcons(index - 1)">
       </button>
     </nav>
 
@@ -26,6 +26,7 @@ import indexSection2_now from '../sections/section_aboutMe.vue';
 import IndexSection3_past from '../sections/section_experience.vue';
 import IndexSection4_projects from '../sections/section_projects.vue';
 import IndexSection5_contact from '../sections/section_contactPage.vue';
+import { backendFetch } from "../globals.ts";
 
 export default {
   components: {
@@ -46,6 +47,10 @@ export default {
       S4active: false,
       S5active: false,
       isNavigationVisible: true,
+      icons: {
+        thick: null,
+        thin: null,
+      },
     };
   },
   watch: {
@@ -156,15 +161,26 @@ export default {
         this.scrollDown();
       }
     },
-    buttonBackground(sectionIndex) {
-      const baseURI = sectionIndex === this.currentSection
-        ? require('../assets/icons-svg/icon-hexagon-thick.svg')
-        : require('../assets/icons-svg/icon-hexagon-thin.svg');
-      return {
-        background: `url(${baseURI}) center no-repeat`,
-        backgroundSize: 'contain'
-      };
-    }
+    async fetchIcon(filename) {
+      try {
+        const base64SVG = btoa(await backendFetch(`/res/icon/${filename}`));
+        return {
+          background: `url('data:image/svg+xml;base64,${base64SVG}')`,
+          backgroundSize: 'contain'
+        };
+      } catch (error) {
+        console.error(`Error fetching icon: ${filename}`, error);
+        return {};
+      }
+    },
+    setIcons(sectionIndex) {
+      const icon = sectionIndex === this.currentSection ? this.icons.thick : this.icons.thin;
+      return icon;
+    },
+  },
+  async created() {
+    this.icons.thick = await this.fetchIcon('icon-hexagon-thick.svg');
+    this.icons.thin = await this.fetchIcon('icon-hexagon-thin.svg');
   },
   mounted() {
     this.updateSectionHeights();
@@ -215,11 +231,8 @@ export default {
   visibility: hidden;
 }
 button {
-  background: none;
   border: none;
-  padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 button:hover {
   background-color: rgba(0, 0, 0, 0.1);
