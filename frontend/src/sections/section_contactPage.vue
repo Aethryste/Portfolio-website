@@ -7,18 +7,18 @@
           <h1 class="G_unselectable G_sectionSlogan">Got a problem to solve?</h1>
           <p class="G_unselectable G_paragraph">Feel free to share your ideas or requests with me!</p>
           <div class="email">
-            <div class="icon"></div>
+            <div class="icon" ref="email" :style="getIconStyle('email')"></div>
             <p id="emailAddress" @click="copyToClipboard('emailAddress')">contact@richardalgra.com</p>
             <transition name="fade" appear>
               <p v-if="copied" class="copied-text"> - Copied!</p>
             </transition>
           </div>
           <div class="icons-group">
-            <div class="icon" id="icon-linkedin"
+            <div class="icon" ref="linkedin" :style="getIconStyle('linkedin')"
                  @click="redirect('https://www.linkedin.com/in/richard-algra/', true)"></div>
-            <div class="icon" id="icon-github"
+            <div class="icon" ref="github" :style="getIconStyle('github')"
                  @click="redirect('https://github.com/Aethryste?tab=repositories', true)"></div>
-            <div class="icon" id="icon-codepen"
+            <div class="icon" ref="codepen" :style="getIconStyle('codepen')"
                  @click="redirect('https://codepen.io/Aethryste', true)"></div>
           </div>
         </div>
@@ -65,6 +65,8 @@
 
 <script>
 import Form from '../classes/form.js';
+import { backendFetch } from "../globals.ts";
+
 export default {
   name: 'section_contactPage',
   data() {
@@ -85,10 +87,44 @@ export default {
       form: null,
       submissionResponse: null,
       lastSubmissionTime: 0,
-      throttleDuration: 60000
+      throttleDuration: 60000,
+      icons: {
+        email: '',
+        linkedin: '',
+        github: '',
+        codepen: '',
+        sendBlack: '',
+        sendWhite: ''
+      }
     };
   },
+  watch: {
+    icons: {
+      handler() {
+        this.updateIconStyles();
+      },
+      deep: true
+    }
+  },
   methods: {
+    getIconStyle(iconName) {
+      return {
+        width: '24px',
+        height: '24px',
+        background: `url(data:image/svg+xml,${encodeURIComponent(this.icons[iconName])}) center no-repeat`,
+        backgroundSize: 'cover',
+        imageRendering: 'crisp-edges',
+        msInterpolationMode: 'nearest-neighbor'
+      };
+    },
+    updateIconStyles() {
+      for (const icon in this.icons) {
+        const element = this.$refs[icon];
+        if (element && this.icons[icon]) {
+          element.style.background = `url(data:image/svg+xml,${encodeURIComponent(this.icons[icon])}) center no-repeat`;
+        }
+      }
+    },
     redirect(path, newTab) {
       if (newTab) {
         window.open(
@@ -155,6 +191,11 @@ export default {
         ajax.send(obj);
       }
     }
+  },
+  async mounted() {
+    for (const icon in this.icons) {
+      this.icons[icon] = await backendFetch(`/res/icon/icon-${icon}.svg`);
+    }
   }
 }
 </script>
@@ -201,7 +242,7 @@ export default {
           .icon {
             width: 24px;
             height: 24px;
-            background: url("../assets/icons-svg/icon-email.svg") center;
+            //background: url("../assets/icons-svg/icon-email.svg") center;
             background-size: contain;
             image-rendering: crisp-edges;
             image-rendering: -moz-crisp-edges;
@@ -225,22 +266,22 @@ export default {
               opacity: 0.8;
             }
           }
-          #icon-linkedin {
-            background: url("../assets/icons-svg/icon-linkedin.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-github {
-            background: url("../assets/icons-svg/icon-github.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-gitlab {
-            background: url("../assets/icons-svg/icon-gitlab.svg") center no-repeat;
-            background-size: cover;
-          }
-          #icon-codepen {
-            background: url("../assets/icons-svg/icon-codepen.svg") center no-repeat;
-            background-size: cover;
-          }
+          //#icon-linkedin {
+          //  background: url("../assets/icons-svg/icon-linkedin.svg") center no-repeat;
+          //  background-size: cover;
+          //}
+          //#icon-github {
+          //  background: url("../assets/icons-svg/icon-github.svg") center no-repeat;
+          //  background-size: cover;
+          //}
+          //#icon-gitlab {
+          //  background: url("../assets/icons-svg/icon-gitlab.svg") center no-repeat;
+          //  background-size: cover;
+          //}
+          //#icon-codepen {
+          //  background: url("../assets/icons-svg/icon-codepen.svg") center no-repeat;
+          //  background-size: cover;
+          //}
         }
       }
     }
