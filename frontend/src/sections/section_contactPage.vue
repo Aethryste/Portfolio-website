@@ -472,6 +472,9 @@ p.copied-text {
     p {
       font-size: 0.7em;
     }
+    .icons-group {
+      min-width: 200px;
+    }
   }
   .component-wrapper .content-wrapper .right .form-box {
     label {

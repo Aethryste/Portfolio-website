@@ -104,7 +104,6 @@ export default {
 @media screen and (max-width: 1060px) {
   .container {
     width: 125px;
-    font-size: 0.8em;
     .icon {
       transform: scale(74%);
     }

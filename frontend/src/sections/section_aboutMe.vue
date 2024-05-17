@@ -344,13 +344,14 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-evenly;
     .profile-image {
-      margin: 8% auto auto auto;
+      margin: auto auto 0 auto;
       width: 80%;
       height: 25%;
     }
     .profile-details {
-      margin: auto;
+      margin: 0 auto auto auto;
       width: 80%;
+      height: fit-content;
     }
     .about {
       margin: auto!important;
@@ -363,16 +364,13 @@ export default defineComponent({
           flex-direction: row;
         }
       }
+      .biography {
+        max-height: 37%;
+      }
     }
   }
 }
 @media screen and (max-width: 510px) {
-  .container {
-    .profile-image {
-      height: 15%;
-      margin: auto auto 0 auto;
-    }
-  }
   .container .profile-details {
     margin: 0 auto auto auto;
     .about .skills-container {

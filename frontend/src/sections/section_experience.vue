@@ -282,7 +282,7 @@ export default {
       background: rgba(255,255,255,0);
       box-shadow: 0 0 10px 5px rgb(30,30,30);
       border-radius: 10px;
-      backdrop-filter: blur(8px);
+      //backdrop-filter: blur(8px);
       flex-direction: column;
       height: fit-content;
       width: 100px;
@@ -294,6 +294,12 @@ export default {
       #year-list {
         flex-direction: column;
         margin: auto!important;
+        span {
+          border-bottom: 1px solid $theme-primary-color;
+          &:nth-last-child(1) {
+            border-bottom: none;
+          }
+        }
       }
       #navigation-deco-top, #navigation-deco-bot {
         opacity: 0;
