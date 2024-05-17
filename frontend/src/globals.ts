@@ -1,20 +1,30 @@
-// import { backendFetch, handleResize, redirect } from '@/globals.ts';
-
-export function backendFetch(url: string): Promise<string> {
+export function backendFetch(url: string, retryCount = 0): Promise<string> {
     return new Promise((resolve, reject) => {
         const ajax = new XMLHttpRequest();
         ajax.open('GET', BACKEND_URL + url);
         ajax.responseType = 'text';
-        ajax.onload = () => {
-            if (ajax.status === 200) {
-                resolve(ajax.responseText);
+
+        const handleRetry = () => {
+            if (retryCount < 5) {
+                console.log(`Retry attempt ${retryCount + 1} for ${url}`);
+                setTimeout(() => {
+                    backendFetch(url, retryCount + 1)
+                        .then(resolve)
+                        .catch(reject);
+                }, 500 * Math.pow(2, retryCount)); // Exponential backoff starting at 500ms
             } else {
                 reject(new Error(`Error fetching: ${url}`));
             }
         };
-        ajax.onerror = () => {
-            reject(new Error(`Error fetching: ${url}`));
+
+        ajax.onload = () => {
+            if (ajax.status === 200) {
+                resolve(ajax.responseText);
+            } else {
+                handleRetry();
+            }
         };
+        ajax.onerror = handleRetry;
         ajax.send();
     });
 }
