@@ -5,8 +5,9 @@
         <h1 class="main">Hi, I'm <span id="richard">Richard</span>.</h1>
         <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
-      <div class="scroll-hint-bounce anim-bounce-vertical">
-        <div class="scroll-hint" ref="scrollHint"></div>
+
+      <div class="absolute-pos-container">
+        <div class="scroll-hint-icon" ref="scrollHint"/>
       </div>
     </div>
     <div class="back-layer G_unselectable">
@@ -18,6 +19,9 @@
 
 <script>
 import TresScene from '../components/tres_scene.vue';
+import lottie from 'lottie-web';
+import animationData from '../assets/anim-scroll.json';
+
 export default {
   name: 'section_landingPage',
   components: {
@@ -25,6 +29,13 @@ export default {
   },
   props: {
     isActive: Boolean
+  },
+  data() {
+    return {
+      defaultOptions: {
+        animationData: animationData
+      }
+    };
   },
   watch: {
     isActive(newVal, oldVal) {
@@ -89,6 +100,13 @@ export default {
     if (scrollHint) {
       scrollHint.classList.add('anim-scrollHint-fade-in');
     }
+    lottie.loadAnimation({
+      container: this.$refs.scrollHint,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: animationData
+    });
   }
 }
 </script>
@@ -135,20 +153,16 @@ export default {
         transform: translateX(-6px);
       }
     }
-    .scroll-hint-bounce {
+    .absolute-pos-container {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      bottom: 15px;
-      left: calc(50% - 20px);
-      transform: translateY(0);
-      .scroll-hint {
-        width: 40px;
-        height: 40px;
-        mask: url("../assets/icons-svg/icon-scroll.svg");
-        mask-position: center;
-        mask-size: contain;
-        background-color: ghostwhite;
+      width: 100dvw;
+      height: 100dvh;
+      .scroll-hint-icon {
+        position: absolute;
+        bottom: 5dvh;
+        left: calc(50% - 30px);
+        width: 60px;
+        height: 60px;
         opacity: 0;
       }
     }
