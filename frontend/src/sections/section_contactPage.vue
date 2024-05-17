@@ -6,20 +6,20 @@
           <h3 class="G_unselectable G_sectionHeader">CONTACT</h3>
           <h1 class="G_unselectable G_sectionSlogan">Got a problem to solve?</h1>
           <p class="G_unselectable G_paragraph">Feel free to share your ideas or requests with me!</p>
-          <div class="email">
-            <div class="icon" ref="email" :style="getIconStyle('email')"></div>
-            <p id="emailAddress" @click="copyToClipboard('emailAddress')">contact@richardalgra.com</p>
-            <transition name="fade" appear>
-              <p v-if="copied" class="copied-text"> - Copied!</p>
-            </transition>
-          </div>
           <div class="icons-group">
-            <div class="icon" ref="linkedin" :style="getIconStyle('linkedin')"
-                 @click="redirect('https://www.linkedin.com/in/richard-algra/', true)"></div>
-            <div class="icon" ref="github" :style="getIconStyle('github')"
-                 @click="redirect('https://github.com/Aethryste?tab=repositories', true)"></div>
-            <div class="icon" ref="codepen" :style="getIconStyle('codepen')"
-                 @click="redirect('https://codepen.io/Aethryste', true)"></div>
+            <div class="icon" ref="linkedin"
+                 :style="getIconStyle('linkedin')"
+                 @click="redirect('https://www.linkedin.com/in/richard-algra/', true)"
+            />
+            <div class="icon" ref="github"
+                 :style="getIconStyle('github')"
+                 @click="redirect('https://github.com/Aethryste?tab=repositories', true)"
+            />
+            <div class="icon" ref="codepen"
+                 :style="getIconStyle('codepen')"
+                 @click="redirect('https://codepen.io/Aethryste', true)"
+            />
+            <a class="icon" ref="codepen" href="mailto:contact@richardalgra.com" :style="getIconStyle('email')"/>
           </div>
         </div>
       </div>
@@ -28,24 +28,18 @@
           <label class="G_unselectable">Name</label>
           <input :class="{ 'error-border': !nameFilled }" @blur="checkInput('name')" v-model="nameValue">
           <p class="G_unselectable error-text" v-if="nameErrorMsg">{{ nameErrorMsg }}</p>
-
           <label class="G_unselectable">Email</label>
           <input :class="{ 'error-border': !emailFilled }" @blur="checkInput('email')" v-model="emailValue">
           <p class="G_unselectable error-text" v-if="emailErrorMsg">{{ emailErrorMsg }}</p>
-
           <label class="G_unselectable">Message</label>
           <textarea
             :class="{ 'error-border': !messageFilled }"
             @blur="checkInput('message')"
             v-model="messageValue"></textarea>
           <p class="G_unselectable error-text" v-if="messageErrorMsg">{{ messageErrorMsg }}</p>
-
-<!--          <button @click.prevent="sendMessage"><span class="icon"></span>Reach out!</button>-->
           <button @click.prevent="sendMessage" @mouseover="changeIcon('sendIcon', 'sendWhite')" @mouseout="changeIcon('sendIcon', 'sendBlack')">
-            <span class="icon" ref="sendIcon"></span>Reach out!
+            <span class="icon" ref="sendIcon"/>Reach out!
           </button>
-
-
           <Transition name="slide-fade">
             <div v-if="messageSent" class="message-sent-notification font_inter">Message Sent!</div>
           </transition>
@@ -54,7 +48,7 @@
               Something went wrong, please try again later..
             </div>
           </Transition>
-          <span v-if="loading" class="loader"></span>
+          <span v-if="loading" class="loader"/>
         </form>
       </div>
     </div>
@@ -114,8 +108,6 @@ export default {
     getIconStyle(iconId) {
       const icon = this.icons.find(icon => icon.id === iconId);
       return icon ? {
-        width: '24px',
-        height: '24px',
         background: `url(data:image/svg+xml,${encodeURIComponent(icon.data)}) center no-repeat`,
         backgroundSize: 'cover',
         imageRendering: 'crisp-edges',
@@ -211,7 +203,6 @@ export default {
     }
     this.changeIcon('sendIcon', 'sendBlack');
   },
-
 }
 </script>
 
@@ -241,6 +232,9 @@ export default {
         height: fit-content;
         margin: auto!important;
         font-size: 1.1em;
+        h1 {
+          margin-bottom: -0.5em!important;
+        }
         .email {
           display: flex;
           flex-direction: row;
@@ -257,7 +251,6 @@ export default {
           .icon {
             width: 24px;
             height: 24px;
-            //background: url("../assets/icons-svg/icon-email.svg") center;
             background-size: contain;
             image-rendering: crisp-edges;
             image-rendering: -moz-crisp-edges;
@@ -269,34 +262,22 @@ export default {
           display: flex;
           flex-direction: row;
           width: 50%;
-          height: 60px;
-          margin: 30px 0 0 0!important;
+          height: fit-content;
+          margin: 0 0 auto -3px;
+          a {
+            width: 28px;
+            height: 28px;
+          }
           .icon {
-            width: 30px;
-            height: 30px;
-            margin: auto 8px auto 0!important;
+            width: 34px;
+            height: 34px;
+            margin: auto 8px auto 0;
             transition: 100ms;
             opacity: 0.3;
             &:hover {
               opacity: 0.8;
             }
           }
-          //#icon-linkedin {
-          //  background: url("../assets/icons-svg/icon-linkedin.svg") center no-repeat;
-          //  background-size: cover;
-          //}
-          //#icon-github {
-          //  background: url("../assets/icons-svg/icon-github.svg") center no-repeat;
-          //  background-size: cover;
-          //}
-          //#icon-gitlab {
-          //  background: url("../assets/icons-svg/icon-gitlab.svg") center no-repeat;
-          //  background-size: cover;
-          //}
-          //#icon-codepen {
-          //  background: url("../assets/icons-svg/icon-codepen.svg") center no-repeat;
-          //  background-size: cover;
-          //}
         }
       }
     }
@@ -341,23 +322,15 @@ export default {
           border: 2px solid white;
           margin-top: 1.5em!important;
           &:hover {
-            cursor: pointer;
-          }
-          span.icon {
-            background: url("../assets/icons-svg/icon-send-black.svg") center no-repeat;
-            background-size: contain;
-            padding: 2px 30px 2px 0;
-            width: 30px;
-            height: 30px;
-          }
-          &:hover {
             background-color: rgba(0,0,0,0);
             border: 2px solid white;
             color: white;
-            span.icon {
-              background: url("../assets/icons-svg/icon-send-white.svg") center no-repeat;
-              background-size: contain;
-            }
+            cursor: pointer;
+          }
+          span.icon {
+            padding: 2px 30px 2px 0;
+            width: 30px;
+            height: 30px;
           }
         }
         #message {
