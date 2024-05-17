@@ -13,6 +13,15 @@ export default defineComponent({
   props: {
     isActive: Boolean
   },
+  computed: {
+    filteredSkillCategories() {
+      if (this.isMobileDevice) {
+        return this.skillCategories.slice(0, -1);
+      } else {
+        return this.skillCategories;
+      }
+    }
+  },
   data() {
     return {
       windowWidth: 0 as number,
@@ -131,7 +140,7 @@ export default defineComponent({
           </a>
         </p>
         <div v-if="!readMoreActivated || readMoreActivated && windowWidth >= 970" class="skills-container">
-          <div v-for="category in skillCategories" :key="category.title" class="skill-section">
+          <div v-for="category in filteredSkillCategories" :key="category.title" class="skill-section">
             <h3 v-if="!readMoreActivated">{{ category.title }}</h3>
             <h4 v-if="readMoreActivated && windowWidth > 1260">{{ category.title }}</h4>
             <hr v-if="readMoreActivated && windowWidth < 1260">

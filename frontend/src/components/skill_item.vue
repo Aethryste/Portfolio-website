@@ -26,7 +26,7 @@ export default {
 
 <template>
   <div class="container G_unselectable" :class="{ 'minimized': minimize }">
-    <div ref="icon" class="icon" v-if="!minimize"/>
+    <div ref="icon" class="icon" v-show="!minimize"/>
     <p class="title">
       <slot name="title"></slot>
     </p>
