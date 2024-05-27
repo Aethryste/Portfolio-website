@@ -3,7 +3,7 @@
     <div class="content-wrapper">
       <div class="left">
         <div class="content">
-          <h3 class="G_unselectable G_sectionHeader">CONTACT</h3>
+          <h3 class="G_unselectable G_sectionHeader">\\ Contact</h3>
           <h1 class="G_unselectable G_sectionSlogan">Got a problem to solve?</h1>
           <p class="G_unselectable G_paragraph">Feel free to share your ideas or requests with me!</p>
           <div class="icons-group">

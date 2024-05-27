@@ -127,7 +127,7 @@ export default defineComponent({
     </div>
     <div class="profile-details">
       <div class="about">
-        <header class="G_unselectable G_sectionHeader">About</header>
+        <header class="G_unselectable G_sectionHeader">\\ About</header>
         <typewriter id="typewriter"/>
         <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
           <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
@@ -196,9 +196,6 @@ export default defineComponent({
       width: calc(100%  - 5em);
       height: calc(100%  - 2em);
       margin: auto auto auto 1em;
-      .G_sectionHeader {
-        text-transform: uppercase;
-      }
       #typewriter {
         margin: -1em 0 -1em 0!important;
       }
@@ -269,54 +266,6 @@ export default defineComponent({
     }
   }
 }
-.animation-move-in-from-left {
-  animation: move-in-from-left 500ms forwards 400ms;
-}
-@keyframes move-in-from-left {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animation-move-in-from-right {
-  animation: move-in-from-right 500ms forwards 400ms;
-}
-@keyframes move-in-from-right {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animation-move-out-to-left {
-  animation: move-out-to-left 400ms forwards;
-}
-@keyframes move-out-to-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.animation-move-out-to-right {
-  animation: move-out-to-right 400ms forwards;
-}
-@keyframes move-out-to-right {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 @media screen and (max-width: 1420px) {
   .container .profile-image img {
     transform: scale(1);
