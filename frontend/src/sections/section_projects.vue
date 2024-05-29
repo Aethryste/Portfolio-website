@@ -11,8 +11,8 @@
       <div class="bottom">
         <header class="G_unselectable G_sectionHeader subheader">More</header>
         <div class="flex-container">
-          <button class="font_inter" @click="redirect('https://github.com/Aethryste?tab=repositories', true)">SEE MY WORK</button>
-          <button class="font_inter" @click="redirect('https://codepen.io/Aethryste', true)">CHECK OUT MY SKETCHES</button>
+          <button class="font_inter" @click="handleRedirect('https://github.com/Aethryste?tab=repositories', true)">SEE MY WORK</button>
+          <button class="font_inter" @click="handleRedirect('https://codepen.io/Aethryste', true)">CHECK OUT MY SKETCHES</button>
         </div>
       </div>
     </div>
@@ -20,14 +20,13 @@
 </template>
 
 <script lang="ts">
-import Projects_list from "../components/projects_list.vue";
 import ProjectsTile from "../components/projects_tile.vue";
+import { redirect } from "../utils/generalUtils.ts";
 
 export default {
   name: 'section_projects',
   components: {
-    ProjectsTile,
-    Projects_list
+    ProjectsTile
   },
   props: {
     isActive: Boolean
@@ -80,12 +79,8 @@ export default {
     }
   },
   methods: {
-    redirect(path: string, newTab: any) {
-      if (newTab) {
-        window.open(
-          path, '_blank'
-        );
-      }
+    handleRedirect(path: string, newTab: any) {
+      redirect(path, newTab);
     },
     toggleAnimation(element: Element | null, inClass: string, outClass: string, isActive: boolean) {
       if (element) {
@@ -98,10 +93,10 @@ export default {
       this.toggleAnimation(this.elem_bottom, 'animation-projects-to-top', 'animation-projects-to-bottom', value);
     },
     adjustWidth() {
-      const container = this.$el.querySelector('.projects-container');
-      const items = container.querySelectorAll('.projects-tile');
+      const container = this.$el.querySelector('.projects-container') as HTMLElement;
+      const items = container.querySelectorAll('.projects-tile') as HTMLElement;
+      container.style.width = '';
 
-      // Count amount of tiles in top row of container.
       let currentRowYOffset = items[0].offsetTop;
       let count:number = 0;
       for (let item of items) {
@@ -111,20 +106,17 @@ export default {
         count++
       }
       this.projects_row_length = count;
-      console.log("projects row-length:", this.projects_row_length);
 
-      // Calculate and set the width of the container.
       const cubeWidth = this.cube_properties.width;
       const cubeMargin = this.cube_properties.margin;
       const containerWidth = (this.projects_row_length * cubeWidth) + ((cubeMargin * 2) * this.projects_row_length);
       container.style.width = `${containerWidth}px`;
-
     },
   },
   mounted () {
     this.elem_top = document.querySelector('.top');
     this.elem_bottom = document.querySelector('.bottom');
-    window.addEventListener('resize', this.adjustWidth);
+    this.$watch('windowWidth', this.adjustWidth);
     this.adjustWidth();
   }
 }
