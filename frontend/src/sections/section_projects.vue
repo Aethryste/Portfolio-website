@@ -35,12 +35,14 @@ export default {
     return {
       elem_top: null as Element | null,
       elem_bottom: null as Element | null,
+      elem_projects_container: null as HTMLElement | null,
+      elem_project_items: null as HTMLElement | null,
       cube_properties: {
         width: 200 as number,
         height: 200 as number,
         margin: 18 as number
       },
-      projects_row_length: 0,
+      projects_row_length: 0 as number,
       projects: [
         {
           passiveImg: '../assets/project_portfolio_front.png',
@@ -93,29 +95,30 @@ export default {
       this.toggleAnimation(this.elem_bottom, 'animation-projects-to-top', 'animation-projects-to-bottom', value);
     },
     adjustWidth() {
-      const container = this.$el.querySelector('.projects-container') as HTMLElement;
-      const items = container.querySelectorAll('.projects-tile') as HTMLElement;
-      container.style.width = '';
-
-      let currentRowYOffset = items[0].offsetTop;
+      if ("style" in this.elem_projects_container) {
+        this.elem_projects_container.style.width = '';
+      }
+      let currentRowYOffset = this.elem_project_items?.[0].offsetTop;
       let count:number = 0;
-      for (let item of items) {
+      for (let item of this.elem_project_items) {
         if (item.offsetTop !== currentRowYOffset) {
           break;
         }
         count++
       }
       this.projects_row_length = count;
-
-      const cubeWidth = this.cube_properties.width;
-      const cubeMargin = this.cube_properties.margin;
-      const containerWidth = (this.projects_row_length * cubeWidth) + ((cubeMargin * 2) * this.projects_row_length);
-      container.style.width = `${containerWidth}px`;
+      const containerWidth = (this.projects_row_length * this.cube_properties.width)
+          + ((this.cube_properties.margin * 2) * this.projects_row_length);
+      if ("style" in this.elem_projects_container) {
+        this.elem_projects_container.style.width = `${containerWidth}px`;
+      }
     },
   },
   mounted () {
-    this.elem_top = document.querySelector('.top');
-    this.elem_bottom = document.querySelector('.bottom');
+    this.elem_top = document.querySelector('.top') as HTMLElement;
+    this.elem_bottom = document.querySelector('.bottom') as HTMLElement;
+    this.elem_projects_container = this.$el.querySelector('.projects-container') as HTMLElement;
+    this.elem_project_items = this.elem_projects_container.querySelectorAll('.projects-tile') as HTMLElement;
     this.$watch('windowWidth', this.adjustWidth);
     this.adjustWidth();
   }
@@ -131,7 +134,6 @@ export default {
   display: flex;
   flex-direction: column;
   .content {
-    border: 1px solid red;
     width: fit-content;
     max-width: 80%;
     height: fit-content;
@@ -149,11 +151,13 @@ export default {
         letter-spacing: 5px;
       }
       .projects-container {
-        border: 1px solid orange;
         display: flex;
         flex-wrap: wrap;
         width: fit-content;
-        max-width: calc(($cube-width*$cube-total-in-list) + ($cube-margin*($cube-total-in-list*2)));
+        max-width: calc(
+            (#{$cube-width} * #{$cube-total-in-list}) +
+            (#{$cube-margin} * (#{$cube-total-in-list} * 2) )
+        );
         height: 100%;
         margin: auto;
       }
@@ -170,7 +174,6 @@ export default {
         letter-spacing: 5px;
       }
       .flex-container {
-        border: 1px solid orange;
         display: flex;
         flex-wrap: wrap;
         width: fit-content;
