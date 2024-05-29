@@ -63,7 +63,7 @@
 
 <script>
 import Form from '../classes/form.js';
-import { backendFetch } from "../globals.ts";
+import { backendFetch } from "../utils/generalUtils.ts";
 
 export default {
   name: 'section_contactPage',

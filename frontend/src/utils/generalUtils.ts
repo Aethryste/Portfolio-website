@@ -50,3 +50,14 @@ export function isMobileDevice(): boolean {
     ];
     return mobileKeywords.some(keyword => userAgent.includes(keyword));
 }
+
+export function onWindowResize(callback: () => void): void {
+    window.addEventListener('resize', callback);
+
+    // Optionally, you might want to call the callback immediately to get the initial size
+    callback();
+}
+
+export function offWindowResize(callback: () => void): void {
+    window.removeEventListener('resize', callback);
+}

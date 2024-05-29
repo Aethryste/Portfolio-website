@@ -26,7 +26,7 @@ import indexSection2_now from '../sections/section_aboutMe.vue';
 import IndexSection3_past from '../sections/section_experience.vue';
 import IndexSection4_projects from '../sections/section_projects.vue';
 import IndexSection5_contact from '../sections/section_contactPage.vue';
-import { backendFetch } from "../globals.ts";
+import { backendFetch } from "../utils/generalUtils.ts";
 
 export default {
   components: {

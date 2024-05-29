@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 import typewriter from "../components/typewriter.vue";
 import Skill_item from "../components/skill_item.vue";
-import { backendFetch, isMobileDevice } from "../globals";
+import { backendFetch, isMobileDevice } from "../utils/generalUtils";
 
 export default defineComponent({
   name: "section_aboutMe",
