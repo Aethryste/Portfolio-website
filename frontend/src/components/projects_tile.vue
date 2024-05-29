@@ -43,9 +43,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import "../styles/theme";
-$cube-width: 200px;
-$cube-height: 200px;
-$rotation-speed: 250ms;
 
 .cube {
   position: relative;
@@ -53,7 +50,7 @@ $rotation-speed: 250ms;
   height: $cube-height;
   transform-style: preserve-3d;
   transition: transform $rotation-speed;
-  margin: 18px 18px 18px 18px;
+  margin: $cube-margin;
   transform: perspective(1200px) rotateY(0deg);
   &:hover {
     transform: perspective(1200px) rotateY(-90deg);

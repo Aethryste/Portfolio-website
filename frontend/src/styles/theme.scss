@@ -4,6 +4,13 @@
 $theme-primary-color: #d4a024;
 $general-text-color: white;
 
+// Projects section
+$cube-width: 200px;
+$cube-height: 200px;
+$cube-margin: 18px;
+$rotation-speed: 250ms;
+$cube-total-in-list: 4;
+
 html {
   background: linear-gradient(39deg,rgb(30,30,35),rgb(10,10,8));
   width: 100%;

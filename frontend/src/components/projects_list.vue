@@ -36,6 +36,34 @@ export default defineComponent({
           title: 'None2',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
           tools: [],
+        },
+        {
+          passiveImg: 'front.jpg',
+          activeImg: 'right.jpg',
+          title: 'None3',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
+          tools: [],
+        },
+        {
+          passiveImg: 'front.jpg',
+          activeImg: 'right.jpg',
+          title: 'None4',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
+          tools: [],
+        },
+        {
+          passiveImg: 'front.jpg',
+          activeImg: 'right.jpg',
+          title: 'None4',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
+          tools: [],
+        },
+        {
+          passiveImg: 'front.jpg',
+          activeImg: 'right.jpg',
+          title: 'None4',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
+          tools: [],
         }
       ],
     };
@@ -50,11 +78,15 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+@import "../styles/theme";
+
 .tile-container {
+  border: 1px solid blue;
   display: flex;
   flex-wrap: wrap;
-  width: fit-content;
-  height: fit-content;
+  //width: fit-content;
+  max-width: calc(($cube-width*5) + ($cube-margin*10));
+  height: 100%;
   margin: auto;
 }
 </style>
