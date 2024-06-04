@@ -11,21 +11,24 @@
       </div>
     </div>
     <div class="back-layer G_unselectable">
-      <p style="text-align: center; opacity: 0.3">3D scene currently deactivated for performance reasons.. :(</p>
-<!--      <TresScene v-bind:isActive="isActive" id="canvas"/>-->
+<!--      <p style="text-align: center; opacity: 0.3">3D scene currently deactivated for performance reasons.. :(</p>-->
+      <TresScene v-bind:isActive="isActive" id="canvas"/>
+<!--      <TresScene_lightweight v-bind:isActive="isActive" id="canvas"/>-->
     </div>
   </div>
 </template>
 
 <script>
-import TresScene from '../components/tres_scene.vue';
+import TresScene from '../components/TresScene_lightweight.vue';
 import lottie from 'lottie-web';
 import animationData from '../assets/anim-scroll.json';
+import TresScene_lightweight from "../components/TresScene_lightweight.vue";
 
 export default {
   name: 'section_landingPage',
   components: {
-    // TresScene
+    // TresScene_lightweight
+    TresScene
   },
   props: {
     isActive: Boolean
