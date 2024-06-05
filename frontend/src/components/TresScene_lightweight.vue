@@ -8,23 +8,22 @@ export default {
   setup() {
     const pillars: Ref<Mesh[]> = ref([])
     const gridSize: number = 10
-    // const gap: number = 1.4
     const pillar_size: number = 1
 
-    const gap_modifyer: number = 0.1
-    const gap: number = pillar_size * (1+gap_modifyer)
+    const gap_modifier: number = 0.1
+    const gap: number = pillar_size * (1+gap_modifier)
 
     const pillar_medium_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: 0x949999 }));
     const pillar_medium_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(pillar_size, 5, pillar_size));
 
     const pillar_small_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: 0x42cef5 }));
-    const pillar_small_geometry: Ref<BoxGeometry> = ref(new BoxGeometry((pillar_size - (0.1))/2, 5, (pillar_size - (0.1))/2));
+    const pillar_small_geometry: Ref<BoxGeometry> = ref(new BoxGeometry((pillar_size - (gap_modifier))/2, 5, (pillar_size - (gap_modifier))/2));
 
     const createPillar = (x: number, z: number, splitPillar: boolean) => {
       if (splitPillar) {
         console.log('pillar split!')
         // Create 4 smaller pillars
-        const offset: number = 0.5 + (gap_modifyer/2)
+        const offset: number = 0.5 + (gap_modifier/2)
         for (let dx = -offset; dx <= offset; dx += offset*2) {
           for (let dz = -offset; dz <= offset; dz += offset*2) {
             const pillar = new Mesh(pillar_small_geometry.value, pillar_small_material.value)
@@ -75,7 +74,7 @@ export default {
     createGrid(gridSize)
 
     return {
-      cameraPosition: ref([5, 8, 5]) as Ref<number[]>,
+      cameraPosition: ref([0, 10, 0]) as Ref<number[]>,
       cameraFov: ref(75) as Ref<number>,
       cameraAspect: ref(window.innerWidth / window.innerHeight) as Ref<number>,
       cameraNear: ref(0.1) as Ref<number>,
@@ -94,7 +93,7 @@ export default {
 <template>
   <TresCanvas preset="realistic" window-size>
     <TresPerspectiveCamera
-        :position="[5, 8, 5]"
+        :position="[0, 6, 0]"
         :fov="cameraFov"
         :aspect="cameraAspect"
         :near="cameraNear"
