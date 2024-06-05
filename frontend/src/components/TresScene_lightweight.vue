@@ -6,23 +6,24 @@ import { TresCanvas } from "@tresjs/core";
 export default {
   components: { TresCanvas },
   setup() {
-    const pillars: Ref<Mesh[]> = ref([])
-    const gridSize: number = 10
-    const pillar_size: number = 1
+    // Changeable variables
+    const gridSize: number = 10;
+    const pillar_size: number = 1;
+    const gap_modifier: number = 0.05;
+    const material_color: number = 0x949999;
 
-    const gap_modifier: number = 0.1
-    const gap: number = pillar_size * (1+gap_modifier)
+    // Static
+    const pillars: Ref<Mesh[]> = ref([]);
+    const gap: number = pillar_size * (1+gap_modifier);
 
-    const pillar_medium_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: 0x949999 }));
+    const pillar_medium_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
     const pillar_medium_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(pillar_size, 5, pillar_size));
-
-    const pillar_small_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: 0x42cef5 }));
+    const pillar_small_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
     const pillar_small_geometry: Ref<BoxGeometry> = ref(new BoxGeometry((pillar_size - (gap_modifier))/2, 5, (pillar_size - (gap_modifier))/2));
 
+    // Methods
     const createPillar = (x: number, z: number, splitPillar: boolean) => {
       if (splitPillar) {
-        console.log('pillar split!')
-        // Create 4 smaller pillars
         const offset: number = 0.5 + (gap_modifier/2)
         for (let dx = -offset; dx <= offset; dx += offset*2) {
           for (let dz = -offset; dz <= offset; dz += offset*2) {
@@ -38,19 +39,18 @@ export default {
       }
     }
 
-
     const createGrid = (gridSize: number) => {
       for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
           const x = i * gap
           const z = j * gap
-
-          const splitPillar = Math.random() < 0.2;
+          const splitPillar = Math.random() < 0.8;
           createPillar(x, z, splitPillar);
         }
       }
       getCenter();
     }
+
     const getCenter = () => {
       const { minX, minZ, maxX, maxZ } = pillars.value.reduce(
           (acc, pillar) => ({
@@ -61,17 +61,15 @@ export default {
           }),
           { minX: Infinity, minZ: Infinity, maxX: -Infinity, maxZ: -Infinity }
       )
-
       const centerX = (minX + maxX) / 2
       const centerZ = (minZ + maxZ) / 2
-
       pillars.value.forEach(pillar => {
         pillar.position.x -= centerX
         pillar.position.z -= centerZ
       })
     }
 
-    createGrid(gridSize)
+    createGrid(gridSize);
 
     return {
       cameraPosition: ref([0, 10, 0]) as Ref<number[]>,
@@ -87,9 +85,7 @@ export default {
     }
   }
 }
-
 </script>
-
 <template>
   <TresCanvas preset="realistic" window-size>
     <TresPerspectiveCamera
@@ -110,6 +106,5 @@ export default {
         :roughness="0.8"
         :position="pillar.position.toArray()"
     />
-
   </TresCanvas>
 </template>
