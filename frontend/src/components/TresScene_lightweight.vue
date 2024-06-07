@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ref, Ref } from 'vue'
-import { BoxGeometry, Mesh, MeshPhongMaterial } from 'three'
+import { BoxGeometry, Mesh, MeshPhongMaterial, Fog } from 'three'
 import { TresCanvas } from "@tresjs/core";
 import { Noise } from 'noisejs';
 
@@ -22,9 +22,17 @@ export default {
     let maxFPS = ref(0);
     let currentFPS = ref(0);
 
+    // Fog
+    const fogColor = 0xffffff;
+    const fogNear = 10;
+    const fogFar = 100;
+    const fog = new Fog(fogColor, fogNear, fogFar);
+
     // Noise and pillars
     let time = ref(0);
     let noise = new Noise(Math.random());
+    const noiseValues: number[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
+    const randomValues: number[] = Array(gridSize * gridSize).fill(0).map(() => Math.random());
     const pillars: Ref<Mesh[]> = ref([]);
     const gap: number = pillar_size * (1+gap_modifier);
 
@@ -32,8 +40,8 @@ export default {
     const pillar_medium_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
         pillar_size,
         5,
-        pillar_size));
-
+        pillar_size)
+    );
     const pillar_small_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
     const pillar_small_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
         (pillar_size / 2) / gap,
@@ -41,7 +49,6 @@ export default {
         (pillar_size / 2) / gap
         )
     );
-
     const pillar_tiny_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
     const pillar_tiny_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
         (pillar_size / 4) / gap / gap,
@@ -49,8 +56,6 @@ export default {
         (pillar_size / 4) / gap / gap
         )
     );
-
-    // Create prototype pillars
     const prototypePillarMedium = new Mesh(pillar_medium_geometry.value, pillar_medium_material.value);
     const prototypePillarSmall = new Mesh(pillar_small_geometry.value, pillar_small_material.value);
     const prototypePillarTiny = new Mesh(pillar_tiny_geometry.value, pillar_tiny_material.value);
@@ -60,13 +65,11 @@ export default {
       const pillar = prototypePillar.clone();
       pillar.position.set(x, 0, z);
       pillars.value.push(pillar);
-    }
-
+    };
     const createSplitPillar = (x: number, z: number) => {
       for (let dx = -0.5; dx <= 0.5; dx += 1) {
         for (let dz = -0.5; dz <= 0.5; dz += 1) {
           const splitAgain = Math.random() < 0.3;
-
           if (splitAgain) {
             for (let dxTiny = -0.5; dxTiny <= 0.5; dxTiny += 1) {
               for (let dzTiny = -0.5; dzTiny <= 0.5; dzTiny += 1) {
@@ -77,7 +80,6 @@ export default {
               }
             }
           }
-
           else {
             createPillar(
                 x + dx * (pillar_size + gap_modifier) / 2,
@@ -86,14 +88,14 @@ export default {
           }
         }
       }
-    }
-
+    };
     const createGrid = (gridSize: number) => {
+      let index = 0;
       for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
           const x = i * gap;
           const z = j * gap;
-          const splitPillar = Math.random() < 0.2;
+          const splitPillar = randomValues[index++] < 0.2;
           if (splitPillar) {
             createSplitPillar(x, z);
           } else {
@@ -102,8 +104,7 @@ export default {
         }
       }
       getCenter();
-    }
-
+    };
     const getCenter = () => {
       const { minX, minZ, maxX, maxZ } = pillars.value.reduce(
           (acc, pillar) => ({
@@ -120,11 +121,15 @@ export default {
         pillar.position.x -= centerX
         pillar.position.z -= centerZ
       })
-    }
-
+    };
     const animateWaves = () => {
       time.value += 0.01;
-      pillars.value.forEach((pillar, index) => {
+      for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+          noiseValues[i][j] = noise.simplex3(i / 10, j / 10, time.value * 0.1);
+        }
+      }
+      pillars.value.forEach((pillar) => {
         const noiseValue = noise.simplex3(
             pillar.position.x / 10,
             pillar.position.z / 10,
@@ -134,12 +139,10 @@ export default {
         const currentHeightOffset = pillar.position.y;
         pillar.position.y = lerp(currentHeightOffset, targetHeightOffset, 0.1);
       });
-    }
-
+    };
     const lerp = (a: number, b: number, t: number) => {
       return a * (1 - t) + b * t;
-    }
-
+    };
     const calculateFPS = () => {
       frameCount.value++;
       const currentTime = performance.now();
@@ -151,16 +154,14 @@ export default {
         frameCount.value = 0;
         lastFrameTime.value = currentTime;
       }
-    }
-
+    };
     const animate = () => {
       calculateFPS()
       animateWaves();
       requestAnimationFrame(animate)
-    }
-
+    };
     createGrid(gridSize);
-    animate()
+    animate();
 
     return {
       cameraPosition: ref([0, 10, 0]) as Ref<number[]>,
@@ -173,10 +174,11 @@ export default {
       pillar_medium_geometry,
       pillar_medium_material,
       pillars,
+      fog,
       currentFPS,
       minFPS,
       maxFPS
-    }
+    };
   }
 }
 </script>
@@ -186,7 +188,7 @@ export default {
     Min: {{ minFPS.toFixed(2) }}<br>
     Max: {{ maxFPS.toFixed(2) }}
   </div>
-  <TresCanvas preset="realistic" window-size>
+  <TresCanvas preset="realistic" window-size :fog="fog">
     <TresPerspectiveCamera
         :position="[5, 6, 5]"
         :fov="cameraFov"
