@@ -12,7 +12,7 @@
     </div>
     <div class="back-layer G_unselectable">
 <!--      <p style="text-align: center; opacity: 0.3">3D scene currently deactivated for performance reasons.. :(</p>-->
-      <TresScene v-bind:isActive="isActive" id="canvas"/>
+      <TresScene id="canvas"/>
 <!--      <TresScene_lightweight v-bind:isActive="isActive" id="canvas"/>-->
     </div>
   </div>

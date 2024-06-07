@@ -1,11 +1,9 @@
 <script lang="ts">
-import { ref, Ref } from 'vue'
-import { BoxGeometry, Mesh, MeshPhongMaterial, Fog } from 'three'
-import { TresCanvas } from "@tresjs/core";
+import { ref, Ref, onMounted } from 'vue'
+import * as THREE from 'three';
 import { Noise } from 'noisejs';
 
 export default {
-  components: { TresCanvas },
   setup() {
     // Changeable variables
     const gridSize: number = 20;
@@ -14,57 +12,56 @@ export default {
     const material_color: number = 0x3d4040;
     const noiseScale = 4;
 
-    // Static
-    // FPS Counter
+    // ThreeJS setup
+    const threeJsCanvas = ref<HTMLDivElement | null>(null);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    const scene = new THREE.Scene();
+    const light1 = new THREE.DirectionalLight(0xe3eeff, 0.5);
+    light1.position.set(-5, 10, 1);
+    light1.castShadow = true;
+    const light2 = new THREE.DirectionalLight(0xe3eeff, 0.5);
+    light2.position.set(5, 10, 1);
+    light2.castShadow = true;
+    scene.add(light1);
+    scene.add(light2);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(5, 6, 5);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
+
+    // FPS tracker
     let frameCount = ref(0);
     let lastFrameTime = ref(performance.now());
     let minFPS = ref(Infinity);
     let maxFPS = ref(0);
     let currentFPS = ref(0);
 
-    // Fog
-    const fogColor = 0xffffff;
-    const fogNear = 10;
-    const fogFar = 100;
-    const fog = new Fog(fogColor, fogNear, fogFar);
-
     // Noise and pillars
     let time = ref(0);
     let noise = new Noise(Math.random());
     const noiseValues: number[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
     const randomValues: number[] = Array(gridSize * gridSize).fill(0).map(() => Math.random());
-    const pillars: Ref<Mesh[]> = ref([]);
+    const pillars: Ref<THREE.Mesh[]> = ref([]);
     const gap: number = pillar_size * (1+gap_modifier);
 
-    const pillar_medium_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
-    const pillar_medium_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
-        pillar_size,
-        5,
-        pillar_size)
-    );
-    const pillar_small_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
-    const pillar_small_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
-        (pillar_size / 2) / gap,
-        5,
-        (pillar_size / 2) / gap
-        )
-    );
-    const pillar_tiny_material: Ref<MeshPhongMaterial> = ref(new MeshPhongMaterial({ color: material_color }));
-    const pillar_tiny_geometry: Ref<BoxGeometry> = ref(new BoxGeometry(
-        (pillar_size / 4) / gap / gap,
-        5,
-        (pillar_size / 4) / gap / gap
-        )
-    );
-    const prototypePillarMedium = new Mesh(pillar_medium_geometry.value, pillar_medium_material.value);
-    const prototypePillarSmall = new Mesh(pillar_small_geometry.value, pillar_small_material.value);
-    const prototypePillarTiny = new Mesh(pillar_tiny_geometry.value, pillar_tiny_material.value);
+    const pillar_medium_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_medium_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry(pillar_size, 5, pillar_size));
+    const pillar_small_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_small_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry((pillar_size / 2) / gap, 5, (pillar_size / 2) / gap));
+    const pillar_tiny_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_tiny_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry((pillar_size / 4) / gap / gap, 5, (pillar_size / 4) / gap / gap));
+
+    const prototypePillarMedium = new THREE.Mesh(pillar_medium_geometry.value, pillar_medium_material.value);
+    const prototypePillarSmall = new THREE.Mesh(pillar_small_geometry.value, pillar_small_material.value);
+    const prototypePillarTiny = new THREE.Mesh(pillar_tiny_geometry.value, pillar_tiny_material.value);
 
     // Methods
-    const createPillar = (x: number, z: number, prototypePillar: Mesh) => {
+    const createPillar = (x: number, z: number, prototypePillar: THREE.Mesh) => {
       const pillar = prototypePillar.clone();
       pillar.position.set(x, 0, z);
       pillars.value.push(pillar);
+      scene.add(pillar);
     };
     const createSplitPillar = (x: number, z: number) => {
       for (let dx = -0.5; dx <= 0.5; dx += 1) {
@@ -158,11 +155,16 @@ export default {
     const animate = () => {
       calculateFPS()
       animateWaves();
+      renderer.render(scene, camera);
       requestAnimationFrame(animate)
     };
-    createGrid(gridSize);
-    animate();
-
+    onMounted(() => {
+      if (threeJsCanvas.value) {
+        threeJsCanvas.value.appendChild(renderer.domElement);
+      }
+      createGrid(gridSize);
+      animate();
+    });
     return {
       cameraPosition: ref([0, 10, 0]) as Ref<number[]>,
       cameraFov: ref(75) as Ref<number>,
@@ -174,7 +176,7 @@ export default {
       pillar_medium_geometry,
       pillar_medium_material,
       pillars,
-      fog,
+      threeJsCanvas,
       currentFPS,
       minFPS,
       maxFPS
@@ -188,26 +190,7 @@ export default {
     Min: {{ minFPS.toFixed(2) }}<br>
     Max: {{ maxFPS.toFixed(2) }}
   </div>
-  <TresCanvas preset="realistic" window-size :fog="fog">
-    <TresPerspectiveCamera
-        :position="[5, 6, 5]"
-        :fov="cameraFov"
-        :aspect="cameraAspect"
-        :near="cameraNear"
-        :far="cameraFar"
-        :look-at="[0,0,0]"
-    />
-    <TresDirectionalLight :intensity="0.5" :color="0xe3eeff" :position="[-5, 10, 1]" :castShadow="true" />
-    <TresDirectionalLight :intensity="0.5" :color="0xe3eeff" :position="[5, 10, 1]" :castShadow="true" />
-    <TresMesh
-        v-for="(pillar, index) in pillars"
-        :key="index"
-        :geometry="pillar.geometry"
-        :material="pillar.material"
-        :roughness="0.8"
-        :position="pillar.position.toArray()"
-    />
-  </TresCanvas>
+  <div id="threeJsCanvas" ref="threeJsCanvas"></div>
 </template>
 <style>
 #fps-counter {
