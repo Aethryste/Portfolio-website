@@ -23,13 +23,14 @@ export default {
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000, 0.1);
 
-    const bottomLight = new THREE.PointLight(0xe63702, 5000, 5000);
+    const bottomLight = new THREE.PointLight(0xe63702, 50, 800, 1.5);
     bottomLight.position.set(0, -5, 0);
+    bottomLight.lookAt(5,0,5);
     bottomLight.castShadow = true;
     scene.add(bottomLight);
 
     const topLight = new THREE.PointLight(0xc1f2f5, 5, 50, 1);
-    topLight.position.set(-5, 10, -5);
+    topLight.position.set(-15, 10, -15);
     topLight.lookAt(0,0,0);
     topLight.castShadow = true;
     scene.add(topLight);
