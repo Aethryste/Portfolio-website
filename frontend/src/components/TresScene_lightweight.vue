@@ -17,6 +17,7 @@ export default {
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x000000, 0.1);
     const light1 = new THREE.DirectionalLight(0xe3eeff, 0.5);
     light1.position.set(-5, 10, 1);
     light1.castShadow = true;
@@ -25,6 +26,11 @@ export default {
     light2.castShadow = true;
     scene.add(light1);
     scene.add(light2);
+
+    const redLight = new THREE.PointLight(0xff0000, 10, 100);
+    redLight.position.set(0, -5, 0); // Position the light beneath the grid
+    scene.add(redLight);
+
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(5, 6, 5);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -43,13 +49,14 @@ export default {
     const noiseValues: number[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
     const randomValues: number[] = Array(gridSize * gridSize).fill(0).map(() => Math.random());
     const pillars: Ref<THREE.Mesh[]> = ref([]);
+    const pillarMaterial = new THREE.MeshPhongMaterial({ color: material_color });
     const gap: number = pillar_size * (1+gap_modifier);
 
-    const pillar_medium_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_medium_material: Ref<THREE.MeshPhongMaterial> = ref(pillarMaterial);
     const pillar_medium_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry(pillar_size, 5, pillar_size));
-    const pillar_small_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_small_material: Ref<THREE.MeshPhongMaterial> = ref(pillarMaterial);
     const pillar_small_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry((pillar_size / 2) / gap, 5, (pillar_size / 2) / gap));
-    const pillar_tiny_material: Ref<THREE.MeshPhongMaterial> = ref(new THREE.MeshPhongMaterial({ color: material_color }));
+    const pillar_tiny_material: Ref<THREE.MeshPhongMaterial> = ref(pillarMaterial);
     const pillar_tiny_geometry: Ref<THREE.BoxGeometry> = ref(new THREE.BoxGeometry((pillar_size / 4) / gap / gap, 5, (pillar_size / 4) / gap / gap));
 
     const prototypePillarMedium = new THREE.Mesh(pillar_medium_geometry.value, pillar_medium_material.value);
