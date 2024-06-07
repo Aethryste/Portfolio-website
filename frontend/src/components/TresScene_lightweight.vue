@@ -6,11 +6,13 @@ import { Noise } from 'noisejs';
 export default {
   setup() {
     // Changeable variables
-    const gridSize: number = 20;
+    const gridSize: number = 18;
     const pillar_size: number = 1;
     const gap_modifier: number = 0.025;
     const material_color: number = 0x3d4040;
-    const noiseScale = 4;
+    const noiseScale = 2.5;
+    const splitChanceSmall: number = 0.4;
+    const splitChanceTiny: number = 0.1;
 
     // ThreeJS setup
     const threeJsCanvas = ref<HTMLDivElement | null>(null);
@@ -32,8 +34,8 @@ export default {
     topLight.castShadow = true;
     scene.add(topLight);
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(5, 5, 5);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 50);
+    camera.position.set(6, 5, 5);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene.add(camera);
 
@@ -81,7 +83,7 @@ export default {
     const createSplitPillar = (x: number, z: number) => {
       for (let dx = -0.5; dx <= 0.5; dx += 1) {
         for (let dz = -0.5; dz <= 0.5; dz += 1) {
-          const splitAgain = Math.random() < 0.3;
+          const splitAgain = Math.random() < splitChanceTiny;
           if (splitAgain) {
             for (let dxTiny = -0.5; dxTiny <= 0.5; dxTiny += 1) {
               for (let dzTiny = -0.5; dzTiny <= 0.5; dzTiny += 1) {
@@ -107,7 +109,7 @@ export default {
         for (let j = 0; j < gridSize; j++) {
           const x = i * gap;
           const z = j * gap;
-          const splitPillar = randomValues[index++] < 0.2;
+          const splitPillar = randomValues[index++] < splitChanceSmall;
           if (splitPillar) {
             createSplitPillar(x, z);
           } else {
@@ -155,7 +157,7 @@ export default {
     const lerp = (a: number, b: number, t: number) => {
       return a * (1 - t) + b * t;
     };
-    const calculateFPS = () => {
+    const calculatePerformance = () => {
       frameCount.value++;
       const currentTime = performance.now();
       const deltaTime = currentTime - lastFrameTime.value;
@@ -168,7 +170,7 @@ export default {
       }
     };
     const animate = () => {
-      calculateFPS()
+      calculatePerformance()
       animateWaves();
       renderer.render(scene, camera);
       requestAnimationFrame(animate)
@@ -203,7 +205,8 @@ export default {
   <div id="fps-counter">
     FPS: {{ currentFPS.toFixed(2) }}<br>
     Min: {{ minFPS.toFixed(2) }}<br>
-    Max: {{ maxFPS.toFixed(2) }}
+    Max: {{ maxFPS.toFixed(2) }}<br>
+    Pillars: {{ pillars.length }}
   </div>
   <div id="threeJsCanvas" ref="threeJsCanvas"></div>
 </template>
@@ -215,9 +218,17 @@ export default {
   left: 0;
   color: white;
   font-size: 0.8em;
-  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   z-index: 100;
-  opacity: 0.5;
+  opacity: 0.2;
+}
+#threeJsCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  margin: 0;
+  z-index: -10;
 }
 </style>
