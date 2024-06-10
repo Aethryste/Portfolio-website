@@ -1,16 +1,17 @@
 <script lang="ts">
 import { ref, Ref, onMounted } from 'vue'
+import { isMobileDevice } from '../utils/generalUtils.ts';
 import * as THREE from 'three';
 import { Noise } from 'noisejs';
 
 export default {
   setup() {
     // Changeable variables
-    const gridSize: number = 18;
+    const gridSize: number = isMobileDevice() ? 10 : 18;
     const pillar_size: number = 1;
     const gap_modifier: number = 0.025;
     const material_color: number = 0x3d4040;
-    const noiseScale = 2.5;
+    const noiseScale = isMobileDevice() ? 2.5 : 2.5;
     const splitChanceSmall: number = 0.4;
     const splitChanceTiny: number = 0.1;
 
@@ -18,10 +19,21 @@ export default {
     const threeJsCanvas = ref<HTMLDivElement | null>(null);
 
     const renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    if (isMobileDevice()) {
+      renderer.shadowMap.enabled = false;
+    } else {
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.1);
+    if (isMobileDevice()) {
+      scene.fog = new THREE.FogExp2(0x000000, 0.15);
+    } else {
+      scene.fog = new THREE.FogExp2(0x000000, 0.1);
+    }
 
     const bottomLight = new THREE.PointLight(0xe63702, 50, 800, 1.5);
     bottomLight.position.set(0, -5, 0);
@@ -36,8 +48,13 @@ export default {
     scene.add(topLight);
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 50);
-    camera.position.set(6, 5, 5);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    if (isMobileDevice()) {
+      camera.position.set(5, 4, 4.2);
+      camera.lookAt(new THREE.Vector3(-1, 0, 0));
+    } else {
+      camera.position.set(6, 5, 5);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+    }
     scene.add(camera);
 
     // FPS tracker
@@ -49,7 +66,7 @@ export default {
 
     // Noise and pillars
     let time = ref(0);
-    let noise = new Noise(Math.random());
+    let noise = new Noise(0.36);
     const noiseValues: number[][] = Array.from({ length: gridSize }, () => Array(gridSize).fill(0));
     const randomValues: number[] = Array(gridSize * gridSize).fill(0).map(() => Math.random());
     const pillars: Ref<THREE.Mesh[]> = ref([]);
