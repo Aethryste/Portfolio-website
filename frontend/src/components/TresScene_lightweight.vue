@@ -99,24 +99,27 @@ export default {
       scene.add(pillar);
     };
     const createSplitPillar = (x: number, z: number) => {
-      for (let dx = -0.5; dx <= 0.5; dx += 1) {
-        for (let dz = -0.5; dz <= 0.5; dz += 1) {
+      const baseX = x * (pillar_size + gap_modifier);
+      const baseZ = z * (pillar_size + gap_modifier);
+      for (let dx = -0.5; dx <= 0.5; dx++) {
+        for (let dz = -0.5; dz <= 0.5; dz++) {
           const splitAgain = Math.random() < splitChanceTiny;
           if (splitAgain) {
-            for (let dxTiny = -0.5; dxTiny <= 0.5; dxTiny += 1) {
-              for (let dzTiny = -0.5; dzTiny <= 0.5; dzTiny += 1) {
+            for (let dxTiny = -0.5; dxTiny <= 0.5; dxTiny++) {
+              for (let dzTiny = -0.5; dzTiny <= 0.5; dzTiny++) {
                 createPillar(
-                    x + dx * (pillar_size + gap_modifier) / 2 + dxTiny * (pillar_size - (gap_modifier / 4)) / 4,
-                    z + dz * (pillar_size + gap_modifier) / 2 + dzTiny * (pillar_size - (gap_modifier / 4)) / 4,
-                    prototypePillarTiny)
+                    baseX + dx * 0.5 + dxTiny * 0.25,
+                    baseZ + dz * 0.5 + dzTiny * 0.25,
+                    prototypePillarTiny
+                );
               }
             }
-          }
-          else {
+          } else {
             createPillar(
-                x + dx * (pillar_size + gap_modifier) / 2,
-                z + dz * (pillar_size + gap_modifier) / 2,
-                prototypePillarSmall)
+                baseX + dx * 0.5,
+                baseZ + dz * 0.5,
+                prototypePillarSmall
+            );
           }
         }
       }
@@ -156,22 +159,24 @@ export default {
     };
     const animateWaves = () => {
       time.value += 0.01;
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-          noiseValues[i][j] = noise.simplex3(i / 10, j / 10, time.value * 0.1);
+      if (frameCount.value % 4 === 0) {
+        for (let i = 0; i < gridSize; i++) {
+          for (let j = 0; j < gridSize; j++) {
+            noiseValues[i][j] = noise.simplex3(i / 10, j / 10, time.value * 0.1);
+          }
         }
       }
       pillars.value.forEach((pillar) => {
-        const noiseValue = noise.simplex3(
-            pillar.position.x / 10,
-            pillar.position.z / 10,
-            time.value * 0.1
-        );
+        const x = pillar.position.x / 10;
+        const z = pillar.position.z / 10;
+        const noiseValue = noise.simplex3(x, z, time.value * 0.1);
         const targetHeightOffset = noiseValue * noiseScale;
         const currentHeightOffset = pillar.position.y;
         pillar.position.y = lerp(currentHeightOffset, targetHeightOffset, 0.1);
       });
+      frameCount.value++;
     };
+
     const lerp = (a: number, b: number, t: number) => {
       return a * (1 - t) + b * t;
     };
