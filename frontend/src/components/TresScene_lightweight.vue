@@ -73,7 +73,7 @@ export default {
       camera.position.set(5, 4, 4.2);
       camera.lookAt(new THREE.Vector3(-1, 0, 0));
     } else {
-      camera.position.set(5.1, 4, 5.2);
+      camera.position.set(5.2, 4.1, 5.2);
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
     scene.add(camera);
