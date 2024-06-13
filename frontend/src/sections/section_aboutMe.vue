@@ -114,44 +114,48 @@ export default defineComponent({
     }
   },
   mounted () {
-    this.elem_profile_image = document.querySelector('.profile-image');
-    this.elem_profile_details = document.querySelector('.profile-details');
+    this.elem_profile_image = document.querySelector('.aboutMe-left');
+    this.elem_profile_details = document.querySelector('.aboutMe-right');
   }
 });
 </script>
 
 <template>
   <div class="container">
-    <div class="profile-image">
-      <img :src='profileImagePath' alt="Profile image"/>
+    <div class="aboutMe-left">
+      <div class="profile-image">
+        <img :src='profileImagePath' alt="Profile image" style="pointer-events: none;"/>
+      </div>
     </div>
-    <div class="profile-details">
-      <div class="about">
-        <header class="G_unselectable G_sectionHeader">\\ About</header>
-        <typewriter id="typewriter"/>
-        <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
-          <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
-          <a class="" v-if="!readMoreActivated" @click="toggleReadMore" href="#">
-            Read more...
-          </a>
-          <span v-if="readMoreActivated" v-html="longText.replace(/\n/g, '<br/>')"></span>
-          <a class="" v-if="readMoreActivated" @click="toggleReadMore" href="#">
-            Read less...
-          </a>
-        </p>
-        <div v-if="!readMoreActivated || readMoreActivated && windowWidth >= 970" class="skills-container">
-          <div v-for="category in filteredSkillCategories" :key="category.title" class="skill-section">
-            <h3 v-if="!readMoreActivated">{{ category.title }}</h3>
-            <h4 v-if="readMoreActivated && windowWidth > 1260">{{ category.title }}</h4>
-            <hr v-if="readMoreActivated && windowWidth < 1260">
-            <skill_item
-                v-for="skill in category.skills"
-                :key="skill.name"
-                :icon="skill.icon"
-                :minimize="readMoreActivated"
-            >
-              <template v-slot:title>{{ skill.name }}</template>
-            </skill_item>
+    <div class="aboutMe-right">
+      <div class="profile-details">
+        <div class="about">
+          <header class="G_unselectable G_sectionHeader">\\ About</header>
+          <typewriter id="typewriter"/>
+          <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
+            <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
+            <a class="" v-if="!readMoreActivated" @click="toggleReadMore" href="#">
+              Read more...
+            </a>
+            <span v-if="readMoreActivated" v-html="longText.replace(/\n/g, '<br/>')"></span>
+            <a class="" v-if="readMoreActivated" @click="toggleReadMore" href="#">
+              Read less...
+            </a>
+          </p>
+          <div v-if="!readMoreActivated || readMoreActivated && windowWidth >= 970" class="skills-container">
+            <div v-for="category in filteredSkillCategories" :key="category.title" class="skill-section">
+              <h3 v-if="!readMoreActivated">{{ category.title }}</h3>
+              <h4 v-if="readMoreActivated && windowWidth > 1260">{{ category.title }}</h4>
+              <hr v-if="readMoreActivated && windowWidth < 1260">
+              <skill_item
+                  v-for="skill in category.skills"
+                  :key="skill.name"
+                  :icon="skill.icon"
+                  :minimize="readMoreActivated"
+              >
+                <template v-slot:title>{{ skill.name }}</template>
+              </skill_item>
+            </div>
           </div>
         </div>
       </div>
@@ -165,11 +169,18 @@ export default defineComponent({
 .container {
   display: flex;
   font-family: "Roboto Light", sans-serif;
-  .profile-image {
+  .aboutMe-left {
     transform: translateX(-125%);
     display: flex;
     width: 50%;
-    height: 640px;
+    height: 70%;
+    margin: auto auto auto 0;
+    overflow: hidden;
+  }
+  .profile-image {
+    display: flex;
+    width: 100%;
+    height: 100%;
     margin: auto auto auto 0;
     overflow: hidden;
     img {
@@ -182,85 +193,95 @@ export default defineComponent({
       -ms-transform: scale(1.3);
       object-fit: cover;
       object-position: center;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
   }
-  .profile-details {
+  .aboutMe-right {
+    background: linear-gradient(-39deg,rgb(30,30,35),rgb(10,10,8));
     transform: translateX(125%);
-    position: relative;
-    display: flex;
-    flex-direction: column;
     width: 50%;
     height: 70%;
     margin: auto auto auto 0;
-    .about {
-      width: calc(100%  - 5em);
-      height: calc(100%  - 2em);
-      margin: auto auto auto 1em;
-      #typewriter {
-        margin: -1em 0 -1em 0!important;
-      }
-    }
-    .biography {
-      transition: max-height 0.5s linear;
-      overflow: hidden;
-      max-height: 20%;
-      &.expanded {
-        max-height: 100%;
-        transition: max-height 0.5s linear;
-      }
-      a {
-        text-decoration: none;
-        color: $theme-primary-color;
-      }
-    }
-    .skills-container {
-      margin: 1em auto auto auto;
+    .profile-details {
+
+      position: relative;
+      display: flex;
+      flex-direction: column;
       width: 100%;
-      height: fit-content;
-      hr {
-        opacity: 0.1;
-        margin: 0;
-        width: 100%;
+      height: 70%;
+      margin: auto auto auto 0;
+      .about {
+        width: calc(100%  - 5em);
+        height: calc(100%  - 2em);
+        margin: auto auto auto 1em;
+        #typewriter {
+          margin: -1em 0 -1em 0!important;
+        }
       }
-      h3 {
-        width: 100%;
-        text-transform: uppercase;
-        color: lightgrey;
-        font-weight: 500;
-        font-size: 0.9em;
-        margin-top: 0.2em;
-        margin-bottom: 0;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-        opacity: 0.3;
+      .biography {
+        transition: max-height 0.5s linear;
+        overflow: hidden;
+        max-height: 20%;
+        &.expanded {
+          max-height: 100%;
+          transition: max-height 0.5s linear;
+        }
+        a {
+          text-decoration: none;
+          color: $theme-primary-color;
+        }
       }
-      h4 {
-        width: 100%;
-        text-transform: uppercase;
-        color: lightgrey;
-        font-size: 0.7em;
-        font-weight: 500;
-        margin-top: 0.2em;
-        margin-bottom: 0;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-        opacity: 0.3;
-      }
-      .skill-section {
+      .skills-container {
+        margin: 1em auto auto auto;
         width: 100%;
         height: fit-content;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        .skill-item {
-          border-radius: 0.3em;
-          display: block;
-          width: 200px;
-          height: 60px;
-          margin: 5px;
-          background: linear-gradient(
-                  190deg,
-                  rgb(255,255,255),
-                  rgb(200,200,200)
-          );
+        hr {
+          opacity: 0.1;
+          margin: 0;
+          width: 100%;
+        }
+        h3 {
+          width: 100%;
+          text-transform: uppercase;
+          color: lightgrey;
+          font-weight: 500;
+          font-size: 0.9em;
+          margin-top: 0.2em;
+          margin-bottom: 0;
+          border-bottom: 1px solid rgba(255,255,255,0.2);
+          opacity: 0.3;
+        }
+        h4 {
+          width: 100%;
+          text-transform: uppercase;
+          color: lightgrey;
+          font-size: 0.7em;
+          font-weight: 500;
+          margin-top: 0.2em;
+          margin-bottom: 0;
+          border-bottom: 1px solid rgba(255,255,255,0.2);
+          opacity: 0.3;
+        }
+        .skill-section {
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          .skill-item {
+            border-radius: 0.3em;
+            display: block;
+            width: 200px;
+            height: 60px;
+            margin: 5px;
+            background: linear-gradient(
+                    190deg,
+                    rgb(255,255,255),
+                    rgb(200,200,200)
+            );
+          }
         }
       }
     }
@@ -292,31 +313,42 @@ export default defineComponent({
   .container {
     flex-direction: column;
     justify-content: space-evenly;
-    .profile-image {
-      margin: auto auto 0 auto;
-      width: 80%;
+    .aboutMe-left {
+      width: 100%;
       height: 25%;
+      margin: auto auto 0 auto;
+      .profile-image {
+        margin: auto auto 0 auto;
+        width: 80%;
+      }
     }
-    .profile-details {
-      margin: 0 auto auto auto;
+    .aboutMe-right {
       width: 80%;
       height: fit-content;
-    }
-    .about {
-      margin: auto!important;
-      width: 100%!important;
-      .skills-container {
-        h3 {
-          font-size: 0.9em;
-        }
-        .skill-section .container {
-          flex-direction: row;
+      margin: 0 auto auto auto;
+      .profile-details {
+        margin: 0 auto auto auto;
+        width: 100%;
+        height: fit-content;
+        .about {
+          margin: 15px auto!important;
+          width: calc(100% - 15px);
+          .skills-container {
+            h3 {
+              font-size: 0.9em;
+            }
+            .skill-section .container {
+              flex-direction: row;
+            }
+          }
+          .biography {
+            max-height: 37%;
+          }
         }
       }
-      .biography {
-        max-height: 37%;
-      }
     }
+
+
   }
 }
 @media screen and (max-width: 510px) {

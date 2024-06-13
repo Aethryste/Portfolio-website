@@ -216,6 +216,7 @@ export default {
   color: white;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(39deg,rgb(30,30,35),rgb(10,10,8));
   .content-wrapper {
     display: flex;
     flex-direction: row;

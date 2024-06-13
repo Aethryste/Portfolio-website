@@ -5,28 +5,19 @@
         <h1 class="main">Hi, I'm <span id="richard">Richard</span>.</h1>
         <h2 class="sub">Software Engineer, front-end developer.</h2>
       </div>
-
       <div class="absolute-pos-container">
         <div class="scroll-hint-icon" ref="scrollHint"/>
       </div>
-    </div>
-    <div class="back-layer G_unselectable">
-      <p style="text-align: center; opacity: 0.3">3D scene currently deactivated for performance reasons.. :(</p>
-<!--      <TresScene v-bind:isActive="isActive" id="canvas"/>-->
     </div>
   </div>
 </template>
 
 <script>
-import TresScene from '../components/tres_scene.vue';
 import lottie from 'lottie-web';
 import animationData from '../assets/anim-scroll.json';
 
 export default {
   name: 'section_landingPage',
-  components: {
-    // TresScene
-  },
   props: {
     isActive: Boolean
   },
@@ -167,26 +158,6 @@ export default {
       }
     }
   }
-  .back-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -10;
-    #threeJs {
-      position: absolute;
-      z-index: -10;
-      top: 0;
-      left: 0;
-      opacity: 1;
-    }
-  }
-}
-#canvas {
-  position: absolute!important;
-  width: 100%!important;
-  height: 100%!important;
 }
 .hidden {
   opacity: 0;
