@@ -31,52 +31,35 @@
 }
 
 /* ANIMATIONS: section_aboutMe.vue */
-.animation-move-in-from-left {
-    animation: move-in-from-left 500ms forwards 400ms;
+.anim-aboutMe-in-from-left {
+    animation: keys-aboutMe-in-from-left 500ms forwards 400ms;
+    animation-delay: 600ms;
 }
-@keyframes move-in-from-left {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
+@keyframes keys-aboutMe-in-from-left {
+    0% { transform: translateX(-130%); }
+    100% { transform: translateX(0%); }
 }
-
-.animation-move-in-from-right {
-    animation: move-in-from-right 500ms forwards 400ms;
+.anim-aboutMe-in-from-right {
+    animation: keys-aboutMe-in-from-right 500ms forwards 400ms;
+    animation-delay: 600ms;
 }
-@keyframes move-in-from-right {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0%);
-    }
+@keyframes keys-aboutMe-in-from-right {
+    0% { transform: translateX(130%); }
+    100% { transform: translateX(0%); }
 }
-
-.animation-move-out-to-left {
-    animation: move-out-to-left 400ms forwards;
+.anim-aboutMe-out-to-left {
+    animation: keys-aboutMe-out-to-left 400ms forwards;
 }
-@keyframes move-out-to-left {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+@keyframes keys-aboutMe-out-to-left {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-130%); }
 }
-
-.animation-move-out-to-right {
-    animation: move-out-to-right 400ms forwards;
+.anim-aboutMe-out-to-right {
+    animation: keys-aboutMe-out-to-right 400ms forwards;
 }
-@keyframes move-out-to-right {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
+@keyframes keys-aboutMe-out-to-right {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(130%); }
 }
 
 

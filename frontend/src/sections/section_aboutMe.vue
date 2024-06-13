@@ -85,8 +85,10 @@ export default defineComponent({
       }
     },
     isActiveWatch(value: boolean) {
-      this.toggleAnimation(this.elem_profile_image, 'animation-move-in-from-left', 'animation-move-out-to-left', value);
-      this.toggleAnimation(this.elem_profile_details, 'animation-move-in-from-right', 'animation-move-out-to-right', value);
+      this.toggleAnimation(this.elem_profile_image,
+          'anim-aboutMe-in-from-left', 'anim-aboutMe-out-to-left', value);
+      this.toggleAnimation(this.elem_profile_details,
+          'anim-aboutMe-in-from-right', 'anim-aboutMe-out-to-right', value);
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
@@ -133,7 +135,8 @@ export default defineComponent({
           <header class="G_unselectable G_sectionHeader">\\ About</header>
           <typewriter id="typewriter"/>
           <p class="biography G_paragraph" :class="{ 'expanded': readMoreActivated }">
-            <span v-if="!readMoreActivated">{{longText.slice(0, 330)}}</span>
+            <span v-if="!readMoreActivated && !this.isMobileDevice">{{longText.slice(0, 330)}}</span>
+            <span v-if="!readMoreActivated && this.isMobileDevice">{{longText.slice(0, 255)}}</span>
             <a class="" v-if="!readMoreActivated" @click="toggleReadMore" href="#">
               Read more...
             </a>
@@ -170,42 +173,41 @@ export default defineComponent({
   display: flex;
   font-family: "Roboto Light", sans-serif;
   .aboutMe-left {
-    transform: translateX(-125%);
+    transform: translateX(-130%);
     display: flex;
     width: 50%;
     height: 70%;
     margin: auto auto auto 0;
     overflow: hidden;
-  }
-  .profile-image {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    margin: auto auto auto 0;
-    overflow: hidden;
-    img {
+    .profile-image {
+      display: flex;
       width: 100%;
       height: 100%;
-      transform: scale(1.3);
-      -webkit-transform: scale(1.3);
-      -moz-transform: scale(1.3);
-      -o-transform: scale(1.3);
-      -ms-transform: scale(1.3);
-      object-fit: cover;
-      object-position: center;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      user-select: none;
+      margin: auto auto auto 0;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        -moz-transform: scale(1.3);
+        -o-transform: scale(1.3);
+        -ms-transform: scale(1.3);
+        object-fit: cover;
+        object-position: center;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
     }
   }
   .aboutMe-right {
-    background: linear-gradient(-39deg,rgb(30,30,35),rgb(10,10,8));
-    transform: translateX(125%);
+    background: linear-gradient(-39deg,rgba(30,30,35,0.2),rgba(10,10,8,0.5));
+    transform: translateX(130%);
     width: 50%;
     height: 70%;
     margin: auto auto auto 0;
     .profile-details {
-
       position: relative;
       display: flex;
       flex-direction: column;
@@ -223,7 +225,7 @@ export default defineComponent({
       .biography {
         transition: max-height 0.5s linear;
         overflow: hidden;
-        max-height: 20%;
+        max-height: 25%;
         &.expanded {
           max-height: 100%;
           transition: max-height 0.5s linear;
@@ -293,7 +295,7 @@ export default defineComponent({
   }
 }
 @media screen and (max-width: 970px) {
-  .container .profile-details .skills-container {
+  .container .aboutMe-right .profile-details .skills-container {
     h3 {
       font-size: 0.7em;
     }
@@ -305,7 +307,8 @@ export default defineComponent({
   }
 }
 @media screen and (max-width: 940px) {
-  .container .profile-details .biography {
+  .container .aboutMe-right .profile-details .biography {
+    height: 30%;
     max-height: 30%;
   }
 }
@@ -347,12 +350,10 @@ export default defineComponent({
         }
       }
     }
-
-
   }
 }
 @media screen and (max-width: 510px) {
-  .container .profile-details {
+  .container .aboutMe-right .profile-details {
     margin: 0 auto auto auto;
     .about .skills-container {
       h3 {
