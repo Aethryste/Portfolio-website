@@ -1,68 +1,36 @@
-/*Used on landingPage*/
-.anim-pageTitle-fade-in {
-    animation: anim-pageTitle-fade-in 5000ms forwards;
+/* ANIMATIONS: section_landing-page.vue */
+.anim-landingSection-title-fade-in {
+    animation: keys-landingSection-title-fade-in 5000ms forwards;
     animation-delay: 1s;
 }
-@keyframes anim-pageTitle-fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+@keyframes keys-landingSection-title-fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
-.anim-pageTitle-fade-out {
-    animation: anim-pageTitle-fade-out 300ms forwards;
+.anim-landingSection-title-fade-out {
+    animation: keys-landingSection-title-fade-out 300ms forwards;
 }
-@keyframes anim-pageTitle-fade-out {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+@keyframes keys-landingSection-title-fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
 }
-.anim-scrollHint-fade-in {
-    animation: anim-scrollHint-fade-in 5000ms forwards;
+.anim-landingSection-scrollHint-fade-in {
+    animation: keys-landingSection-scrollHint-fade-in 5000ms forwards;
     animation-delay: 4s;
 }
-@keyframes anim-scrollHint-fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 0.7;
-    }
+@keyframes keys-landingSection-scrollHint-fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 0.7; }
 }
-.anim-scrollHint-fade-out {
-    animation: anim-scrollHint-fade-out 300ms forwards;
+.anim-landingSection-scrollHint-fade-out {
+    animation: keys-landingSection-scrollHint-fade-out 300ms forwards;
 }
-@keyframes anim-scrollHint-fade-out {
-    0% {
-        opacity: 0.7;
-    }
-    100% {
-        opacity: 0;
-    }
+@keyframes keys-landingSection-scrollHint-fade-out {
+    0% { opacity: 0.7; }
+    100% { opacity: 0; }
 }
-.anim-bounce-vertical {
-    animation: anim-bounce-vertical 2000ms linear infinite;
-    animation-delay: 6s;
-}
-@keyframes anim-bounce-vertical {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(0);
-    }
-    75% {
-        transform: translateY(5px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
+
+/* ANIMATIONS: section_aboutMe.vue */
 .animation-move-in-from-left {
     animation: move-in-from-left 500ms forwards 400ms;
 }
