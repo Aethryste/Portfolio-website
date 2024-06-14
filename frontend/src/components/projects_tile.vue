@@ -15,6 +15,22 @@ export default defineComponent({
       type: Object as PropType<Project>,
       required: true,
     },
+    width: {
+      type: String,
+      required: true,
+    },
+    height: {
+      type: String,
+      required: true,
+    },
+    margin: {
+      type: String,
+      required: true,
+    },
+    translate: {
+      type: String,
+      required: true,
+    }
   },
   methods: {
     rotate() {
@@ -28,11 +44,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="cube" @mouseover="rotate" @mouseout="reset">
-    <div class="face front">
+  <div class="cube" :style="{width: width, height: height, margin: margin}" @mouseover="rotate" @mouseout="reset">
+    <div class="face front" :style="{width: width, height: height, transform: 'translateZ('+translate+')'}">
       <img src="../assets/project_portfolio_front.png" :alt="project.title">
     </div>
-    <div class="face right">
+    <div class="face right" :style="{width: width, height: height, transform: 'rotateY(90deg) translateZ('+translate+')'}">
       <h3 class="title G_sectionHeader">{{ project.title }}</h3>
       <p class="description">{{ project.description }}</p>
       <div class="git-icon"/>
@@ -46,11 +62,8 @@ export default defineComponent({
 
 .cube {
   position: relative;
-  width: $cube-width;
-  height: $cube-height;
   transform-style: preserve-3d;
   transition: transform $rotation-speed;
-  margin: $cube-margin;
   transform: perspective(1200px) rotateY(0deg);
   &:hover {
     transform: perspective(1200px) rotateY(-90deg);
@@ -60,8 +73,6 @@ export default defineComponent({
   }
   .face {
     position: absolute;
-    width: $cube-width;
-    height: $cube-height;
     background: linear-gradient(
             30deg,
             rgb(50,50,50),
@@ -70,6 +81,7 @@ export default defineComponent({
     backface-visibility: hidden;
     transform-style: flat;
     text-align: center;
+    overflow: hidden;
     .description {
       font-family: "Roboto Light", sans-serif;
       font-size: 0.8em;
@@ -79,11 +91,11 @@ export default defineComponent({
       width: 100%;
     }
   }
-  .front {
-    transform: translateZ(100px);
-  }
-  .right {
-    transform: rotateY(90deg) translateZ(100px);
-  }
+  //.front {
+  //  transform: translateZ(100px);
+  //}
+  //.right {
+  //  transform: rotateY(90deg) translateZ(100px);
+  //}
 }
 </style>

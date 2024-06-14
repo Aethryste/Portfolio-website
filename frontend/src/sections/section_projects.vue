@@ -4,8 +4,15 @@
       <div class="top">
         <header class="G_unselectable G_sectionHeader header">\\ Projects</header>
         <header class="G_unselectable G_sectionHeader subheader">Featured</header>
-        <div class="projects-container">
-          <projects-tile v-for="project in projects" :key="project.title" :project="project" class="projects-tile" />
+        <div v-if="windowWidth > 600" class="projects-container">
+          <projects-tile v-for="project in projects" :key="project.title" :project="project"
+                         :width="'200px'" :height="'200px'" :margin="'18px'" :translate="'100px'"
+                         class="projects-tile" />
+        </div>
+        <div v-else class="projects-container">
+          <projects-tile v-for="project in projects" :key="project.title" :project="project"
+                         :width="'150px'" :height="'150px'" :margin="'10px'" :translate="'76px'"
+                         class="projects-tile" />
         </div>
       </div>
       <div class="bottom">
@@ -33,6 +40,7 @@ export default {
   },
   data() {
     return {
+      windowWidth: window.innerWidth as number,
       elem_top: null as Element | null,
       elem_bottom: null as Element | null,
       elem_projects_container: null as HTMLElement | null,
@@ -95,22 +103,24 @@ export default {
       this.toggleAnimation(this.elem_bottom, 'animation-projects-to-top', 'animation-projects-to-bottom', value);
     },
     adjustWidth() {
-      if ("style" in this.elem_projects_container) {
-        this.elem_projects_container.style.width = '';
-      }
-      let currentRowYOffset = this.elem_project_items?.[0].offsetTop;
-      let count:number = 0;
-      for (let item of this.elem_project_items) {
-        if (item.offsetTop !== currentRowYOffset) {
-          break;
+      if (this.elem_projects_container && this.elem_project_items) {
+        if ("style" in this.elem_projects_container) {
+          this.elem_projects_container.style.width = '';
         }
-        count++
-      }
-      this.projects_row_length = count;
-      const containerWidth = (this.projects_row_length * this.cube_properties.width)
-          + ((this.cube_properties.margin * 2) * this.projects_row_length);
-      if ("style" in this.elem_projects_container) {
-        this.elem_projects_container.style.width = `${containerWidth}px`;
+        let currentRowYOffset = this.elem_project_items?.[0].offsetTop;
+        let count:number = 0;
+        for (let item of this.elem_project_items) {
+          if (item.offsetTop !== currentRowYOffset) {
+            break;
+          }
+          count++
+        }
+        this.projects_row_length = count;
+        const containerWidth = (this.projects_row_length * this.cube_properties.width)
+            + ((this.cube_properties.margin * 2) * this.projects_row_length);
+        if ("style" in this.elem_projects_container) {
+          this.elem_projects_container.style.width = `${containerWidth}px`;
+        }
       }
     },
   },
@@ -184,7 +194,7 @@ export default {
           width: 300px;
           height: 4em;
           text-align: center;
-          margin: auto 0 auto 15px;
+          margin: 10px 0 auto 15px;
           background-color: rgba(0,0,0,0);
           border: 2px solid white;
           color: whitesmoke;
@@ -201,12 +211,26 @@ export default {
     }
   }
 }
-@media screen and (max-width: 910px) {
+@media screen and (max-width: 885px) {
   .container .content .bottom .flex-container {
     flex-direction: column;
-    button {
-      width: 250px;
-      margin-bottom: 10px;
+    width: fit-content;
+  }
+}
+@media screen and (max-width: 600px) {
+  .container {
+    max-width: 440px;
+    margin: auto;
+    flex-direction: column;
+    .content .bottom {
+      .flex-container {
+        margin: 0 auto 0 5px;
+        width: 92%;
+        button {
+          width: 100%;
+          margin: 10px 0 0 0;
+        }
+      }
     }
   }
 }
