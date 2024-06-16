@@ -6,12 +6,20 @@
         <header class="G_unselectable G_sectionHeader subheader">Featured</header>
         <div v-if="windowWidth > 600" class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
-                         :width="'200px'" :height="'200px'" :margin="'18px'" :translate="'100px'"
+                         :width="'200px'"
+                         :height="'200px'"
+                         :margin="'18px'"
+                         :translate="'100px'"
+                         :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
         <div v-else class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
-                         :width="'150px'" :height="'150px'" :margin="'10px'" :translate="'76px'"
+                         :width="'150px'"
+                         :height="'150px'"
+                         :margin="'10px'"
+                         :translate="'76px'"
+                         :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
       </div>
@@ -53,29 +61,25 @@ export default {
       projects_row_length: 0 as number,
       projects: [
         {
-          passiveImg: '../assets/project_portfolio_front.png',
-          activeImg: 'right.jpg',
-          title: 'Portfolio website',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
+          thumbnail: 'project_portfolio.png',
+          title: 'Portfolio',
+          description: "My web-development portfolio, you're currently viewing it!",
           tools: ['Vue', 'Vite', 'TypeScript', 'SCSS'],
         },
         {
-          passiveImg: 'front.jpg',
-          activeImg: 'right.jpg',
+          thumbnail: 'project_javamail.png',
           title: 'Mailing Service',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
           tools: ['Java', 'Spring', 'JavaMail'],
         },
         {
-          passiveImg: 'front.jpg',
-          activeImg: 'right.jpg',
+          thumbnail: 'front.jpg',
           title: 'None1',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
           tools: [],
         },
         {
-          passiveImg: 'front.jpg',
-          activeImg: 'right.jpg',
+          thumbnail: 'front.jpg',
           title: 'None2',
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
           tools: [],

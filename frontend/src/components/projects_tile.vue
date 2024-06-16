@@ -2,8 +2,7 @@
 import { defineComponent, PropType } from 'vue';
 
 interface Project {
-  passiveImg: string;
-  activeImg: string;
+  thumbnail: string;
   title: string;
   description: string;
   tools: string[];
@@ -45,8 +44,11 @@ export default defineComponent({
 
 <template>
   <div class="cube" :style="{width: width, height: height, margin: margin}" @mouseover="rotate" @mouseout="reset">
-    <div class="face front" :style="{width: width, height: height, transform: 'translateZ('+translate+')'}">
-      <img src="../assets/project_portfolio_front.png" :alt="project.title">
+    <div class="face front" :style="{
+      width: width,
+      height: height,
+      transform: 'translateZ('+translate+')'}">
+      <img :src="'src/assets/'+project.thumbnail" :alt="project.title">
     </div>
     <div class="face right" :style="{width: width, height: height, transform: 'rotateY(90deg) translateZ('+translate+')'}">
       <h3 class="title G_sectionHeader">{{ project.title }}</h3>
@@ -82,20 +84,23 @@ export default defineComponent({
     transform-style: flat;
     text-align: center;
     overflow: hidden;
+    .title {
+      margin: 0.5em auto -0.5em auto;
+    }
     .description {
       font-family: "Roboto Light", sans-serif;
-      font-size: 0.8em;
+      font-size: 0.7em;
       color: white;
+    }
+    .git-icon {
+      border: 1px solid orange;
+      width: 40px;
+      height: 40px;
+      margin: auto;
     }
     img {
       width: 100%;
     }
   }
-  //.front {
-  //  transform: translateZ(100px);
-  //}
-  //.right {
-  //  transform: rotateY(90deg) translateZ(100px);
-  //}
 }
 </style>
