@@ -8,6 +8,8 @@ export default {
   setup() {
     //TODO: Grid checker, disable or remove in prod.
     const DEV_gridCheck: boolean = false;
+    //TODO: FPS tracker, disable or remove in prod.
+    const FPS_tracker: boolean = false;
 
     const gridSize: number = isMobileDevice() ? 10 : 18;
     const pillar_size: number = 1;
@@ -23,7 +25,7 @@ export default {
     let time = ref(0);
 
     //TODO: FPS tracker, disable or remove in prod.
-    let frameCount = ref(0);
+    let frameCount = ref(0); // Also used by noise gen, check before removal.
     let lastFrameTime = ref(performance.now());
     let minFPS = ref(Infinity);
     let maxFPS = ref(0);
@@ -210,7 +212,9 @@ export default {
       }
     };
     const animate = () => {
-      calculatePerformance()
+      if (FPS_tracker) {
+        calculatePerformance()
+      }
       animateWaves();
       renderer.render(scene, camera);
       requestAnimationFrame(animate)
@@ -229,6 +233,7 @@ export default {
       pillar_medium_material,
       pillars,
       threeJsCanvas,
+      FPS_tracker,
       currentFPS,
       minFPS,
       maxFPS
@@ -237,7 +242,7 @@ export default {
 }
 </script>
 <template>
-  <div id="fps-counter">
+  <div v-if="FPS_tracker" id="fps-counter">
     FPS: {{ currentFPS.toFixed(2) }}<br>
     Min: {{ minFPS.toFixed(2) }}<br>
     Max: {{ maxFPS.toFixed(2) }}<br>
