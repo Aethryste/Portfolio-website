@@ -4,7 +4,28 @@
       <div class="top">
         <header class="G_unselectable G_sectionHeader header">\\ Projects</header>
         <header class="G_unselectable G_sectionHeader subheader">Featured</header>
-        <div v-if="windowWidth > 600" class="projects-container">
+
+        <div v-if="windowWidth < 400" class="projects-container">
+          <projects-tile v-for="project in projects" :key="project.title" :project="project"
+                         :width="'120px'"
+                         :height="'120px'"
+                         :margin="'10px'"
+                         :translate="'65px'"
+                         :thumbnail="project.thumbnail"
+                         class="projects-tile" />
+        </div>
+
+        <div v-if="windowWidth < 600 && windowWidth > 399" class="projects-container">
+          <projects-tile v-for="project in projects" :key="project.title" :project="project"
+                         :width="'150px'"
+                         :height="'150px'"
+                         :margin="'10px'"
+                         :translate="'75px'"
+                         :thumbnail="project.thumbnail"
+                         class="projects-tile" />
+        </div>
+
+        <div v-if="windowWidth > 599" class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
                          :width="'200px'"
                          :height="'200px'"
@@ -13,15 +34,7 @@
                          :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
-        <div v-else class="projects-container">
-          <projects-tile v-for="project in projects" :key="project.title" :project="project"
-                         :width="'150px'"
-                         :height="'150px'"
-                         :margin="'10px'"
-                         :translate="'76px'"
-                         :thumbnail="project.thumbnail"
-                         class="projects-tile" />
-        </div>
+
       </div>
       <div class="bottom">
         <header class="G_unselectable G_sectionHeader subheader">More</header>
@@ -235,6 +248,25 @@ export default {
           margin: 10px 0 0 0;
         }
       }
+    }
+  }
+}
+@media screen and (max-width: 430px) {
+  .container .content {
+    border: 1px solid red;
+    min-width: 350px;
+    //width: calc(90dvw - 2px);
+    //max-width: fit-content;
+    .top {
+      border: 1px solid blue;
+      .projects-container {
+
+        //width: 100%;
+        //max-width: 100%;
+      }
+    }
+    .bottom .flex-container button {
+      //width: 330px;
     }
   }
 }
