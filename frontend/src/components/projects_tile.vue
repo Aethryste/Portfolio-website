@@ -1,14 +1,20 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
+import { redirect } from "../utils/generalUtils.ts";
+import mini_skill from "../components/mini_skill.vue";
 
 interface Project {
   thumbnail: string;
   title: string;
+  url: string;
   description: string;
-  tools: string[];
+  skills: string[];
 }
 
 export default defineComponent({
+  components: {
+    mini_skill
+  },
   props: {
     project: {
       type: Object as PropType<Project>,
@@ -46,17 +52,21 @@ export default defineComponent({
         isMouseInside.value = false;
       }
     };
+    const handleRedirect = (url:string) => {
+      redirect(url, true);
+    };
     return {
       transformStyle,
       handleMouseEnter,
-      handleMouseLeave
+      handleMouseLeave,
+      handleRedirect
     };
   },
 });
 </script>
 
 <template>
-  <div class="cube-container" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+  <div class="cube-container" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" @click="handleRedirect(project.url)">
     <div
         class="cube"
         :style="{ width: width, height: height, margin: margin, transform: transformStyle }"
@@ -65,16 +75,18 @@ export default defineComponent({
           class="face front"
           :style="{ width: width, height: height, transform: 'translateZ(' + translate + ')' }"
       >
+        <h3 class="G_unselectable">{{ project.title }}</h3>
         <img :src="'src/assets/' + project.thumbnail" :alt="project.title">
       </div>
       <div
           class="face right"
           :style="{ width: width, height: height, transform: 'rotateY(90deg) translateZ(' + translate + ')' }"
       >
-        <h3 class="title G_sectionHeader">{{ project.title }}</h3>
         <p class="description">{{ project.description }}</p>
-        <div class="git-icon"></div>
-        <div class="mini-icons-list"></div>
+        <div class="mini-skill-container">
+          <div class="mini-skill"></div>
+          <mini_skill v-for="skill in project.skills" :key="skill" :skill="skill"/>
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +100,7 @@ export default defineComponent({
   display: inline-block;
   width: fit-content;
   height: fit-content;
+  cursor: pointer;
   &::before {
     content: '';
     position: absolute;
@@ -107,27 +120,85 @@ export default defineComponent({
   z-index: 0;
   .face {
     position: absolute;
-    background: linear-gradient(30deg, rgb(50, 50, 50), rgb(100, 100, 100));
+    border: 2px solid white;
     backface-visibility: hidden;
     transform-style: flat;
     text-align: center;
     overflow: hidden;
-    .title {
-      margin: 0.5em auto -0.5em auto;
-    }
-    .description {
+  }
+  .front {
+    background: linear-gradient(30deg, rgb(50, 50, 50), rgb(100, 100, 100));
+
+    h3 {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: calc(100% - 18px);
+      height: 1.2em;
+      margin: 0 auto auto 0;
+      z-index: 5;
       font-family: "Roboto Light", sans-serif;
-      font-size: 0.7em;
-      color: white;
-    }
-    .git-icon {
-      border: 1px solid orange;
-      width: 40px;
-      height: 40px;
-      margin: auto;
+      font-weight: 100;
+      text-align: start;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      word-spacing: 100dvw;
     }
     img {
       width: 100%;
+      filter: brightness(120%);
+      z-index: -5;
+    }
+  }
+  .right {
+    .description {
+      letter-spacing: 1px;
+      width: fit-content;
+      max-width: calc(100% - 20px);
+      height: fit-content;
+      max-height: 50%;
+      position: relative;
+      margin: 10px auto auto auto;
+    }
+    .mini-skill-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      position: relative;
+      width: fit-content;
+      max-width: calc(100% - 18px);
+      height: fit-content;
+      max-height: 50%;
+      margin: 10px auto;
+      z-index: 5;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .cube-container .right {
+    .description {
+      font-size: 0.7em;
+      height: fit-content;
+      margin: 5px auto 0 auto;
+    }
+    .mini-skill-container {
+      justify-content: center;
+      flex-flow: column wrap;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin: 2px auto auto auto;
+      height: fit-content;
+    }
+  }
+}
+@media screen and (max-width: 400px) {
+  .cube-container .cube {
+    .front h3 {
+      font-size: 1em;
+      letter-spacing: 2px;
+    }
+    .right .mini-skill-container {
+      display: none;
     }
   }
 }

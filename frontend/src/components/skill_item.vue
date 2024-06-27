@@ -86,7 +86,6 @@ export default {
   .minimized {
     height: 35px;
   }
-
 }
 @media screen and (max-width: 1280px) {
   .minimized {

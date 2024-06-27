@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ProjectsTile from './projects_tile.vue';
+import ProjectsTile from '../components/projects_tile.vue';
 
 export default defineComponent({
   components: {

@@ -4,7 +4,6 @@
       <div class="top">
         <header class="G_unselectable G_sectionHeader header">\\ Projects</header>
         <header class="G_unselectable G_sectionHeader subheader">Featured</header>
-
         <div v-if="windowWidth < 400" class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
                          :width="'120px'"
@@ -14,7 +13,6 @@
                          :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
-
         <div v-if="windowWidth < 600 && windowWidth > 399" class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
                          :width="'150px'"
@@ -24,7 +22,6 @@
                          :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
-
         <div v-if="windowWidth > 599" class="projects-container">
           <projects-tile v-for="project in projects" :key="project.title" :project="project"
                          :width="'200px'"
@@ -34,7 +31,6 @@
                          :thumbnail="project.thumbnail"
                          class="projects-tile" />
         </div>
-
       </div>
       <div class="bottom">
         <header class="G_unselectable G_sectionHeader subheader">More</header>
@@ -74,28 +70,100 @@ export default {
       projects_row_length: 0 as number,
       projects: [
         {
-          thumbnail: 'project_portfolio.png',
-          title: 'Portfolio',
+          thumbnail: 'github.svg',
+          title: 'Portfolio website',
+          url: 'https://github.com/Aethryste/Portfolio-website',
           description: "My web-development portfolio, you're currently viewing it!",
-          tools: ['Vue', 'Vite', 'TypeScript', 'SCSS'],
+          skills: [
+              {
+                title: 'Vue',
+                color: '#31f586'
+              },
+              {
+                title: 'Vite',
+                color: '#a621ff'
+              },
+              {
+                title: 'Typescript',
+                color: '#0db6db'
+              },
+              {
+                title: 'SCSS',
+                color: '#d64fa9'
+              },
+              {
+                title: 'Java',
+                color: '#ff8324'
+              },
+              {
+                title: 'Spring',
+                color: '#039956'
+              }
+          ]
         },
         {
-          thumbnail: 'project_javamail.png',
+          thumbnail: 'github.svg',
           title: 'Mailing Service',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
-          tools: ['Java', 'Spring', 'JavaMail'],
+          url: 'https://github.com/Aethryste/MailingService-template',
+          description: 'SMTP mailing-service template for spring backends.',
+          skills: [
+            {
+              title: 'Java',
+              color: '#ff8324'
+            },
+            {
+              title: 'JavaMail',
+              color: '#ff8324'
+            },
+            {
+              title: 'Spring',
+              color: '#039956'
+            }
+          ]
         },
         {
-          thumbnail: 'front.jpg',
-          title: 'None1',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
-          tools: [],
+          thumbnail: 'github.svg',
+          title: 'Degiro Notifier',
+          url: 'https://github.com/Aethryste/Degiro_notifier',
+          description: 'Selenium-based web-scraper with Telegram bot for notifications.',
+          skills: [
+              {
+                title: 'Python',
+                color: '#05499c'
+              }
+          ]
         },
         {
-          thumbnail: 'front.jpg',
-          title: 'None2',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum metus a lorem convallis eleifend. Vivamus tempus in metus et rutrum.',
-          tools: [],
+          thumbnail: 'github.svg',
+          title: 'X.com clone',
+          url: 'https://github.com/Aethryste/x.com_clone',
+          description: "This is a new project that i'm currently working on!",
+          skills: [
+            {
+              title: 'Vue',
+              color: '#31f586'
+            },
+            {
+              title: 'Vite',
+              color: '#a621ff'
+            },
+            {
+              title: 'Typescript',
+              color: '#0db6db'
+            },
+            {
+              title: 'SCSS',
+              color: '#d64fa9'
+            },
+            {
+              title: 'Java',
+              color: '#ff8324'
+            },
+            {
+              title: 'Spring',
+              color: '#039956'
+            }
+          ]
         },
       ]
     }
@@ -244,7 +312,7 @@ export default {
         margin: 0 auto 0 5px;
         width: 92%;
         button {
-          width: 100%;
+          width: 335px;
           margin: 10px 0 0 0;
         }
       }
@@ -253,20 +321,18 @@ export default {
 }
 @media screen and (max-width: 430px) {
   .container .content {
-    border: 1px solid red;
     min-width: 350px;
-    //width: calc(90dvw - 2px);
-    //max-width: fit-content;
-    .top {
-      border: 1px solid blue;
-      .projects-container {
-
-        //width: 100%;
-        //max-width: 100%;
-      }
+    width: fit-content;
+    .header, .subheader {
+      width: fit-content;
     }
+  }
+}
+@media screen and (max-width: 400px) {
+  .container .content {
+    min-width: 286px;
     .bottom .flex-container button {
-      //width: 330px;
+      width: 273px;
     }
   }
 }
