@@ -44,6 +44,13 @@ html {
   -ms-user-select: none;
   user-select: none;
 }
+.G_sectionWrapper {
+  position: relative;
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+}
 .G_sectionHeader {
   font-weight: 400;
   font-size: 1.1em;
@@ -71,36 +78,4 @@ html {
   &::-webkit-scrollbar {
     display: none;
   }
-}
-#icon-html {
-  background: url("../assets/icons-svg/icon-html.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-css {
-  background: url("../assets/icons-svg/icon-css.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-js {
-  background: url("../assets/icons-svg/icon-js.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-vue {
-  background: url("../assets/icons-svg/icon-vue.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-java {
-  background: url("../assets/icons-svg/icon-java.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-nodejs {
-  background: url("../assets/icons-svg/icon-nodejs.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-sql {
-  background: url("../assets/icons-svg/icon-sql.svg") center no-repeat;
-  background-size: cover;
-}
-#icon-python {
-  background: url("../assets/icons-svg/icon-python.svg") center no-repeat;
-  background-size: cover;
 }

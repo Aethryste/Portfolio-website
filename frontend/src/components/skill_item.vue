@@ -44,11 +44,12 @@ export default {
   margin: 5px;
   background: linear-gradient(
           190deg,
-          rgba(255,255,255,0.05),
-          rgba(200,200,200,0.05)
+          rgba(255,255,255,0.2),
+          rgba(200,200,200,0.1)
   );
   opacity: 1;
   transition: 300ms;
+  backdrop-filter: blur(5px);
   &:hover {
     opacity: 1;
     color: $theme-primary-color;
@@ -85,7 +86,6 @@ export default {
   .minimized {
     height: 35px;
   }
-
 }
 @media screen and (max-width: 1280px) {
   .minimized {

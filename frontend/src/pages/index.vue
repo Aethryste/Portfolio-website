@@ -165,7 +165,7 @@ export default {
       try {
         const base64SVG = btoa(await backendFetch(`/res/icon/${filename}`));
         return {
-          background: `url('data:image/svg+xml;base64,${base64SVG}')`,
+          background: `url('data:image/svg+xml;base64,${base64SVG}') no-repeat`,
           backgroundSize: 'contain'
         };
       } catch (error) {

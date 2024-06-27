@@ -1,11 +1,11 @@
 <script setup>
 import IndexComp from '../src/pages/index.vue';
-import TresScene from '../src/components/TresScene_lightweight.vue';
+import ThreeScene from '../src/components/TresScene_lightweight.vue';
 </script>
 
 <template>
   <IndexComp id="IndexComp"/>
-  <TresScene id="canvas"/>
+  <ThreeScene/>
 </template>
 
 <style>
